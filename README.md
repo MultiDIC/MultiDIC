@@ -1,4 +1,4 @@
-# MaDICT: MATLAB Toolbox for Multi-View 3D Digital Image Correlation
+# MaDICT: MATLAB Toolbox for Multi-View 3D-DIC
 
 This is the offical repository for:
 
