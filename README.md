@@ -49,4 +49,5 @@ Dana Solav, Kevin M. Moerman, Aaron M. Jaeger, Hugh M. Herr
 DOI: TBD
 ```
 
-# Contributing <a name="Contributing"></a>
+# Contributing <a name="Contributing"></a>   
+If you wish to contribute code/algorithms to this project, please contact [danask@mit.edu](danask@mit,edu)
