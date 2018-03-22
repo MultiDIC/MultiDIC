@@ -20,7 +20,7 @@ Please cite this paper if you use this toolbox.
 
 
 # Summary <a name="Summary"></a>
-MultiDIC (Multi Digital Image Correlation) is an open-source MATLAB toolbox by [Dana Solav](media.mit.edu/people/danask/). Three-dimensional (stereo) Digital Image Correlation (3D-DIC) is an important technique for measuring the mechanical behavior of materials. MultiDIC was developed to allow fast calibration even for a large number of cameras, and be easily adaptable to different experimental requirements. It integrates the 2D-DIC subset-based software [Ncorr](github.com/justinblaber/ncorr_2D_matlab) with several camera calibration algorithms to reconstruct 3D surfaces from multiple stereo image pairs. Moreover, it contains algorithms for merging multiple surfaces, and for computing and plotting displacement, deformation and strain measures. High-level scripts allow users to perform 3D-DIC analyses with minimal interaction with MATLAB syntax, while proficient MATLAB users can use stand-alone functions and data-structures to write custom scripts for specific experimental requirements. Comprehensive documentation, user guide, and sample data are included.
+MultiDIC (Multi Digital Image Correlation) is an open-source MATLAB toolbox by [Dana Solav](https://www.media.mit.edu/people/danask/). Three-dimensional (stereo) Digital Image Correlation (3D-DIC) is an important technique for measuring the mechanical behavior of materials. MultiDIC was developed to allow fast calibration even for a large number of cameras, and be easily adaptable to different experimental requirements. It integrates the 2D-DIC subset-based software [Ncorr](https://www.github.com/justinblaber/ncorr_2D_matlab) with several camera calibration algorithms to reconstruct 3D surfaces from multiple stereo image pairs. Moreover, it contains algorithms for merging multiple surfaces, and for computing and plotting displacement, deformation and strain measures. High-level scripts allow users to perform 3D-DIC analyses with minimal interaction with MATLAB syntax, while proficient MATLAB users can use stand-alone functions and data-structures to write custom scripts for specific experimental requirements. Comprehensive documentation, user guide, and sample data are included.
 
 # Installation <a name="Installation"></a>  
 To install Multi DIC simply follow these two steps:
@@ -36,10 +36,10 @@ Use one of these two options:
 **b)** In Matlab, Add the MaDICT folder (with subfolders) to the path and save the path definitions.
 
 # Getting started <a name="Start"></a>
-Check out the [instruction manual](github.com/MultiDIC/MultiDIC/blob/master/lib_ext/ncorr_2D_matlab-master/ncorrmanual_v1_2_2.pdf). It should have all the information you need to get started.
+Check out the [instruction manual](https://www.github.com/MultiDIC/MultiDIC/blob/master/lib_ext/ncorr_2D_matlab-master/ncorrmanual_v1_2_2.pdf). It should have all the information you need to get started.
 
 # License <a name="License"></a>
-MultiDIC is provided under the [Apache-2.0 license](apache.org/licenses/). The [license file](github.com/MultiDIC/MultiDIC/blob/master/LICENSE) is found on the GitHub repository.
+MultiDIC is provided under the [Apache-2.0 license](https://www.apache.org/licenses/). The [license file](https://www.github.com/MultiDIC/MultiDIC/blob/master/LICENSE) is found on the GitHub repository.
 
 # Citing <a name="Cite"></a>   
 Please cite the following paper if you use this toolbox:
@@ -50,4 +50,4 @@ DOI: TBD
 ```
 
 # Contributing <a name="Contributing"></a>   
-If you wish to contribute code/algorithms to this project, please contact [danask@mit.edu](danask@mit,edu)
+If you wish to contribute code/algorithms to this project, please send an email to danask at mit dot edu.

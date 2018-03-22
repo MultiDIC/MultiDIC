@@ -77,12 +77,10 @@ switch faceMeasureString
         if ~isfield(optStruct,'colorBarLimits')
             optStruct.colorBarLimits=[1-prctile(abs(FCmat(:)-1),100) 1+prctile(abs(FCmat(:)-1),100)];
         end
-        %         FClimits=[1-prctile(abs(FCmat(:)-1),100) 1+prctile(abs(FCmat(:)-1),100)];
         colorBarLogic=1;
         if ~isfield(optStruct,'colorMap')
-            optStruct.colorMap=0.8*redblue(256);
+            optStruct.colorMap=0.8*coldwarm;
         end
-%         cMap=0.8*redblue(256);
         legendLogic=0;
         
     case {'Emgn','emgn'}
@@ -99,12 +97,10 @@ switch faceMeasureString
         if ~isfield(optStruct,'colorBarLimits')
             optStruct.colorBarLimits=[0 prctile(FCmat(:),100)];
         end
-%         FClimits=[0 prctile(FCmat(:),100)];
         colorBarLogic=1;
         if ~isfield(optStruct,'colorMap')
             optStruct.colorMap='parula';
         end
-%         cMap='parula';
         legendLogic=0;
         
     case {'Epc1','Epc2','epc1','epc2'}
@@ -121,12 +117,10 @@ switch faceMeasureString
         if ~isfield(optStruct,'colorBarLimits')
             optStruct.colorBarLimits=[-prctile(abs(FCmat(:)),100) prctile(abs(FCmat(:)),100)];
         end
-%         FClimits=[-prctile(abs(FCmat(:)),100) prctile(abs(FCmat(:)),100)];
         colorBarLogic=1;
         if ~isfield(optStruct,'colorMap')
-            optStruct.colorMap=0.8*redblue(256);
+            optStruct.colorMap=0.8*coldwarm;
         end
-%         cMap=0.8*redblue(256);
         legendLogic=0;
         
     case {'DispMgn'}
@@ -145,12 +139,10 @@ switch faceMeasureString
         if ~isfield(optStruct,'colorBarLimits')
             optStruct.colorBarLimits=[0 prctile(FCmat(:),100)];
         end
-%         FClimits=[0 prctile(FCmat(:),100)];
         colorBarLogic=1;
         if ~isfield(optStruct,'colorMap')
             optStruct.colorMap='parula';
         end
-%         cMap='parula';
         legendLogic=0;
         
     case {'DispX'}

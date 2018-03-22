@@ -49,9 +49,18 @@ function [varargout]=cFigure(varargin)
 %
 % 2014/11/25 %Created
 % 2015/04/15 %Added vcw functionality
+% 2018/02/02 %Fixed bug in relation to groot units (e.g. figure size is
+% wrong if units are not pixels). 
 %------------------------------------------------------------------------
 
 %% Parse input and set defaults
+
+%Force groot units to be pixels
+graphicalRoot=groot;
+grootUnits=graphicalRoot.Units;
+if ~strcmp(grootUnits,'pixels')
+    graphicalRoot.Units='pixels';
+end
 
 switch nargin
     case 0
@@ -59,6 +68,7 @@ switch nargin
         figStruct.Visible='on';
         figStruct.ColorDef='white';
         figStruct.Color='w';
+%         figStruct.Colormap=gjet(250);
         screenSizeGroot = get(groot,'ScreenSize');
         figStruct.ScreenOffset=round(max(screenSizeGroot)*0.1); %i.e. figures are spaced around 10% of the sreensize from the edges
         vcwOpt={'pan','rot','zoomz','zoomz'};
@@ -171,7 +181,13 @@ end
 if nargout>0
     varargout{1}=hf;
 end
- 
+
+%%
+% Reset groot units if a change was needed
+if ~strcmp(grootUnits,'pixels')
+    graphicalRoot.Units=grootUnits;
+end
+
 %% 
 % _*GIBBON footer text*_ 
 % 
@@ -181,7 +197,7 @@ end
 % image segmentation, image-based modeling, meshing, and finite element
 % analysis.
 % 
-% Copyright (C) 2017  Kevin Mattheus Moerman
+% Copyright (C) 2018  Kevin Mattheus Moerman
 % 
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by

@@ -51,10 +51,13 @@ DIC2DpairResults.nCamRef=nCamRef;
 DIC2DpairResults.nCamDef=nCamDef;
 
 %%  load images from the paths, convert to gray and undistort, and create IMset cell for Ncorr
+h=msgbox({'Please wait while loading images'});
 [ImPaths,ImSet]=createDICimageSet(folderPaths,processedImagePath);
 DIC2DpairResults.nImages=numel(ImPaths)/2;
 DIC2DpairResults.ImPaths=ImPaths;
-
+if isvalid(h)
+    close(h);
+end
 %% animate the 2 sets of images to be correlated with Ncorr
 hf1=anim8_DIC_images(ImPaths,ImSet);
 pause

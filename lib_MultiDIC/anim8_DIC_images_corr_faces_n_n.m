@@ -80,7 +80,8 @@ set(hp2,'EdgeAlpha',0.4);
 colormap jet
 pbaspect([size(IMset{ii},2) size(IMset{ii},1) 1])
 hs1=title(['Ref (Cam ' num2str(nCamRef) ' frame ' num2str(1) ')']);
-hc1=colorbar; caxis([0 CorCoeffDispMax])
+hc1=colorbar; 
+caxis([0 CorCoeffDispMax])
 title(hc1, 'Corr-Coeff')
 axis off
 

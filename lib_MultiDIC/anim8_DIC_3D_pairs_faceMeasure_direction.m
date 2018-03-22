@@ -144,7 +144,7 @@ if ~isfield(optStruct,'colorBarLimits')
 end
 colorBarLogic=1;
 if ~isfield(optStruct,'colorMap')
-    optStruct.colorMap=0.8*redblue(256);
+    optStruct.colorMap=.8*coldwarm;
 end
 
 
