@@ -40,8 +40,10 @@ Use one of these two options:
 Check out the [instruction manual](https://github.com/MultiDIC/MultiDIC/blob/master/docs/pdf/DIC%20documentation_v2_2018_03_22_NR.pdf). It should have all the information you need to get started.
 
 # Application Highlights <a name="Applications"></a>
-<img src="docs/img/shank_34_full.gif">
+<img src="docs/img/Shank2D_corr_204_205.gif">
+<img src="docs/img/ShankFull_L1_L2.gif">
 <img src="docs/img/indentation_204_205_DispMgn_onImages.gif">
+<img src="docs/img/indentation_3D_Lamda1_Lamda2.gif">
 
 # License <a name="License"></a>
 MultiDIC is provided under the [Apache-2.0 license](https://www.apache.org/licenses/). The [license file](https://www.github.com/MultiDIC/MultiDIC/blob/master/LICENSE) is found on the GitHub repository.

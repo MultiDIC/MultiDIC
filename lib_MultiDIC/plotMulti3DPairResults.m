@@ -80,9 +80,9 @@ Prompt={'\bf{Select which parameters to plot}';... % 1
     'Surfaces with color as Epc2+direction (2nd principal Lagrangian strain value and direction)';... % 26
     'Surfaces with color as epc1+direction (1st principal Almansi strain value and direction)';... % 27
     'Surfaces with color as epc2+direction (2nd principal Almansi strain value and direction)';... % 28
-    'Surfaces with color as Epc1+Epc2+direction (1st and 2nd principal Lagrangian strain values and directions)';... % 29
-    'Surfaces with color as epc1+epc2+direction (1st and 2nd principal Almansi strain values and directions)';... % 30
-    'Surfaces with color as Lamda1+Lamda2+direction (1st and 2nd principal stretch values and directions)'; % 31
+    'Surfaces with color as Lamda1+Lamda2+direction (1st and 2nd principal stretch values and directions)';... % 29
+    'Surfaces with color as Epc1+Epc2+direction (1st and 2nd principal Lagrangian strain values and directions)';... % 30
+    'Surfaces with color as epc1+epc2+direction (1st and 2nd principal Almansi strain values and directions)'; % 31
     'Surfaces with color as FaceColors (grayscale from images)';... % 32
     'Surfaces with color as FaceIsoInd (triangular face isotropy index)';... % 33
     'Select All';}; % 34
