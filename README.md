@@ -14,6 +14,7 @@ Please cite this paper if you use this toolbox.
 - [Summary](#Summary)  
 - [Installation](#Installation)  
 - [Getting started](#Start)
+- [Application Highlights](#Applications)
 - [License](#License)  
 - [Citing](#Cite)
 - [Contributing](#Contributing)  
@@ -36,7 +37,11 @@ Use one of these two options:
 **b)** In Matlab, Add the MaDICT folder (with subfolders) to the path and save the path definitions.
 
 # Getting started <a name="Start"></a>
-Check out the [instruction manual](https://www.github.com/MultiDIC/MultiDIC/blob/master/lib_ext/ncorr_2D_matlab-master/ncorrmanual_v1_2_2.pdf). It should have all the information you need to get started.
+Check out the [instruction manual](https://github.com/MultiDIC/MultiDIC/blob/master/docs/pdf/DIC%20documentation_v2_2018_03_22_NR.pdf). It should have all the information you need to get started.
+
+# Application Highlights <a name="Applications"></a>
+<img src="docs/img/shank_34_full.gif">
+<img src="docs/img/indentation_204_205_DispMgn_onImages.gif">
 
 # License <a name="License"></a>
 MultiDIC is provided under the [Apache-2.0 license](https://www.apache.org/licenses/). The [license file](https://www.github.com/MultiDIC/MultiDIC/blob/master/LICENSE) is found on the GitHub repository.

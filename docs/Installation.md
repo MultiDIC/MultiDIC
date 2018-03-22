@@ -13,4 +13,4 @@ Use one of these two options:
 **b)** In Matlab, Add the MaDICT folder (with subfolders) to the path and save the path definitions.
 
 # Getting started <a name="Start"></a>
-Check out the [instruction manual](https://www.github.com/MultiDIC/MultiDIC/blob/master/lib_ext/ncorr_2D_matlab-master/ncorrmanual_v1_2_2.pdf). It should have all the information you need to get started.
+Check out the [instruction manual](https://github.com/MultiDIC/MultiDIC/blob/master/docs/pdf/DIC%20documentation_v2_2018_03_22_NR.pdf). It should have all the information you need to get started.
