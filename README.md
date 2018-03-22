@@ -43,7 +43,7 @@ Check out the [instruction manual](https://github.com/MultiDIC/MultiDIC/blob/mas
 <img src="docs/img/Shank2D_corr_204_205.gif">
 <img src="docs/img/ShankFull_L1_L2.gif">
 <img src="docs/img/indentation_204_205_DispMgn_onImages.gif">
-<img src="docs/img/indentation_3D_Lamda1_Lamda2.gif">
+<img src="docs/img/indentation_3D_Lamda1_Lamda2_reducedLight.gif">
 
 # License <a name="License"></a>
 MultiDIC is provided under the [Apache-2.0 license](https://www.apache.org/licenses/). The [license file](https://www.github.com/MultiDIC/MultiDIC/blob/master/LICENSE) is found on the GitHub repository.
