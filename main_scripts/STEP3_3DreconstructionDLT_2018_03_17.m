@@ -225,7 +225,7 @@ plotButton = questdlg('Plot 3D-DIC results from camera pairs?', 'Plot?', 'Yes', 
 switch plotButton
     case 'Yes'
         optStruct=struct;
-        optStruct.zDirection=-1;
+        optStruct.zDirection=1;
         plotMulti3DPairResults(DIC3DAllPairsResults,optStruct);        
     case 'No'
 end
