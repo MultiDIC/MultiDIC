@@ -45,10 +45,11 @@ Check out the [instruction manual](https://github.com/MultiDIC/MultiDIC/blob/mas
 
 ## Application Highlights <a name="Applications"></a>
 ### These are some examples of figures obtained using MultiDIC:
-##### Shape change and skin deformation induced by joint movement and muscle contraction
-<img src="docs/img/Shank2D_corr_204_205.gif">
-<img src="docs/img/ShankFull_L1_L2.gif">   
-##### Shape change and skin deformation induced by indentation
+#### Shape change and skin deformation induced by joint movement and muscle contraction
+<img src="docs/img/Shank2D_corr_204_205.gif">     
+<img src="docs/img/ShankFull_L1_L2.gif">       
+
+#### Shape change and skin deformation induced by indentation    
 <img src="docs/img/indentation_204_205_DispMgn_onImages.gif">
 <img src="docs/img/indentation_3D_Lamda1_Lamda2_reducedLight.gif">
 
