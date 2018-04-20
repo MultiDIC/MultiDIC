@@ -15,9 +15,9 @@ MultiDIC (Multi Digital Image Correlation) is an open-source MATLAB toolbox by [
 
 ## Installation <a name="Installation"></a>  
 #### Installation Requirements
-###### Operating system requirements
+##### Operating system requirements
 MultiDIC was developed on 64-bit Windows 10 and has not yet been tested on other operating systems.      
-###### MATLAB requirements
+##### MATLAB requirements
 MultiDIC was developed on MATLAB versions R2017a and R2017b, and has not yet been tested on prior versions.  
 
 MATLAB toolbox dependencies:
@@ -28,12 +28,12 @@ MATLAB toolbox dependencies:
 
 #### Installation Instructions
 To install Multi DIC simply follow these two steps:
-###### 1. Get a copy of MultiDIC
+##### 1. Get a copy of MultiDIC
 Use one of these two options:      
 **a.** Download and unzip the latest [zip file](https://github.com/MultiDIC/MultiDIC/archive/master.zip).   
 **b.** Clone MultiDIC using: `git clone https://github.com/MultiDIC/MultiDIC/.git`.
 
-###### 2. Install (or add to path)    
+##### 2. Install (or add to path)    
 Use one of these two options:          
 **a.** In Matlab, navigate to the unzipped MultiDIC folder, type installMultiDIC in the command window, and hit Enter.   
 **b.** In Matlab, Add the MultiDIC folder (with subfolders) to the path and save the path definitions.
@@ -44,11 +44,11 @@ Use one of these two options:
 Check out the [instruction manual](https://github.com/MultiDIC/MultiDIC/blob/master/docs/pdf/MultiDIC_InstructionManual.pdf). It should have all the information you need to get started.
 
 ## Application Highlights <a name="Applications"></a>
-#### These are some examples of figures obtained using MultiDIC:
-###### Shape change and skin deformation induced by joint movement and muscle contraction
+### These are some examples of figures obtained using MultiDIC:
+##### Shape change and skin deformation induced by joint movement and muscle contraction
 <img src="docs/img/Shank2D_corr_204_205.gif">
 <img src="docs/img/ShankFull_L1_L2.gif">   
-###### Shape change and skin deformation induced by indentation
+##### Shape change and skin deformation induced by indentation
 <img src="docs/img/indentation_204_205_DispMgn_onImages.gif">
 <img src="docs/img/indentation_3D_Lamda1_Lamda2_reducedLight.gif">
 
@@ -57,11 +57,11 @@ MultiDIC is provided under the [Apache-2.0 license](https://www.apache.org/licen
 
 ## Citing <a name="Cite"></a>   
 This is the official repository for:
-```
-MultiDIC: a MATLAB Toolbox for Multi-View 3D Digital Image Correlation
-Dana Solav, Kevin M. Moerman, Aaron M. Jaeger, Katia Genovese, Hugh M. Herr
-DOI: TBD
-```
+
+[MultiDIC: a MATLAB Toolbox for Multi-View 3D Digital Image Correlation with Specific In-vivo Biomedical Applications](https://engrxiv.org/fv47e/)   
+Dana Solav, Kevin M. Moerman, Aaron M. Jaeger, Katia Genovese, Hugh M. Herr   
+DOI: [10.17605/OSF.IO/FV47E](https://engrxiv.org/fv47e/)
+
 Please cite this paper if you use the toolbox.
 
 

@@ -1,8 +1,8 @@
-%% STEP 1p : calculate and plot reprojection errors for camera stereo pairs
+%% STEP 1p : calculate and plot reconstruction errors for camera stereo pairs
 % This main scripts reconstruct 3D points based on pairs of cameras and
 % their DLT structures, and calculates the errors betweent the
 % reconstructed points and the true points.
-% reprojection errors are plotted and saved
+% reconstruction errors are plotted and saved
 
 %%
 clearvars; close all
@@ -99,9 +99,9 @@ switch distortionRemovalLogic
         end
 end
 
-% calculate reprojected points and reprojection errors
-DLTreprojectPoints=cell(1,size(DLTstructPairs.indPairs,1));
-DLTreprojectErr=cell(1,size(DLTstructPairs.indPairs,1));
+% calculate recronstructed points and recronstruction errors
+DLTreconstructPoints=cell(1,size(DLTstructPairs.indPairs,1));
+DLTreconstructErr=cell(1,size(DLTstructPairs.indPairs,1));
 for ipair=1:size(DLTstructPairs.indPairs,1) % loop over pairs
     
     % camera indeces of current pair
@@ -126,22 +126,22 @@ for ipair=1:size(DLTstructPairs.indPairs,1) % loop over pairs
     L1=DLTstructPairs.DLTparams{icount1}; % DLT parameters for 1st camera
     L2=DLTstructPairs.DLTparams{icount2}; % DLT parameters for 2nd camera
      
-    % reprojection errors between true points and reconstructed points
+    % recronstruction errors between true points and reconstructed points
     % Solve the linear system with the LS method for the unknown X Y and Z
     P3D=DLT11Reconstruction(P2D1,P2D2,L1,L2);
     % save into cell array
-    DLTreprojectPoints{ipair}=P3D;
+    DLTreconstructPoints{ipair}=P3D;
     
     % find the true points for this pair
     C3DtruePair=C3Dtrue{1}(:,columnsMutual,:);
     P3Dtrue=reshape(C3DtruePair,NpPair,3);
 
-    %reprojection error vectors
-    DLTreprojectErr{ipair}=P3D-P3Dtrue;
+    %recronstruction error vectors
+    DLTreconstructErr{ipair}=P3D-P3Dtrue;
     
 end
-DLTstructPairs.reprojectPoints=DLTreprojectPoints;
-DLTstructPairs.reprojectErrors=DLTreprojectErr;
+DLTstructPairs.reconstructPoints=DLTreconstructPoints;
+DLTstructPairs.reconstructErrors=DLTreconstructErr;
 
 %% save DLTstruct
 
@@ -155,7 +155,7 @@ if saveDLTpairsLogic
     save(saveName,'DLTstructPairs');
 end
 
-%% Plot reprojected points and reprojection errors
+%% Plot recronstructed points and recronstruction errors
 % this section can be executed also by loading an existing DLTstruct
 
 plotCalibrationResults(DLTstructPairs,saveDLTpairsLogic,figuresPath);

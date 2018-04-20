@@ -151,13 +151,18 @@ for ip=1:nPairs % loop over stereo pairs
 
     % pre-allocate 3D-DIC result variables
     DIC3DpairResults.Points3D=cell(nImages,1);
+    DIC3DpairResults.Points3Dtransformed=cell(nImages,1);
     DIC3DpairResults.Disp.DispVec=cell(nImages,1);
     DIC3DpairResults.Disp.DispMgn=cell(nImages,1);
+    DIC3DpairResults.Disp.DispVecTransformed=cell(nImages,1);
+    DIC3DpairResults.Disp.DispMgnTransformed=cell(nImages,1);
     DIC3DpairResults.FaceCentroids=cell(nImages,1);
     DIC3DpairResults.corrComb=cell(nImages,1);
     DIC3DpairResults.FaceCorrComb=cell(nImages,1);
     DIC3DpairResults.FaceIsoInd=cell(nImages,1);
-        
+    DIC3DpairResults.RBM.RotMat=cell(nImages,1);
+    DIC3DpairResults.RBM.TransVec=cell(nImages,1);
+    
     for ii=1:nImages % loop over images (time frames)
         waitbar(1/3+ii/(3*nImages));
         
@@ -183,7 +188,22 @@ for ip=1:nPairs % loop over stereo pairs
         DispVec=DIC3DpairResults.Points3D{ii}-DIC3DpairResults.Points3D{1};
         DIC3DpairResults.Disp.DispVec{ii}=DispVec;
         DIC3DpairResults.Disp.DispMgn{ii}=sqrt(DispVec(:,1).^2+DispVec(:,2).^2+DispVec(:,3).^2);
-
+        
+        % Compute rigid body transformation between point clouds
+        [RotMat,TransVec,Points3Dtransformed]=rigidTransformation(DIC3DpairResults.Points3D{ii},DIC3DpairResults.Points3D{1});
+        DIC3DpairResults.RBM.RotMat{ii}=RotMat;
+        DIC3DpairResults.RBM.TransVec{ii}=TransVec;
+        DIC3DpairResults.Points3Dtransformed{ii}=Points3Dtransformed;
+        
+        % Compute displacements between sets - after transformation
+        DispVec=DIC3DpairResults.Points3Dtransformed{ii}-DIC3DpairResults.Points3Dtransformed{1};
+        DIC3DpairResults.Disp.DispVecTransformed{ii}=DispVec;
+        DIC3DpairResults.Disp.DispMgnTransformed{ii}=sqrt(DispVec(:,1).^2+DispVec(:,2).^2+DispVec(:,3).^2);
+        
+        % compute face centroids - after transformation
+        for iface=1:size(F,1)
+            DIC3DpairResults.FaceCentroidsTransformed{ii}(iface,:)=mean(Points3Dtransformed(F(iface,:),:));
+        end
     end
     
     % compute deformation and strains (per triangular face)
@@ -225,8 +245,11 @@ plotButton = questdlg('Plot 3D-DIC results from camera pairs?', 'Plot?', 'Yes', 
 switch plotButton
     case 'Yes'
         optStruct=struct;
-        optStruct.zDirection=1;
-        plotMulti3DPairResults(DIC3DAllPairsResults,optStruct);        
+        optStruct.zDirection=-1;
+        optStruct.FaceAlpha=1;
+        plotMulti3DPairResults(DIC3DAllPairsResults,optStruct); 
+%         plotMulti3DPairResultsRBM(DIC3DAllPairsResults,optStruct);
+
     case 'No'
 end
 

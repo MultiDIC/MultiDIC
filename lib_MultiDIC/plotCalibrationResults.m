@@ -49,7 +49,7 @@ Colors=gjet(Npairs+1);
 hf1=cFigure;
 hf1.Units='normalized'; hf1.Position=[.05 .05 .9 .8];
 
-hf1.Name='Reprojected points vs. true points';
+hf1.Name='Reconstructed points vs. true points';
 legendstrings=cell(Npairs,1);
 for ipair=1:Npairs
     plotV(DLTstruct.reprojectPoints{ipair},'x','Color',Colors(ipair,:)); hold on
@@ -62,14 +62,14 @@ plotV(P3DtrueArray,'s','Color','k'); hold on
 legendstrings{ipair+1}='True points';
 legend(legendstrings);
 axisGeom
-title('reprojected points [mm]');
+title('reconstructed points [mm]');
 
 %% save figure 1
 if saveFiguresLogic
-        saveName=[figuresPath '\reprojectPoints.fig'];
+        saveName=[figuresPath '\reconstructedPoints.fig'];
     icount=1;
     while exist(saveName,'file')
-        saveName=[figuresPath '\reprojectPoints(' num2str(icount) ').fig'];
+        saveName=[figuresPath '\reconstructedPoints(' num2str(icount) ').fig'];
         icount=icount+1;
     end
     savefig(saveName);
@@ -80,7 +80,7 @@ hf2=cFigure;
 hf2.Units='normalized'; hf2.Position=[.05 .05 .9 .8];
 
 reprojectErrArray=cell2mat(DLTstruct.reprojectErrors(:));
-hf2.Name='Reprojection errors';
+hf2.Name='Reconstruction errors';
 errMaxTotal=0;
 ax1=subplot(1,3,[1 2]);
 for ipair=1:Npairs
@@ -97,7 +97,7 @@ legend(legendstrings);
 axisGeom
 xlim([-errMaxTotal errMaxTotal]); ylim([-errMaxTotal errMaxTotal]); zlim([-errMaxTotal errMaxTotal]);
 RMSEtot=rms(sqrt(sum(reprojectErrArray.^2,2)));
-title({'Reprojection errors per camera pair [mm]';['RMSE=' num2str(RMSEtot,3)]},'fontsize',16);
+title({'Reconstruction errors per camera pair [mm]';['RMSE=' num2str(RMSEtot,3)]},'fontsize',16);
 
 ax2=subplot(1,3,3);
 reprojectErrArrayMgn=[reprojectErrArray sqrt(sum(reprojectErrArray.^2,2))];
@@ -108,15 +108,15 @@ ylim([-max(max(abs(reprojectErrArrayMgn))) max(max(abs(reprojectErrArrayMgn)))])
 hrf1=refline(0,0); hrf1.Color='g'; hrf1.LineStyle='--';
 hrf2=line([3.5 4.5],[RMSEtot RMSEtot]); hrf2.Color='m'; hrf2.LineStyle='--';
 hl=line([3.5 3.5],ylim); hl.Color='k';
-title('Reprojection error statistics for all pairs [mm]','fontsize',16);
+title('Reconstruction error statistics for all pairs [mm]','fontsize',16);
 legend([hrf1 hrf2],{'Zero','RMSE(Mgn)'});
 
 %% save figure 2
 if saveFiguresLogic
-        saveName=[figuresPath '\reprojectErrors.fig'];
+        saveName=[figuresPath '\reconstructionErrors.fig'];
     icount=1;
     while exist(saveName,'file')
-        saveName=[figuresPath '\reprojectErrors(' num2str(icount) ').fig'];
+        saveName=[figuresPath '\reconstructionErrors(' num2str(icount) ').fig'];
         icount=icount+1;
     end
     savefig(saveName);

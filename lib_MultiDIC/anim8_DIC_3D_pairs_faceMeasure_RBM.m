@@ -1,4 +1,4 @@
-function []=anim8_DIC_3D_pairs_faceMeasure(DIC3DAllPairsResults,faceMeasureString,varargin)
+function []=anim8_DIC_3D_pairs_faceMeasure_RBM(DIC3DAllPairsResults,faceMeasureString,varargin)
 %% function for plotting 3D-DIC results of face measures in STEP3.
 % plotting 3D surfaces from camera pairs, animation changing
 % with time, and the faces colored according to faceMeasureString 
@@ -36,6 +36,9 @@ end
 % complete the struct fields
 if ~isfield(optStruct,'smoothLogic')
     optStruct.smoothLogic=0;
+end
+if ~isfield(optStruct,'alphaVal')
+    optStruct.alphaVal=0.8;
 end
 if ~isfield(optStruct,'dataLimits')
     optStruct.dataLimits=[-inf inf];
@@ -78,9 +81,6 @@ switch faceMeasureString
         if ~isfield(optStruct,'colorMap')
             optStruct.colorMap=0.8*coldwarm;
         end
-        if ~isfield(optStruct,'alphaVal')
-            optStruct.alphaVal=1;
-        end
         legendLogic=0;
         
     case {'Emgn','emgn'}
@@ -100,9 +100,6 @@ switch faceMeasureString
         colorBarLogic=1;
         if ~isfield(optStruct,'colorMap')
             optStruct.colorMap='parula';
-        end
-                if ~isfield(optStruct,'alphaVal')
-            optStruct.alphaVal=0.8;
         end
         legendLogic=0;
         
@@ -124,16 +121,13 @@ switch faceMeasureString
         if ~isfield(optStruct,'colorMap')
             optStruct.colorMap=0.8*coldwarm;
         end
-                if ~isfield(optStruct,'alphaVal')
-            optStruct.alphaVal=0.8;
-        end
         legendLogic=0;
         
     case {'DispMgn'}
         for ip=1:nPairs
             for it=1:nFrames
                 Fnow=DIC3DAllPairsResults{ip}.Faces;
-                dispNow=DIC3DAllPairsResults{ip}.Disp.(faceMeasureString){it}; % point measure
+                dispNow=DIC3DAllPairsResults{ip}.Disp.DispMgnTransformed{it}; % point measure
                 FC{ip,it}=mean(dispNow(Fnow),2); % turn into face measure
                 if ~isempty(optStruct.maxCorrCoeff)
                     corrNow=DIC3DAllPairsResults{ip}.FaceCorrComb{it};
@@ -149,16 +143,13 @@ switch faceMeasureString
         if ~isfield(optStruct,'colorMap')
             optStruct.colorMap='parula';
         end
-                if ~isfield(optStruct,'alphaVal')
-            optStruct.alphaVal=0.8;
-        end
         legendLogic=0;
         
     case {'DispX'}
         for ip=1:nPairs
             for it=1:nFrames
                 Fnow=DIC3DAllPairsResults{ip}.Faces;
-                dispNow=DIC3DAllPairsResults{ip}.Disp.DispVec{it}(:,1); % point measure
+                dispNow=DIC3DAllPairsResults{ip}.Disp.DispVecTransformed{it}(:,1); % point measure
                 FC{ip,it}=mean(dispNow(Fnow),2); % turn into face measure
                 if ~isempty(optStruct.maxCorrCoeff)
                     corrNow=DIC3DAllPairsResults{ip}.FaceCorrComb{it};
@@ -170,20 +161,19 @@ switch faceMeasureString
         if ~isfield(optStruct,'colorBarLimits')
             optStruct.colorBarLimits=[min(FCmat(:)) max(FCmat(:))];
         end
+        %         FClimits=[min(FCmat(:)) max(FCmat(:))];
         colorBarLogic=1;
         if ~isfield(optStruct,'colorMap')
             optStruct.colorMap='parula';
         end
-                if ~isfield(optStruct,'alphaVal')
-            optStruct.alphaVal=0.8;
-        end
+        %         cMap='parula';
         legendLogic=0;
         
     case {'DispY'}
         for ip=1:nPairs
             for it=1:nFrames
                 Fnow=DIC3DAllPairsResults{ip}.Faces;
-                dispNow=DIC3DAllPairsResults{ip}.Disp.DispVec{it}(:,2); % point measure
+                dispNow=DIC3DAllPairsResults{ip}.Disp.DispVecTransformed{it}(:,2); % point measure
                 FC{ip,it}=mean(dispNow(Fnow),2); % turn into face measure
                 if ~isempty(optStruct.maxCorrCoeff)
                     corrNow=DIC3DAllPairsResults{ip}.FaceCorrComb{it};
@@ -195,20 +185,19 @@ switch faceMeasureString
         if ~isfield(optStruct,'colorBarLimits')
             optStruct.colorBarLimits=[min(FCmat(:)) max(FCmat(:))];
         end
+        %         FClimits=[min(FCmat(:)) max(FCmat(:))];
         colorBarLogic=1;
         if ~isfield(optStruct,'colorMap')
             optStruct.colorMap='parula';
         end
-                if ~isfield(optStruct,'alphaVal')
-            optStruct.alphaVal=0.8;
-        end
+%         cMap='parula';
         legendLogic=0;
         
     case {'DispZ'}
         for ip=1:nPairs
             for it=1:nFrames
                 Fnow=DIC3DAllPairsResults{ip}.Faces;
-                dispNow=DIC3DAllPairsResults{ip}.Disp.DispVec{it}(:,3); % point measure
+                dispNow=DIC3DAllPairsResults{ip}.Disp.DispVecTransformed{it}(:,3); % point measure
                 FC{ip,it}=mean(dispNow(Fnow),2); % turn into face measure
                 if ~isempty(optStruct.maxCorrCoeff)
                     corrNow=DIC3DAllPairsResults{ip}.FaceCorrComb{it};
@@ -220,13 +209,12 @@ switch faceMeasureString
         if ~isfield(optStruct,'colorBarLimits')
             optStruct.colorBarLimits=[min(FCmat(:)) max(FCmat(:))];
         end
+%         FClimits=[min(FCmat(:)) max(FCmat(:))];
         colorBarLogic=1;
         if ~isfield(optStruct,'colorMap')
             optStruct.colorMap='parula';
         end
-                if ~isfield(optStruct,'alphaVal')
-            optStruct.alphaVal=0.8;
-        end
+%         cMap='parula';
         legendLogic=0;
         
     case {'FaceIsoInd'}
@@ -242,13 +230,12 @@ switch faceMeasureString
         if ~isfield(optStruct,'colorBarLimits')
             optStruct.colorBarLimits=[0 1];
         end
+%         FClimits=[0 1];
         colorBarLogic=1;
         if ~isfield(optStruct,'colorMap')
             optStruct.colorMap='parula';
         end
-                if ~isfield(optStruct,'alphaVal')
-            optStruct.alphaVal=0.8;
-        end
+%         cMap='parula';
         legendLogic=0;
         
     case {'FaceCorrComb'}
@@ -265,13 +252,12 @@ switch faceMeasureString
         if ~isfield(optStruct,'colorBarLimits')
             optStruct.colorBarLimits=[0 prctile(FCmat(:),100)];
         end
+%         FClimits=[0 prctile(FCmat(:),100)];
         colorBarLogic=1;
         if ~isfield(optStruct,'colorMap')
             optStruct.colorMap='parula';
         end
-                if ~isfield(optStruct,'alphaVal')
-            optStruct.alphaVal=0.8;
-        end
+%         cMap='parula';
         legendLogic=0;
         
     case {'FaceColors'}
@@ -287,14 +273,14 @@ switch faceMeasureString
         if ~isfield(optStruct,'colorBarLimits')
             optStruct.colorBarLimits=[0 255];
         end
+        %         FClimits=[0 255];
         colorBarLogic=1;
         if ~isfield(optStruct,'colorMap')
             optStruct.colorMap='gray';
         end
+%         cMap='gray';
         legendLogic=0;
-        if ~isfield(optStruct,'alphaVal')
-            optStruct.alphaVal=1;
-        end
+        
     case 'pairInd'
         for ip=1:nPairs
             for it=1:nFrames
@@ -308,13 +294,12 @@ switch faceMeasureString
         if ~isfield(optStruct,'colorBarLimits')
             optStruct.colorBarLimits=[1 nPairs];
         end
+%         FClimits=[1 nPairs];
         colorBarLogic=0;
         if ~isfield(optStruct,'colorMap')
             optStruct.colorMap='gjet';
         end
-                if ~isfield(optStruct,'alphaVal')
-            optStruct.alphaVal=0.8;
-        end
+%         cMap='gjet';
         legendLogic=1;
     otherwise
         error('unexpected face measure string. plots not created');
@@ -349,7 +334,7 @@ suptitle(optStruct.supTitleString);
 it=1;
 for ip=1:nPairs
     Fnow=DIC3DAllPairsResults{ip}.Faces;
-    Pnow=DIC3DAllPairsResults{ip}.Points3D{it};
+    Pnow=DIC3DAllPairsResults{ip}.Points3Dtransformed{it};
     CFnow=FC{ip,it};
     if optStruct.smoothLogic
         [CFnow]=triSmoothFaceMeasure(CFnow,Fnow,Pnow,[],[]);
@@ -385,7 +370,7 @@ for it=1:nFrames
     
     for ip=1:nPairs
         Fnow=DIC3DAllPairsResults{ip}.Faces;
-        Pnow=DIC3DAllPairsResults{ip}.Points3D{it};
+        Pnow=DIC3DAllPairsResults{ip}.Points3Dtransformed{it};
         CFnow=FC{ip,it};
         if optStruct.smoothLogic
             [CFnow]=triSmoothFaceMeasure(CFnow,Fnow,Pnow,[],[]);
