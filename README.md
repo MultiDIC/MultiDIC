@@ -59,7 +59,7 @@ MultiDIC is provided under the [Apache-2.0 license](https://www.apache.org/licen
 ## Citing <a name="Cite"></a>   
 This is the official repository for:
 
-[MultiDIC: a MATLAB Toolbox for Multi-View 3D Digital Image Correlation with Specific In-vivo Biomedical Applications](https://engrxiv.org/fv47e/)   
+[MultiDIC: MultiDIC: an Open-Source Toolbox for Multi-View 3D Digital Image Correlation](https://engrxiv.org/fv47e/)   
 Dana Solav, Kevin M. Moerman, Aaron M. Jaeger, Katia Genovese, Hugh M. Herr   
 DOI: [10.17605/OSF.IO/FV47E](https://engrxiv.org/fv47e/)
 
@@ -67,4 +67,4 @@ Please cite this paper if you use the toolbox.
 
 
 ## Contributing <a name="Contributing"></a>   
-If you wish to contribute code/algorithms to this project, please send an email to danask (at) mit (dot) edu.
+If you wish to contribute code/algorithms to this project, or to propose a collaboration study, please send an email to danask (at) mit (dot) edu.

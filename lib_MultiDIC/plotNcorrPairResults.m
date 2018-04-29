@@ -25,7 +25,21 @@ CorCoeffCutOff=str2double(answer{2}); % maximal correlation coefficient to displ
 %% load images and animate
 ImPaths=DIC2DpairResults.ImPaths;
 ImSet=cell(length(ImPaths),1);
+% if ImPaths are not valid (for example if using on another computer, ask
+% user to provide a new folder where all the images are located.
+try
+   ImSet{1}=imread(ImPaths{1});
+catch
+    newPath=uigetdir([],'Path to images is invalid. Please provide the correct path to the images (the folder containing all camera folders with the processed gray images)');
+    for ii=1:length(ImPaths)
+        [a,b,c]=fileparts(ImPaths{ii});
+        as = strsplit(a,'\');
+        ImPaths{ii}=[newPath '\' as{end} '\' b c];
+    end
+end
+
 for ii=1:length(ImPaths)
+    
     ImSet{ii}=imread(ImPaths{ii});
 end
 
