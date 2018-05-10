@@ -1,4 +1,4 @@
-function []=plotCalibrationResults(varargin)
+function []=plotCalibrationResults_vase(varargin)
 %% function for plot calibration (reprojection) results in step 1p
 % INPUT options:
 % plotCalibrationResults
@@ -52,15 +52,20 @@ hf1.Units='normalized'; hf1.Position=[.05 .05 .9 .8];
 hf1.Name='Reconstructed points vs. true points';
 legendstrings=cell(Npairs,1);
 for ipair=1:Npairs
+    % reconstructed points
     plotV(DLTstruct.reconstructPoints{ipair},'x','Color',Colors(ipair,:)); hold on
     legendstrings{ipair}=['Pair ' num2str(ipair) ' (cameras ' num2str(DLTstruct.indPairs(ipair,1)) '+' num2str(DLTstruct.indPairs(ipair,2)) ')'];
 end
-NcTotal=size(DLTstruct.truePoints,2);
-Nr=size(DLTstruct.truePoints,1);
-P3DtrueArray=reshape(DLTstruct.truePoints,NcTotal*Nr,3);
-plotV(P3DtrueArray,'s','Color','k'); hold on
-legendstrings{ipair+1}='True points';
+for icam=1:length(DLTstruct.indCams);
+    % true points
+    Nc=size(DLTstruct.truePoints{icam},2);
+    Nr=size(DLTstruct.truePoints{icam},1);
+    P3DtrueArray=reshape(DLTstruct.truePoints{icam},Nc*Nr,3);
+    plotV(P3DtrueArray,'s','Color','k'); hold on
+end
 legend(legendstrings);
+legendstrings{ipair+1}='True points';
+
 axisGeom
 title('reconstructed points [mm]');
 
@@ -79,7 +84,7 @@ end
 hf2=cFigure;
 hf2.Units='normalized'; hf2.Position=[.05 .05 .9 .8];
 
-reconstructErrArray=cell2mat(DLTstruct.reprojectErrors(:));
+reconstructErrArray=cell2mat(DLTstruct.reconstructErrors(:));
 hf2.Name='Reconstruction errors';
 errMaxTotal=0;
 ax1=subplot(1,3,[1 2]);
