@@ -16,3 +16,13 @@ figure; imshow(CB);
 imwrite(CB,[path '\CB_' num2str(Nrows) '_' num2str(Nrows) '_' num2str(squareSize*1000) '.png'],'png','ResolutionUnit','meter','XResolution',resolution); %XResolution=pixels per meter
 
 end
+
+ %% 
+% MultiDIC: a MATLAB Toolbox for Multi-View 3D Digital Image Correlation
+% 
+% License: <https://github.com/MultiDIC/MultiDIC/blob/master/LICENSE.txt>
+% 
+% Copyright (C) 2018  Dana Solav
+% 
+% If you use the toolbox/function for your research, please cite our paper:
+% <https://engrxiv.org/fv47e>

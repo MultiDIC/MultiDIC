@@ -146,3 +146,13 @@ end
 anim8(hf,animStruct);
 
 end
+
+%% 
+% MultiDIC: a MATLAB Toolbox for Multi-View 3D Digital Image Correlation
+% 
+% License: <https://github.com/MultiDIC/MultiDIC/blob/master/LICENSE.txt>
+% 
+% Copyright (C) 2018  Dana Solav
+% 
+% If you use the toolbox/function for your research, please cite our paper:
+% <https://engrxiv.org/fv47e>

@@ -1,17 +1,10 @@
 function [cMap]=coldwarm(varargin)
-
-% function [cMap]=fireIce(n)
+% function [cMap]=coldwarm
+% function [cMap]=coldwarm(n)
 % ------------------------------------------------------------------------
-% Creates the colormap data for n levels for the fire and ice colormap. Low
+% Creates the colormap data for n levels for the cold and warm colormap. Low
 % values define a cold blue color while high values define a warm/hot
-% color. The extrema of the colordata are the same color. Therefore this
-% map is suitable for angular data where 360 may be equivalent to 0
-% degrees.
-%
-% Kevin Mattheus Moerman
-% gibbon.toolbox@gmail.com
-% 
-% 2015/01/01
+% color. The 0 value is white. Therefore this map is suitable for data centered around 0
 %------------------------------------------------------------------------
 
 switch nargin
@@ -32,25 +25,11 @@ cMap=[rot90(cFire,2); cFire(2:end,:)];
 [cMap]=resampleColormap(cMap,n);
  
 %% 
-% _*GIBBON footer text*_ 
+% MultiDIC: a MATLAB Toolbox for Multi-View 3D Digital Image Correlation
 % 
-% License: <https://github.com/gibbonCode/GIBBON/blob/master/LICENSE>
+% License: <https://github.com/MultiDIC/MultiDIC/blob/master/LICENSE.txt>
 % 
-% GIBBON: The Geometry and Image-based Bioengineering add-On. A toolbox for
-% image segmentation, image-based modeling, meshing, and finite element
-% analysis.
+% Copyright (C) 2018  Dana Solav
 % 
-% Copyright (C) 2018  Kevin Mattheus Moerman
-% 
-% This program is free software: you can redistribute it and/or modify
-% it under the terms of the GNU General Public License as published by
-% the Free Software Foundation, either version 3 of the License, or
-% (at your option) any later version.
-% 
-% This program is distributed in the hope that it will be useful,
-% but WITHOUT ANY WARRANTY; without even the implied warranty of
-% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-% GNU General Public License for more details.
-% 
-% You should have received a copy of the GNU General Public License
-% along with this program.  If not, see <http://www.gnu.org/licenses/>.
+% If you use the toolbox/function for your research, please cite our paper:
+% <https://engrxiv.org/fv47e>
