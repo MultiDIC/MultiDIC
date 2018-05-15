@@ -246,7 +246,7 @@ switch plotButton
     case 'Yes'
         optStruct=struct;
         optStruct.zDirection=-1;
-        optStruct.FaceAlpha=1;
+        optStruct.FaceAlpha=.5;
         plotMulti3DPairResults(DIC3DAllPairsResults,optStruct); 
 %         plotMulti3DPairResultsRBM(DIC3DAllPairsResults,optStruct);
 

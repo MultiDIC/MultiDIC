@@ -14,7 +14,7 @@ function []=anim8_DIC_3D_pairs_faceMeasure(DIC3DAllPairsResults,faceMeasureStrin
 %   'J','Emgn','emgn','Epc1','Epc2','epc1','epc2','dispMgn','dispX','dispY','dispZ','FaceColors','FaceIsoInd','pairInd','Lamda1','Lamda2'
 % * optStruct: optional structure for plotting options which may include any of the following fields:
 %   - smoothLogic: logical variable for smoothing (true)/not smoothing (false) the face measure 
-%   - alphaVal: transparacy of the faces (scalar between 0 and 1, where zero is transparent and 1 is opaque) 
+%   - FaceAlpha: transparacy of the faces (scalar between 0 and 1, where zero is transparent and 1 is opaque) 
 %   - colorBarLimits: a 2x1 scalar vector for the colobar limits. if not set, it's automatic
 %   - dataLimits: a 2x1 scalar vector for the data limits of the face measure. if a face measure is outside these limits, it is set to NaN. if not set no face is set to NaN
 %   - colorMap
@@ -78,8 +78,8 @@ switch faceMeasureString
         if ~isfield(optStruct,'colorMap')
             optStruct.colorMap=0.8*coldwarm;
         end
-        if ~isfield(optStruct,'alphaVal')
-            optStruct.alphaVal=1;
+        if ~isfield(optStruct,'FaceAlpha')
+            optStruct.FaceAlpha=1;
         end
         legendLogic=0;
         
@@ -101,8 +101,8 @@ switch faceMeasureString
         if ~isfield(optStruct,'colorMap')
             optStruct.colorMap='parula';
         end
-                if ~isfield(optStruct,'alphaVal')
-            optStruct.alphaVal=0.8;
+                if ~isfield(optStruct,'FaceAlpha')
+            optStruct.FaceAlpha=0.8;
         end
         legendLogic=0;
         
@@ -124,8 +124,8 @@ switch faceMeasureString
         if ~isfield(optStruct,'colorMap')
             optStruct.colorMap=0.8*coldwarm;
         end
-                if ~isfield(optStruct,'alphaVal')
-            optStruct.alphaVal=0.8;
+                if ~isfield(optStruct,'FaceAlpha')
+            optStruct.FaceAlpha=0.8;
         end
         legendLogic=0;
         
@@ -149,8 +149,8 @@ switch faceMeasureString
         if ~isfield(optStruct,'colorMap')
             optStruct.colorMap='parula';
         end
-                if ~isfield(optStruct,'alphaVal')
-            optStruct.alphaVal=0.8;
+                if ~isfield(optStruct,'FaceAlpha')
+            optStruct.FaceAlpha=0.8;
         end
         legendLogic=0;
         
@@ -174,8 +174,8 @@ switch faceMeasureString
         if ~isfield(optStruct,'colorMap')
             optStruct.colorMap='parula';
         end
-                if ~isfield(optStruct,'alphaVal')
-            optStruct.alphaVal=0.8;
+                if ~isfield(optStruct,'FaceAlpha')
+            optStruct.FaceAlpha=0.8;
         end
         legendLogic=0;
         
@@ -199,8 +199,8 @@ switch faceMeasureString
         if ~isfield(optStruct,'colorMap')
             optStruct.colorMap='parula';
         end
-                if ~isfield(optStruct,'alphaVal')
-            optStruct.alphaVal=0.8;
+                if ~isfield(optStruct,'FaceAlpha')
+            optStruct.FaceAlpha=0.8;
         end
         legendLogic=0;
         
@@ -224,8 +224,8 @@ switch faceMeasureString
         if ~isfield(optStruct,'colorMap')
             optStruct.colorMap='parula';
         end
-                if ~isfield(optStruct,'alphaVal')
-            optStruct.alphaVal=0.8;
+                if ~isfield(optStruct,'FaceAlpha')
+            optStruct.FaceAlpha=0.8;
         end
         legendLogic=0;
         
@@ -246,8 +246,8 @@ switch faceMeasureString
         if ~isfield(optStruct,'colorMap')
             optStruct.colorMap='parula';
         end
-                if ~isfield(optStruct,'alphaVal')
-            optStruct.alphaVal=0.8;
+                if ~isfield(optStruct,'FaceAlpha')
+            optStruct.FaceAlpha=0.8;
         end
         legendLogic=0;
         
@@ -269,8 +269,8 @@ switch faceMeasureString
         if ~isfield(optStruct,'colorMap')
             optStruct.colorMap='parula';
         end
-                if ~isfield(optStruct,'alphaVal')
-            optStruct.alphaVal=0.8;
+                if ~isfield(optStruct,'FaceAlpha')
+            optStruct.FaceAlpha=0.8;
         end
         legendLogic=0;
         
@@ -292,8 +292,8 @@ switch faceMeasureString
             optStruct.colorMap='gray';
         end
         legendLogic=0;
-        if ~isfield(optStruct,'alphaVal')
-            optStruct.alphaVal=1;
+        if ~isfield(optStruct,'FaceAlpha')
+            optStruct.FaceAlpha=1;
         end
     case 'pairInd'
         for ip=1:nPairs
@@ -312,8 +312,8 @@ switch faceMeasureString
         if ~isfield(optStruct,'colorMap')
             optStruct.colorMap='gjet';
         end
-                if ~isfield(optStruct,'alphaVal')
-            optStruct.alphaVal=0.8;
+                if ~isfield(optStruct,'FaceAlpha')
+            optStruct.FaceAlpha=0.8;
         end
         legendLogic=1;
     otherwise
@@ -357,9 +357,9 @@ for ip=1:nPairs
     CFnow(CFnow<optStruct.dataLimits(1))=NaN;
     CFnow(CFnow>optStruct.dataLimits(2))=NaN;
     if strcmp(faceMeasureString,'pairInd')
-        hp(ip)=gpatch(Fnow,Pnow,Colors(ip,:),Colors(ip,:),optStruct.alphaVal); hold on
+        hp(ip)=gpatch(Fnow,Pnow,Colors(ip,:),Colors(ip,:),optStruct.FaceAlpha); hold on
     else
-        hp(ip)=gpatch(Fnow,Pnow,CFnow,optStruct.lineColor,optStruct.alphaVal); hold on
+        hp(ip)=gpatch(Fnow,Pnow,CFnow,optStruct.lineColor,optStruct.FaceAlpha); hold on
     end
 end
 

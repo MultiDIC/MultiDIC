@@ -14,7 +14,7 @@ function []=anim8_DIC_3D_pairs_faceMeasure_direction(DIC3DAllPairsResults,faceMe
 %   'Epc1','Epc2','epc1','epc2','Lamda1','Lamda2', or a combination of two  in a cell array to plot side by side
 % * optStruct: optional structure for plotting options which may include any of the following fields:
 %   - smoothLogic: logical variable for smoothing (true)/not smoothing (false) the face measure 
-%   - alphaVal: transparacy of the faces (scalar between 0 and 1, where zero is transparent and 1 is opaque) 
+%   - FaceAlpha: transparacy of the faces (scalar between 0 and 1, where zero is transparent and 1 is opaque) 
 %   - colorBarLimits: a 2x1 scalar vector for the colobar limits. if not set, it's automatic
 %   - dataLimits: a 2x1 scalar vector for the data limits of the face measure. if a face measure is outside these limits, it is set to NaN. if not set no face is set to NaN
 %   - colorMap
@@ -37,8 +37,8 @@ end
 if ~isfield(optStruct,'smoothLogic')
     optStruct.smoothLogic=0;
 end
-if ~isfield(optStruct,'alphaVal')
-    optStruct.alphaVal=1;
+if ~isfield(optStruct,'FaceAlpha')
+    optStruct.FaceAlpha=1;
 end
 if ~isfield(optStruct,'dataLimits')
     optStruct.dataLimits=[-inf inf];
@@ -183,7 +183,7 @@ for is=1:nStrains
     FCnow(FCnow<optStruct.dataLimits(1))=NaN;
     FCnow(FCnow>optStruct.dataLimits(2))=NaN;
 
-    hp(is)=gpatch(Fnow,Pnow,FCnow,optStruct.lineColor,optStruct.alphaVal); hold on
+    hp(is)=gpatch(Fnow,Pnow,FCnow,optStruct.lineColor,optStruct.FaceAlpha); hold on
     hq(is)=quiver3(Vnow(:,1),Vnow(:,2),Vnow(:,3),Dnow(:,1),Dnow(:,2),Dnow(:,3),0,'Color',.2*[1 1 1],'ShowArrowHead','off','AutoScale','on'); hold on;
 %         
     h_ax=gca;
