@@ -75,11 +75,11 @@ if saveFiguresLogic
     savefig(saveName);
 end
 
-%% plot reprojected errors and their statisticss
+%% plot reconstruction errors and their statisticss
 hf2=cFigure;
 hf2.Units='normalized'; hf2.Position=[.05 .05 .9 .8];
 
-reconstructErrArray=cell2mat(DLTstruct.reprojectErrors(:));
+reconstructErrArray=cell2mat(DLTstruct.reconstructErrors(:));
 hf2.Name='Reconstruction errors';
 errMaxTotal=0;
 ax1=subplot(1,3,[1 2]);
