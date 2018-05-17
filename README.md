@@ -11,13 +11,12 @@ MultiDIC is a work in progress. The first complete package is expected to be rel
 - [Contributing](#Contributing)  
 
 ## Summary <a name="Summary"></a>
-MultiDIC is an open-source MATLAB toolbox by [Dana Solav](https://www.media.mit.edu/people/danask/). Three-dimensional (stereo) Digital Image Correlation (3D-DIC) is an important technique for measuring the mechanical behavior of materials. MultiDIC was developed to allow fast calibration and data merging even for a large number of cameras, and to be easily adaptable to different experimental requirements. It integrates the 2D-DIC subset-based software [Ncorr](https://www.github.com/justinblaber/ncorr_2D_matlab) with several camera calibration algorithms to reconstruct 3D surfaces from multiple stereo image pairs. Moreover, it contains algorithms for merging multiple surfaces, and for computing and visualizing 3D displacement, deformation and strain measures. High-level scripts allow users to perform 3D-DIC analyses with minimal interaction with MATLAB syntax, while proficient MATLAB users can use stand-alone functions and data-structures to write custom scripts for specific experimental requirements. Comprehensive documentation, user guide, and sample data are included.
+MultiDIC is an open-source MATLAB toolbox by [Dana Solav](https://www.media.mit.edu/people/danask/). Three-dimensional (stereo) Digital Image Correlation (3D-DIC) is an important technique for measuring the mechanical behavior of materials. MultiDIC was developed to allow fast calibration and data merging even for a large number of cameras, and to be easily adaptable to different experimental requirements. MultiDIC integrates the 2D-DIC subset-based software [Ncorr](https://www.github.com/justinblaber/ncorr_2D_matlab) with several camera calibration algorithms to reconstruct 3D surfaces from multiple stereo image pairs. Moreover, it contains algorithms for merging multiple surfaces, and for computing and visualizing 3D displacement, deformation and strain measures. High-level scripts allow users to perform 3D-DIC analyses with minimal interaction with MATLAB syntax, while proficient MATLAB users can also use stand-alone functions and data-structures to write custom scripts for specific experimental requirements. Comprehensive documentation, [instruction manual](https://github.com/MultiDIC/MultiDIC/blob/master/docs/pdf/MultiDIC_InstructionManual.pdf), and [sample data](https://github.com/MultiDIC/MultiDIC/tree/master/sample_data) are included.
 
 ## Installation <a name="Installation"></a>  
-### Installation Requirements
-#### Operating system requirements
-MultiDIC was developed on 64-bit Windows 10 and has not yet been tested on other operating systems.      
-#### MATLAB requirements
+### System Requirements
+MultiDIC was developed and tested on 64-bit Windows 10 and has not yet been tested on other platforms.        
+#### MATLAB
 MultiDIC was developed on MATLAB versions R2017a and R2017b, and has not yet been tested on prior versions.  
 
 MATLAB toolbox dependencies:

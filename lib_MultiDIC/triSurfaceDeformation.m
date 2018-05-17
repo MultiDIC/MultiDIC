@@ -78,7 +78,10 @@ epc1vec=cell(nFrames,1);
 epc2=cell(nFrames,1); 
 epc2vec=cell(nFrames,1);
 
+hw = waitbar(0,'Calculating deformations and strains');
 for itime=1:nFrames
+    waitbar(itime/nFrames);
+       
     % preallocation for speed
     D1{itime}=zeros(size(F,1),3); 
     D2{itime}=zeros(size(F,1),3); 
@@ -209,9 +212,10 @@ for itime=1:nFrames
         end
         
     end
-    
+   
+   
 end
-
+ delete(hw)
 % save all results in the structure
 
 deformationStruct.Fmat=Fmat; % deformation gradient tensor

@@ -76,7 +76,7 @@ end
 DIC3DAllPairsResults=cell(nPairs,1);
 
 for ip=1:nPairs % loop over stereo pairs
-    hw = waitbar(0,['Please wait while reconstructing points and calculating deformations for pair ' num2str(ip) '...']);
+    hw = waitbar(0,['Please wait while reconstructing points for pair ' num2str(ip) '...']);
     
     % create 3D-DIc results struct
     DIC3DpairResults=struct;
@@ -151,18 +151,12 @@ for ip=1:nPairs % loop over stereo pairs
 
     % pre-allocate 3D-DIC result variables
     DIC3DpairResults.Points3D=cell(nImages,1);
-    DIC3DpairResults.Points3Dtransformed=cell(nImages,1);
     DIC3DpairResults.Disp.DispVec=cell(nImages,1);
     DIC3DpairResults.Disp.DispMgn=cell(nImages,1);
-    DIC3DpairResults.Disp.DispVecTransformed=cell(nImages,1);
-    DIC3DpairResults.Disp.DispMgnTransformed=cell(nImages,1);
     DIC3DpairResults.FaceCentroids=cell(nImages,1);
     DIC3DpairResults.corrComb=cell(nImages,1);
     DIC3DpairResults.FaceCorrComb=cell(nImages,1);
-    DIC3DpairResults.FaceIsoInd=cell(nImages,1);
-    DIC3DpairResults.RBM.RotMat=cell(nImages,1);
-    DIC3DpairResults.RBM.TransVec=cell(nImages,1);
-    
+   
     for ii=1:nImages % loop over images (time frames)
         waitbar(1/3+ii/(3*nImages));
         
@@ -189,69 +183,61 @@ for ip=1:nPairs % loop over stereo pairs
         DIC3DpairResults.Disp.DispVec{ii}=DispVec;
         DIC3DpairResults.Disp.DispMgn{ii}=sqrt(DispVec(:,1).^2+DispVec(:,2).^2+DispVec(:,3).^2);
         
-        % Compute rigid body transformation between point clouds
-        [RotMat,TransVec,Points3Dtransformed]=rigidTransformation(DIC3DpairResults.Points3D{ii},DIC3DpairResults.Points3D{1});
-        DIC3DpairResults.RBM.RotMat{ii}=RotMat;
-        DIC3DpairResults.RBM.TransVec{ii}=TransVec;
-        DIC3DpairResults.Points3Dtransformed{ii}=Points3Dtransformed;
-        
-        % Compute displacements between sets - after transformation
-        DispVec=DIC3DpairResults.Points3Dtransformed{ii}-DIC3DpairResults.Points3Dtransformed{1};
-        DIC3DpairResults.Disp.DispVecTransformed{ii}=DispVec;
-        DIC3DpairResults.Disp.DispMgnTransformed{ii}=sqrt(DispVec(:,1).^2+DispVec(:,2).^2+DispVec(:,3).^2);
-        
-        % compute face centroids - after transformation
-        for iface=1:size(F,1)
-            DIC3DpairResults.FaceCentroidsTransformed{ii}(iface,:)=mean(Points3Dtransformed(F(iface,:),:));
-        end
     end
     
-    % compute deformation and strains (per triangular face)
-    deformationStruct=triSurfaceDeformation(F,DIC3DpairResults.Points3D{1},DIC3DpairResults.Points3D);
-    DIC3DpairResults.Deform=deformationStruct;
-    
-    % compute triangle regularity (isotropy index) based on reference image
-    for ii=1:nImages
-        waitbar(2/3+ii/(3*nImages));
-        [FisoInd]=faceIsotropyIndex(F,DIC3DpairResults.Points3D{ii});
-        DIC3DpairResults.FaceIsoInd{ii}=FisoInd;
-    end
-    
+    % put all pairs in a cell array
     DIC3DAllPairsResults{ip}=DIC3DpairResults;
             
-     if save3DDIClogic
-        save([savePath '\DIC3DpairResults_C_' num2str(nCamRef) '_C_' num2str(nCamDef)] ,'DIC3DpairResults');
-     end
+%      if save3DDIClogic
+%         save([savePath '\DIC3DpairResults_C_' num2str(nCamRef) '_C_' num2str(nCamDef)] ,'DIC3DpairResults');
+%      end
     
      delete(hw) 
 end
 
+
+%% Stitch pairs
+% Stitch pairs? If yes, selesct which pairs to stitch and in which order
+stitchButton = questdlg('Stitch surfaces together?', 'Stitch surfaces together?', 'Yes', 'No', 'Yes');
+switch stitchButton
+    case 'Yes'
+        stitchButton=true(1);
+    case 'No'
+        stitchButton=false(1);
+end
+
+if stitchButton
+    % stitch or stitch+append
+    anim8_DIC3D_reconstructedPairs_faceMeasure(DIC3DAllPairsResults,'pairInd');
+    answer = inputdlg({sprintf('Enter the indices of camera-pairs to stitch to each other (in the order they should be stitched):\nSurfaces deleted from the list will not be stitched, but will be included in the results')},'Input',[1,100],{mat2str(1:nPairs)});
+    pairIndList=str2num(answer{1});
+    [DIC3Dcombined]= DIC3DsurfaceStitch(DIC3DAllPairsResults,pairIndList);
+else
+    % only append
+    [DIC3Dcombined]= DIC3DsurfaceStitch(DIC3DAllPairsResults,[]);
+end
+
+% add distortion model information to DIC3Dcombined
+for ipair=1:nPairs
+    
+            DIC3Dcombined.distortionModel{ipair,1}=DIC3DAllPairsResults{ipair}.distortionModel{1};
+            DIC3Dcombined.distortionModel{ipair,2}=DIC3DpairResults.distortionModel{2}=distortionPar{iCamDef};
+
+            
+end
 %% save all pairs
 
+
 if save3DDIClogic
-    saveName=[savePath '\DIC3DAll' num2str(nPairs) 'PairsResults.mat'];
+    saveName=[savePath '\DIC3Dcombined_' num2str(nPairs) 'PairsResults.mat'];
     icount=1;
     while exist(saveName,'file')
-        saveName=[savePath '\DIC3DAll' num2str(nPairs) 'PairsResults(' num2str(icount) ').mat'];
+        saveName=[savePath '\DIC3Dcombined_' num2str(nPairs) 'PairsResults(' num2str(icount) ').mat'];
         icount=icount+1;
     end
-    save(saveName,'DIC3DAllPairsResults');
+    save(saveName,'DIC3Dcombined');
 end
 
-
- %% Plot pair results?
- 
-plotButton = questdlg('Plot 3D-DIC results from camera pairs?', 'Plot?', 'Yes', 'No', 'Yes');
-switch plotButton
-    case 'Yes'
-        optStruct=struct;
-        optStruct.zDirection=-1;
-        optStruct.FaceAlpha=.5;
-        plotMulti3DPairResults(DIC3DAllPairsResults,optStruct); 
-%         plotMulti3DPairResultsRBM(DIC3DAllPairsResults,optStruct);
-
-    case 'No'
-end
 
 %% finish
 h=msgbox('STEP3 is completed');
@@ -260,32 +246,6 @@ h.CurrentAxes.Children.FontSize=11;
 set(0, 'DefaultUIControlFontSize', fs);
 
 return
-
-%% ADD LATER (AFTER MERGING)
-% %% Compute rigid body transformation between point clouds
-% REC_pair_transformed=cell(nPairs,nSets);
-% RotMat=cell(nPairs,nSets);
-% TransVec=cell(nPairs,nSets);
-% for iset=indSets
-%     for ipair=1:nPairs
-%         TruP=REC_pair{ipair,1};
-%         RecP=REC_pair{ipair,iset};
-%         [RotMat{ipair,iset},TransVec{ipair,iset},REC_pair_transformed{ipair,iset}]=rigidTransformation(RecP,TruP);        
-%     end
-% end
-% 
-% %% Compute displacements between sets - after transformation
-% REC_TransDispVec=cell(nPairs,nSets); REC_TransDispTot=cell(nPairs,nSets);
-% for iset=indSets
-%     for ipair=1:nPairs
-%         REC_TransDispVec{ipair,iset}=REC_pair_transformed{ipair,iset}-REC_pair_transformed{ipair,1};
-%         REC_TransDispTot{ipair,iset}=sqrt(REC_TransDispVec{ipair,iset}(:,1).^2+REC_TransDispVec{ipair,iset}(:,2).^2+REC_TransDispVec{ipair,iset}(:,3).^2);
-%     end
-% end
-% 
-% if saveOn==1
-%     save([savePath '\3Dreconstruction_allVar.mat']);
-% end
 
 
 %% 

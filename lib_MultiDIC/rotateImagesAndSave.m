@@ -73,16 +73,15 @@ switch nArg
         error('wrong number of input arguments');
 end
 
-
 for ii=1:numel(imagePaths)
     IM=imread(imagePaths{ii});
     IMr = imrotate(IM,rotateValue);
     switch OverWriteLogic
         case 0
             [~,imName,ext]=fileparts(imagePaths{ii});
-            imwrite(IMr,[folderName '\' imName ext]);
+            imwrite(IMr,[folderName '\' imName ext],'Quality',100);
         case 1
-            imwrite(IMr,imagePaths{ii});
+            imwrite(IMr,imagePaths{ii},'Quality',100);
     end
 end
 

@@ -79,7 +79,7 @@ for ii=1:nImages
         % change path to processed image
         ImPaths{ii}=imName; 
         % write to path
-        imwrite(IM,imName); 
+        imwrite(IM,imName,'Quality',100); 
     end
     
     ImSet{ii}=IM; % save image to set
@@ -104,7 +104,7 @@ for ii=1:nImages
         % change path to processed image
         ImPaths{nImages+ii}=imName;
         % write to path
-        imwrite(IM,imName);
+        imwrite(IM,imName,'Quality',100);
     end
     
     ImSet{nImages+ii}=IM; % save image to set

@@ -1,15 +1,11 @@
-function []=plotMulti3DPairResults(varargin)
+function []=plot3DDICPPresults(varargin)
 %% function for plotting 3D-DIC results in STEP3.
 % Plotting the 3D reconstruction of points correlated with Ncorr
 % The function opens a selection window for all the possible measures to plot
 % After selection, the animation figures are plotted
 %
 % INPUT options:
-% DIC3DpairResults: can be a DIC3DpairResults structure or a cell array of multiple DIC3DpairResults structures.
-%
-% plotMultiDICPairResults;
-% plotMultiDICPairResults(DIC3DpairResults);
-% plotMultiDICPairResults(DIC3DpairResults,optStruct);
+% DIC3DPPresults
 
 
 %%
@@ -17,35 +13,17 @@ switch nargin
     case 0 % in case no results were entered
         % ask user to load results from 1 or more camera pairs and turn
         % into a cell array
-        structPaths = uipickfiles('FilterSpec',[],'Prompt','Select one or multiple 3D-DIC results structures');
-        result=load(structPaths{1});
-        if numel(structPaths)==1 && isfield(result,'DIC3DAllPairsResults') % if the user selected a cell array of all pairs, take this cell array
-            DIC3DpairResultsCell=result.DIC3DAllPairsResults;
-        else % if the user selected multiple structures, create the cell array
-            DIC3DpairResultsCell=cell(numel(structPaths),1);
-            for ii=1:numel(structPaths)
-                result=load(structPaths{ii});
-                DIC3DpairResultsCell{ii}=result.DIC3DpairResults;
-            end
-        end
+        [file,path] = uigetfile(pwd,'Select a DIC3DPPresults structure');
+        result=load([path file]);
+        DIC3DPPresults=result.DIC3DPPresults;
         optStruct=struct;
     case 1
-        % use given struct or cell array of structs. If not cell, turn into a cell array
-        result=varargin{1};
-        if ~iscell(result)
-            DIC3DpairResultsCell{1}=result;
-        else
-            DIC3DpairResultsCell=result;
-        end
+        % use given struct
+        DIC3DPPresults=varargin{1};
         optStruct=struct;
     case 2
-        % use given struct or cell array of structs. If not cell, turn into a cell array
-        result=varargin{1};
-        if ~iscell(result)
-            DIC3DpairResultsCell{1}=result;
-        else
-            DIC3DpairResultsCell=result;
-        end
+        % use given struct
+        DIC3DPPresults=varargin{1};
         optStruct=varargin{2};
     otherwise
         error('wrong number of input arguments');
@@ -83,9 +61,10 @@ Prompt={'\bf{Select which parameters to plot}';... % 1
     'Surfaces with color as Lamda1+Lamda2+direction (1st and 2nd principal stretch values and directions)';... % 29
     'Surfaces with color as Epc1+Epc2+direction (1st and 2nd principal Lagrangian strain values and directions)';... % 30
     'Surfaces with color as epc1+epc2+direction (1st and 2nd principal Almansi strain values and directions)'; % 31
-    'Surfaces with color as FaceColors (grayscale from images)';... % 32
-    'Surfaces with color as FaceIsoInd (triangular face isotropy index)';... % 33
-    'Select All';}; % 34
+    'Surfaces with color as FaceIsoInd (triangular face isotropy index)';... % 32
+    'Select to remove rigid body motion';... % 33
+    'Surfaces with color as FaceColors (grayscale from images)';... % 34
+    'Select All'; }; % 35
 
 Title='Select which parameters to plot';
 
@@ -125,9 +104,11 @@ Formats(16,2).type='none';
 Formats(17,1).type='check';
 Formats(17,2).type='none';
 Formats(18,1).type='check';
-Formats(18,2).type='check';
+Formats(18,2).type='none';
 Formats(19,1).type='check';
 Formats(19,2).type='check';
+Formats(20,1).type='check';
+Formats(20,2).type='check';
 
 DefAns=cell(numel(Prompt),1);
 DefAns{1}=[];
@@ -139,10 +120,15 @@ Options.Resize='on';
 Options.FontSize=10;
 
 [Answer,Canceled] = inputsdlg(Prompt, Title, Formats, DefAns, Options);
-if Answer{34}
-    for ii=2:33
+if Answer{35}
+    for ii=[2:32 34]
         Answer{ii}=true;
     end
+end
+if Answer{33}
+    RBMlogic=true;
+else
+    RBMlogic=false;
 end
 if Canceled
     return
@@ -177,134 +163,112 @@ if Canceled
 end
 
 if Answer{2}
-    anim8_DIC_3D_pairs_faceMeasure(DIC3DpairResultsCell,'pairInd',optStruct);
+    anim8_DIC3DPP_faceMeasure(DIC3DPPresults,'FacePairInds',RBMlogic,optStruct);
 end
 if Answer{3}
-    anim8_DIC_3D_pairs_pointMeasure(DIC3DpairResultsCell,'pairInd',optStruct);
+    anim8_DIC3DPP_pointMeasure(DIC3DPPresults,'pairInd',RBMlogic,optStruct);
 end
 if Answer{4}
-    anim8_DIC_3D_pairs_faceMeasure(DIC3DpairResultsCell,'FaceCorrComb',optStruct);
+    anim8_DIC3DPP_faceMeasure(DIC3DPPresults,'FaceCorrComb',RBMlogic,optStruct);
 end
 if Answer{5}
-    anim8_DIC_3D_pairs_pointMeasure(DIC3DpairResultsCell,'corrComb',optStruct);
+    anim8_DIC3DPP_pointMeasure(DIC3DPPresults,'corrComb',RBMlogic,optStruct);
 end
 if Answer{6}
-    anim8_DIC_3D_pairs_faceMeasure(DIC3DpairResultsCell,'DispMgn',optStruct);
+    anim8_DIC3DPP_faceMeasure(DIC3DPPresults,'DispMgn',RBMlogic,optStruct);
 end
 if Answer{7}
-    anim8_DIC_3D_pairs_pointMeasure(DIC3DpairResultsCell,'DispMgn',optStruct);
+    anim8_DIC3DPP_pointMeasure(DIC3DPPresults,'DispMgn',RBMlogic,optStruct);
 end
 if Answer{8}
-    anim8_DIC_3D_pairs_faceMeasure(DIC3DpairResultsCell,'DispX',optStruct);
+    anim8_DIC3DPP_faceMeasure(DIC3DPPresults,'DispX',RBMlogic,optStruct);
 end
 if Answer{9}
-    anim8_DIC_3D_pairs_pointMeasure(DIC3DpairResultsCell,'DispX',optStruct);
+    anim8_DIC3DPP_pointMeasure(DIC3DPPresults,'DispX',RBMlogic,optStruct);
 end
 if Answer{10}
-    anim8_DIC_3D_pairs_faceMeasure(DIC3DpairResultsCell,'DispY',optStruct);
+    anim8_DIC3DPP_faceMeasure(DIC3DPPresults,'DispY',RBMlogic,optStruct);
 end
 if Answer{11}
-    anim8_DIC_3D_pairs_pointMeasure(DIC3DpairResultsCell,'DispY',optStruct);
+    anim8_DIC3DPP_pointMeasure(DIC3DPPresults,'DispY',RBMlogic,optStruct);
 end
 if Answer{12}
-    anim8_DIC_3D_pairs_faceMeasure(DIC3DpairResultsCell,'DispZ',optStruct);
+    anim8_DIC3DPP_faceMeasure(DIC3DPPresults,'DispZ',RBMlogic,optStruct);
 end
 if Answer{13}
-    anim8_DIC_3D_pairs_pointMeasure(DIC3DpairResultsCell,'DispZ',optStruct);
+    anim8_DIC3DPP_pointMeasure(DIC3DPPresults,'DispZ',RBMlogic,optStruct);
 end
 if Answer{14}
-    anim8_DIC_3D_pairs_faceMeasure(DIC3DpairResultsCell,'J',optStruct);
+    anim8_DIC3DPP_faceMeasure(DIC3DPPresults,'J',RBMlogic,optStruct);
 end
 if Answer{15}
-    anim8_DIC_3D_pairs_faceMeasure(DIC3DpairResultsCell,'Lamda1',optStruct);
+    anim8_DIC3DPP_faceMeasure(DIC3DPPresults,'Lamda1',RBMlogic,optStruct);
 end
 if Answer{16}
-    anim8_DIC_3D_pairs_faceMeasure(DIC3DpairResultsCell,'Lamda2',optStruct);
+    anim8_DIC3DPP_faceMeasure(DIC3DPPresults,'Lamda2',RBMlogic,optStruct);
 end
 if Answer{17}
-    anim8_DIC_3D_pairs_faceMeasure(DIC3DpairResultsCell,'Epc1',optStruct);
+    anim8_DIC3DPP_faceMeasure(DIC3DPPresults,'Epc1',RBMlogic,optStruct);
 end
 if Answer{18}
-    anim8_DIC_3D_pairs_faceMeasure(DIC3DpairResultsCell,'Epc2',optStruct);
+    anim8_DIC3DPP_faceMeasure(DIC3DPPresults,'Epc2',RBMlogic,optStruct);
 end
 if Answer{19}
-    anim8_DIC_3D_pairs_faceMeasure(DIC3DpairResultsCell,'epc1',optStruct);
+    anim8_DIC3DPP_faceMeasure(DIC3DPPresults,'epc1',RBMlogic,optStruct);
 end
 if Answer{20}
-    anim8_DIC_3D_pairs_faceMeasure(DIC3DpairResultsCell,'epc2',optStruct);
+    anim8_DIC3DPP_faceMeasure(DIC3DPPresults,'epc2',RBMlogic,optStruct);
 end
 if Answer{21}
-    anim8_DIC_3D_pairs_faceMeasure(DIC3DpairResultsCell,'Emgn',optStruct);
+    anim8_DIC3DPP_faceMeasure(DIC3DPPresults,'Emgn',RBMlogic,optStruct);
 end
 if Answer{22}
-    anim8_DIC_3D_pairs_faceMeasure(DIC3DpairResultsCell,'emgn',optStruct);
+    anim8_DIC3DPP_faceMeasure(DIC3DPPresults,'emgn',RBMlogic,optStruct);
 end
 if Answer{23}
-    anim8_DIC_3D_pairs_faceMeasure_direction(DIC3DpairResultsCell,'Lamda1',optStruct);
+    anim8_DIC3DPP_faceMeasureDirection(DIC3DPPresults,'Lamda1',RBMlogic,optStruct);
 end
 if Answer{24}
-    anim8_DIC_3D_pairs_faceMeasure_direction(DIC3DpairResultsCell,'Lamda2',optStruct);
+    anim8_DIC3DPP_faceMeasureDirection(DIC3DPPresults,'Lamda2',RBMlogic,optStruct);
 end
 if Answer{25}
-    anim8_DIC_3D_pairs_faceMeasure_direction(DIC3DpairResultsCell,'Epc1',optStruct);
+    anim8_DIC3DPP_faceMeasureDirection(DIC3DPPresults,'Epc1',RBMlogic,optStruct);
 end
 if Answer{26}
-    anim8_DIC_3D_pairs_faceMeasure_direction(DIC3DpairResultsCell,'Epc2',optStruct);
+    anim8_DIC3DPP_faceMeasureDirection(DIC3DPPresults,'Epc2',RBMlogic,optStruct);
 end
 if Answer{27}
-    anim8_DIC_3D_pairs_faceMeasure_direction(DIC3DpairResultsCell,'epc1',optStruct);
+    anim8_DIC3DPP_faceMeasureDirection(DIC3DPPresults,'epc1',RBMlogic,optStruct);
 end
 if Answer{28}
-    anim8_DIC_3D_pairs_faceMeasure_direction(DIC3DpairResultsCell,'epc2',optStruct);
+    anim8_DIC3DPP_faceMeasureDirection(DIC3DPPresults,'epc2',RBMlogic,optStruct);
 end
 if Answer{29}
-    anim8_DIC_3D_pairs_faceMeasure_direction(DIC3DpairResultsCell,{'Lamda1','Lamda2'},optStruct);
+    anim8_DIC3DPP_faceMeasureDirection(DIC3DPPresults,{'Lamda1','Lamda2'},RBMlogic,optStruct);
 end
 if Answer{30}
-    anim8_DIC_3D_pairs_faceMeasure_direction(DIC3DpairResultsCell,{'Epc1','Epc2'},optStruct);
+    anim8_DIC3DPP_faceMeasureDirection(DIC3DPPresults,{'Epc1','Epc2'},RBMlogic,optStruct);
 end
 if Answer{31}
-    anim8_DIC_3D_pairs_faceMeasure_direction(DIC3DpairResultsCell,{'epc1','epc2'},optStruct);
+    anim8_DIC3DPP_faceMeasureDirection(DIC3DPPresults,{'epc1','epc2'},RBMlogic,optStruct);
+end
+if Answer{34}
+    anim8_DIC3DPP_faceMeasure(DIC3DPPresults,'FaceColors',RBMlogic,optStruct);
 end
 if Answer{32}
-    anim8_DIC_3D_pairs_faceMeasure(DIC3DpairResultsCell,'FaceColors',optStruct);
-end
-if Answer{33}
-    anim8_DIC_3D_pairs_faceMeasure(DIC3DpairResultsCell,'FaceIsoInd',optStruct);
+    anim8_DIC3DPP_faceMeasure(DIC3DPPresults,'FaceIsoInd',RBMlogic,optStruct);
 end
 
 
-% %% Join results from all pairs into one
-% nPairs=numel(DIC3DpairResultsCell);
-% nFrames=size(DIC3DpairResultsCell{1}.Points3D,1);
-% 
-% DIC3DjoinedPairsResults=joinPairs(DIC3DpairResultsCell);
-% 
-% %% Compute rigid body transformation between point clouds
-% P1=DIC3DjoinedPairsResults.Points3D{1};
-% for it=1:nFrames
-%     Pi=DIC3DjoinedPairsResults.Points3D{it};
-%     [RotMat{it},TransVec{it},Pt{it}]=rigidTransformation(Pi,P1);
-% end
-% DIC3DjoinedPairsResults.RBT.RotMat=RotMat;
-% DIC3DjoinedPairsResults.RBT.TransVec=TransVec;
-% DIC3DjoinedPairsResults.RBT.Points3Dtransformed=Pt;
+end
 
 
 %%
-
-
-
-
-end
-
- 
-%% 
 % MultiDIC: a MATLAB Toolbox for Multi-View 3D Digital Image Correlation
-% 
+%
 % License: <https://github.com/MultiDIC/MultiDIC/blob/master/LICENSE.txt>
-% 
+%
 % Copyright (C) 2018  Dana Solav
-% 
+%
 % If you use the toolbox/function for your research, please cite our paper:
 % <https://engrxiv.org/fv47e>
