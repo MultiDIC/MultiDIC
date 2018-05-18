@@ -41,6 +41,10 @@ end
 for ii=1:length(ImPaths)
     
     ImSet{ii}=imread(ImPaths{ii});
+    
+    if size(ImSet{ii},3)==3       
+        ImSet{ii}=rgb2gray(ImSet{ii});     
+    end
 end
 
 % anim8_DIC_images(ImPaths,ImSet);

@@ -179,6 +179,7 @@ for icam=indCams % loop over all cameras
     Centroids_sorted{icount}=PS;
     
 end
+close(fh);
 
 %% calculate Direct linear transformation from the 2D image and 3D target points (save DLT parameter matrix L for each camera)
 

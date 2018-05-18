@@ -22,6 +22,10 @@ for ii=1:nImages
 end
 for ii=1:2*nImages
     ImSet{ii}=imread(DIC3DPPresults.DIC2Dinfo{pairIndex}.ImPaths{ii});
+    
+    if size(ImSet{ii},3)==3
+        ImSet{ii}=rgb2gray(ImSet{ii});     
+    end
 end
 
 switch nargin

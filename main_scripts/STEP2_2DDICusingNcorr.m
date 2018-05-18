@@ -76,7 +76,7 @@ switch chooseMaskButton
         answer=inputdlg('Enter the number of ROIs','Enter the number of ROIs',1,{'1'});
         nROI=str2double(answer{1});        
 
-        ROImask = selectROI(ImPaths,nROI);
+        ROImask = selectROI(ImSet{1},nROI);
         
         if save2DDIClogic
             % save image mask

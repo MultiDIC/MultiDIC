@@ -62,24 +62,24 @@ end
 
 % for reference camera
 for ii=1:nImages
-    [~,name,ext]=fileparts(imagePaths1{ii});
+%     [~,name,ext]=fileparts(imagePaths1{ii});
     ImPaths{ii}=imagePaths1{ii};
     IM=imread(imagePaths1{ii}); % read original image
     
     % if image is RGB, create a processed image folder, change the image path and save the processed image there
     if size(IM,3)==3
-        folderName=[processedImagePath  '\' icam1Str];
-        warning('off','MATLAB:MKDIR:DirectoryExists');
-        mkdir(folderName);
-        imName=[folderName '\' name ext];
-        
+%         folderName=[processedImagePath  '\' icam1Str];
+%         warning('off','MATLAB:MKDIR:DirectoryExists');
+%         mkdir(folderName);
+%         imName=[folderName '\' name ext];
+%         
         % turn to gray if RGB
         IM=rgb2gray(IM);
         
-        % change path to processed image
-        ImPaths{ii}=imName; 
-        % write to path
-        imwrite(IM,imName,'Quality',100); 
+%         % change path to processed image
+%         ImPaths{ii}=imName; 
+%         % write to path
+%         imwrite(IM,imName,'Quality',100); 
     end
     
     ImSet{ii}=IM; % save image to set
@@ -87,24 +87,24 @@ end
 
 % for second camera
 for ii=1:nImages
-    [~,name,ext]=fileparts(imagePaths2{ii});
+%     [~,name,ext]=fileparts(imagePaths2{ii});
     ImPaths{nImages+ii}=imagePaths2{ii};
     IM=imread(imagePaths2{ii}); % read original image
     
     % if image is RGB or if undistortion required, create a processed image folder, change the image path and save the processed image there
     if size(IM,3)==3
-        folderName=[processedImagePath  '\' icam2Str];
-        warning('off','MATLAB:MKDIR:DirectoryExists');
-        mkdir(folderName);
-        imName=[folderName '\' name ext];
-        
+%         folderName=[processedImagePath  '\' icam2Str];
+%         warning('off','MATLAB:MKDIR:DirectoryExists');
+%         mkdir(folderName);
+%         imName=[folderName '\' name ext];
+%         
         % turn to gray if RGB
         IM=rgb2gray(IM);
         
-        % change path to processed image
-        ImPaths{nImages+ii}=imName;
-        % write to path
-        imwrite(IM,imName,'Quality',100);
+%         % change path to processed image
+%         ImPaths{nImages+ii}=imName;
+%         % write to path
+%         imwrite(IM,imName,'Quality',100);
     end
     
     ImSet{nImages+ii}=IM; % save image to set

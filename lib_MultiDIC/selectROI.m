@@ -1,8 +1,8 @@
-function [ROImask] = selectROI(ImPaths, varargin)
+function [ROImask] = selectROI(IM, varargin)
 %% function for selecting the ROI on speckle images in step2
 % options:
-%[] = selectROI(IMset);
-%[] = selectROI(IMset,nROI);
+%[] = selectROI(IM);
+%[] = selectROI(IM,nROI);
 %
 % function for selecting the region of interest (ROI) for stereo DIC (2 views)
 % requirements: GIBBON toolbox
@@ -34,20 +34,6 @@ switch nVars
         error('Wrong number of input arguments');
 end
 
-% number of frames
-nCur=numel(ImPaths);
-
-% load images
-ImSet=cell(nCur,1);
-for ii=1:nCur
-   ImSet{ii}=imread(ImPaths{ii}); 
-end
-
-
-nImages=nCur/2; %Number of animation steps
-if  rem(nImages,1)~=0
-    error('Number of images in the set should be even');
-end
 
 polyOK='No';
 while ~strcmp(polyOK,'Yes')
@@ -55,19 +41,8 @@ while ~strcmp(polyOK,'Yes')
     hf.Units='normalized'; hf.OuterPosition=[.05 .05 .9 .9]; hf.Units='pixels';
 
     suptitle(['Draw ' num2str(nROI) ' ROI polygons on the reference images. double-click on the polygon to finish']);
-    
-%     subplot(2,2,2);
-%     imshow(ImSet{nImages}); hold on; axis on;
-%     title('Reference camera last image');
-%     axis off
-%     
-%     subplot(2,2,4);
-%     imshow(ImSet{2*nImages}); hold on; axis on;
-%     title('Deformed camera last image');
-%     axis off
-%         
-%     subplot(1,2,1);
-    imshow(ImSet{1}); hold on; axis on;
+
+    imshow(IM); hold on; axis on;
 %     title('Reference image');
     axis off
     
@@ -80,7 +55,7 @@ end
 
 for iROI=1:nROI
     nodes = getPosition(hp(iROI));
-    ROImask(:,:,iROI) = poly2mask(nodes(:,1),nodes(:,2),size(ImSet{1},1),size(ImSet{1},2));
+    ROImask(:,:,iROI) = poly2mask(nodes(:,1),nodes(:,2),size(IM,1),size(IM,2));
 end
 
 ROImask=logical(sum(ROImask,3));

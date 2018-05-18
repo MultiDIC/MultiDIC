@@ -1,4 +1,4 @@
-function [] = anim8_DIC_images_corr_points_1_2n(IMset,DIC_2Dpair_results,varargin)
+function [] = anim8_DIC_images_corr_points_1_2n(ImSet,DIC_2Dpair_results,varargin)
 %% function for plotting 2D-DIC results imported from Ncorr in step 2
 % called inside plotNcorrPairResults
 % plotting the images chosen for stereo DIC (2 views) with the
@@ -26,7 +26,7 @@ function [] = anim8_DIC_images_corr_points_1_2n(IMset,DIC_2Dpair_results,varargi
 % * optional: CorCoeffDispMax - maximal correlation coefficient in colorbar
 
 %%
-nCur=numel(IMset); % number of frames
+nCur=numel(ImSet); % number of frames
 
 nSteps=nCur/2; %Number of animation steps
 if  rem(nSteps,1)~=0
@@ -76,11 +76,11 @@ hf.Units='normalized'; hf.OuterPosition=[.05 .05 .9 .9]; hf.Units='pixels';
 ii=1;
 % Ref
 subplot(1,2,1)
-hp1=imagesc(repmat(IMset{ii},1,1,3)); hold on;
+hp1=imagesc(repmat(ImSet{ii},1,1,3)); hold on;
 P=Points{ii}(~isnan(CorCoeffVec{ii}),:);
 hp2=scatter(P(:,1),P(:,2),6,CorCoeffVec{ii}(~isnan(CorCoeffVec{ii})),'+');
 colormap jet
-pbaspect([size(IMset{ii},2) size(IMset{ii},1) 1])
+pbaspect([size(ImSet{ii},2) size(ImSet{ii},1) 1])
 title(['Ref (Cam ' num2str(nCamRef) ' frame ' num2str(1) ')']);
 hc1=colorbar; caxis([0 CorCoeffDispMax])
 title(hc1, 'Corr-Coeff')
@@ -88,10 +88,10 @@ axis off
 
 % Cur
 subplot(1,2,2)
-hp3=imagesc(repmat(IMset{ii},1,1,3)); hold on
+hp3=imagesc(repmat(ImSet{ii},1,1,3)); hold on
 hp4=scatter(P(:,1),P(:,2),6,CorCoeffVec{ii}(~isnan(CorCoeffVec{ii})),'+');
 colormap jet
-pbaspect([size(IMset{ii},2) size(IMset{ii},1) 1])
+pbaspect([size(ImSet{ii},2) size(ImSet{ii},1) 1])
 hs2=title(['Cur ' num2str(ii) ' (Cam ' num2str(nCamRef) ' frame ' num2str(1) ')']);
 hc2=colorbar;
 caxis([0 CorCoeffDispMax])
@@ -123,7 +123,7 @@ for ii=1:2*nImages
     %Set entries in animation structure
     animStruct.Handles{ii}=[hp3,hp2,hp2,hp2,hp4,hp4,hp4,hs2]; %Handles of objects to animate
     animStruct.Props{ii}={'CData','XData','YData','CData','XData','YData','CData','String'}; %Properties of objects to animate
-    animStruct.Set{ii}={repmat(IMset{ii},1,1,3),xNow1,yNow1,cNow,xNow2,yNow2,cNow,TitleNow}; %Property values for to set in order to animate
+    animStruct.Set{ii}={repmat(ImSet{ii},1,1,3),xNow1,yNow1,cNow,xNow2,yNow2,cNow,TitleNow}; %Property values for to set in order to animate
     
 end
 
