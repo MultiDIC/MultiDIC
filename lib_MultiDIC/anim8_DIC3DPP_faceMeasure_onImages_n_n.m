@@ -1,4 +1,4 @@
-function [] = anim8_DIC3DPP_faceMeasures_onImages_n_n(DIC3DPPresults,pairIndex,faceMeasureString,varargin)
+function [] = anim8_DIC3DPP_faceMeasure_onImages_n_n(DIC3DPPresults,pairIndex,faceMeasureString,varargin)
 %% function for plotting 3D-DIC post-processing results from step 4 projected on the 2D images
 % plotting the images with the 3D face measure results plotted on top
 % on the left side the images from the reference camera (reference image and current images), and on the right side the
@@ -67,6 +67,7 @@ switch faceMeasureString
         else
             FClimits=optStruct.FClimits;
         end
+        FClimits
     case {'Emgn','emgn'}
         for ii=1:nImages
             FC{ii}=DIC3DPPresults.Deform.(faceMeasureString){ii}(currentFacesLogic,:);

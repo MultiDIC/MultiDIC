@@ -16,10 +16,10 @@ set(0, 'DefaultUIControlFontSize', 10);
 folderPathInitial=pwd;
 
 % select the folder containing the analysis images (if imagePathInitial=[] then the initial path is the current path)
-folderPathRef=uigetdir(folderPathInitial,'Select the folder containing images from the reference camera');
+folderPathRef=uigetdir(folderPathInitial,'Select the folder containing speckle images from the reference camera');
 folderPathInitial2 = strsplit(folderPathRef,'\');
 folderPathInitial2 = strjoin(folderPathInitial2(1:end-1),'\');
-folderPathDef=uigetdir(folderPathInitial2,'Select the folder containing images from the "deformed" camera');
+folderPathDef=uigetdir(folderPathInitial2,'Select the folder containing speckle images from the "deformed" camera');
 folderPaths=cell(1,2);
 folderPaths{1}=folderPathRef;
 folderPaths{2}=folderPathDef;
@@ -35,14 +35,14 @@ nCamDef=str2double(folderNameStr);
 % save 2D-DIC results? choose save path
 [save2DDIClogic,savePath]=Qsave2DDICresults(folderPaths);
 
-% create folder for processed images and warn for overwriting
-if save2DDIClogic
-    processedImagePath=[savePath '\processedImages'];
-    warning('off','MATLAB:MKDIR:DirectoryExists');
-    mkdir(processedImagePath);
-else
-    processedImagePath=[];
-end
+% % create folder for processed images and warn for overwriting
+% if save2DDIClogic
+%     processedImagePath=[savePath '\processedImages'];
+%     warning('off','MATLAB:MKDIR:DirectoryExists');
+%     mkdir(processedImagePath);
+% else
+%     processedImagePath=[];
+% end
 
 %% create structure for saving the 2DDIC results
 DIC2DpairResults = struct;
@@ -52,7 +52,7 @@ DIC2DpairResults.nCamDef=nCamDef;
 
 %%  load images from the paths, convert to gray and undistort, and create IMset cell for Ncorr
 h=msgbox({'Please wait while loading images'});
-[ImPaths,ImSet]=createDICimageSet(folderPaths,processedImagePath);
+[ImPaths,ImSet]=createDICimageSet(folderPaths,[]);
 DIC2DpairResults.nImages=numel(ImPaths)/2;
 DIC2DpairResults.ImPaths=ImPaths;
 if isvalid(h)

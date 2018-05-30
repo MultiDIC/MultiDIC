@@ -1,6 +1,6 @@
 # MultiDIC: a MATLAB Toolbox for Multi-View 3D Digital Image Correlation   
 
-MultiDIC is a work in progress. The first complete package is expected to be released in April-May 2018.
+MultiDIC is a work in progress. The first complete package is expected to be released in May 2018.
 
 - [Summary](#Summary)  
 - [Installation](#Installation)  
@@ -26,7 +26,7 @@ MATLAB toolbox dependencies:
 * Computer Vision System Toolbox
 
 ### Installation Instructions
-To install Multi DIC simply follow these two steps:
+To install MultiDIC simply follow these two steps:
 #### 1. Get a copy of MultiDIC
 Use one of these two options:      
 **a.** Download and unzip the latest [zip file](https://github.com/MultiDIC/MultiDIC/archive/master.zip).   
@@ -58,7 +58,7 @@ MultiDIC is provided under the [Apache-2.0 license](https://www.apache.org/licen
 ## Citing <a name="Cite"></a>   
 This is the official repository for:
 
-[MultiDIC: MultiDIC: an Open-Source Toolbox for Multi-View 3D Digital Image Correlation](https://engrxiv.org/fv47e/)   
+[MultiDIC: an Open-Source Toolbox for Multi-View 3D Digital Image Correlation](https://engrxiv.org/fv47e/)   
 Dana Solav, Kevin M. Moerman, Aaron M. Jaeger, Katia Genovese, Hugh M. Herr   
 DOI: [10.17605/OSF.IO/FV47E](https://engrxiv.org/fv47e/)
 

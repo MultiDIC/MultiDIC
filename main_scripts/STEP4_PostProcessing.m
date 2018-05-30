@@ -113,8 +113,8 @@ switch plotButton
         plotMoreLogic=true;
         while plotMoreLogic
             optStruct=struct;
-            optStruct.zDirection=-1;
-            optStruct.FaceAlpha=1;
+            optStruct.zDirection=1;
+            optStruct.FaceAlpha=.6;
             
             % PLOT
             plot3DDICPPresults(DIC3DPPresults,optStruct);

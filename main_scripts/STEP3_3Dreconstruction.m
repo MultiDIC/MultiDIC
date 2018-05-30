@@ -223,6 +223,8 @@ for ipair=1:nPairs
     DIC3Dcombined.distortionModel{ipair,2}=DIC3DAllPairsResults{ipair}.distortionModel{2};
     % add 2D-DIC data to DIC3Dcombined
     DIC3Dcombined.DIC2Dinfo{ipair}=DIC2D{ipair};
+    % add 3D-DIC data to DIC3Dcombined
+    DIC3Dcombined.AllPairsResults=DIC3DAllPairsResults;
 end
 
 

@@ -43,9 +43,7 @@ end
 if ~isfield(optStruct,'zDirection') % 1 or -1
     optStruct.zDirection=1;
 end
-if ~isfield(optStruct,'lineColor') % 'none' or 'k'
-    optStruct.lineColor='none';
-end
+
 if ~isfield(optStruct,'maxCorrCoeff')
     optStruct.maxCorrCoeff=[];
 end
@@ -75,6 +73,9 @@ switch faceMeasureString
         if ~isfield(optStruct,'FaceAlpha')
             optStruct.FaceAlpha=1;
         end
+        if ~isfield(optStruct,'lineColor') % 'none' or 'k'
+            optStruct.lineColor='none';
+        end
         faceMeasureTitle='Color texture from image';
     case 'FacePairInds'
         for it=1:nFrames
@@ -93,6 +94,9 @@ switch faceMeasureString
         end
         if ~isfield(optStruct,'FaceAlpha')
             optStruct.FaceAlpha=0.8;
+        end
+        if ~isfield(optStruct,'lineColor') % 'none' or 'k'
+            optStruct.lineColor='k';
         end
         faceMeasureTitle='Camera-pair index';
     case {'J'}
@@ -114,6 +118,9 @@ switch faceMeasureString
         if ~isfield(optStruct,'FaceAlpha')
             optStruct.FaceAlpha=1;
         end
+        if ~isfield(optStruct,'lineColor') % 'none' or 'k'
+            optStruct.lineColor='none';
+        end
         faceMeasureTitle='Surface Area Change (Dilatation J)';
     case {'Lamda1'}
         for it=1:nFrames
@@ -133,6 +140,9 @@ switch faceMeasureString
         end
         if ~isfield(optStruct,'FaceAlpha')
             optStruct.FaceAlpha=1;
+        end
+        if ~isfield(optStruct,'lineColor') % 'none' or 'k'
+            optStruct.lineColor='none';
         end
         faceMeasureTitle='1st principal stretch';
     case {'Lamda2'}
@@ -154,6 +164,9 @@ switch faceMeasureString
         if ~isfield(optStruct,'FaceAlpha')
             optStruct.FaceAlpha=1;
         end
+        if ~isfield(optStruct,'lineColor') % 'none' or 'k'
+            optStruct.lineColor='none';
+        end
         faceMeasureTitle='2nd principal stretch';
     case {'Emgn'}
         for it=1:nFrames
@@ -172,10 +185,13 @@ switch faceMeasureString
             optStruct.colorMap='parula';
         end
         if ~isfield(optStruct,'FaceAlpha')
-            optStruct.FaceAlpha=0.8;
+            optStruct.FaceAlpha=1;
+        end
+        if ~isfield(optStruct,'lineColor') % 'none' or 'k'
+            optStruct.lineColor='none';
         end
         faceMeasureTitle='Lagrangian strain norm';
-            case {'emgn'}
+    case {'emgn'}
         for it=1:nFrames
             FC{it}=DIC3DPPresults.Deform.(faceMeasureString){it};
             if ~isempty(optStruct.maxCorrCoeff)
@@ -192,7 +208,10 @@ switch faceMeasureString
             optStruct.colorMap='parula';
         end
         if ~isfield(optStruct,'FaceAlpha')
-            optStruct.FaceAlpha=0.8;
+            optStruct.FaceAlpha=1;
+        end
+        if ~isfield(optStruct,'lineColor') % 'none' or 'k'
+            optStruct.lineColor='none';
         end
         faceMeasureTitle='Eulerian strain norm';
     case {'Epc1'}
@@ -212,10 +231,13 @@ switch faceMeasureString
             optStruct.colorMap=0.8*coldwarm;
         end
         if ~isfield(optStruct,'FaceAlpha')
-            optStruct.FaceAlpha=0.8;
+            optStruct.FaceAlpha=1;
+        end
+        if ~isfield(optStruct,'lineColor') % 'none' or 'k'
+            optStruct.lineColor='none';
         end
         faceMeasureTitle='1st principal Lagrangian strain';
-            case {'Epc2'}
+    case {'Epc2'}
         for it=1:nFrames
             FC{it}=DIC3DPPresults.Deform.(faceMeasureString){it};
             if ~isempty(optStruct.maxCorrCoeff)
@@ -232,10 +254,13 @@ switch faceMeasureString
             optStruct.colorMap=0.8*coldwarm;
         end
         if ~isfield(optStruct,'FaceAlpha')
-            optStruct.FaceAlpha=0.8;
+            optStruct.FaceAlpha=1;
+        end
+        if ~isfield(optStruct,'lineColor') % 'none' or 'k'
+            optStruct.lineColor='none';
         end
         faceMeasureTitle='2nd principal Lagrangian strain';
-            case {'epc1'}
+    case {'epc1'}
         for it=1:nFrames
             FC{it}=DIC3DPPresults.Deform.(faceMeasureString){it};
             if ~isempty(optStruct.maxCorrCoeff)
@@ -252,10 +277,13 @@ switch faceMeasureString
             optStruct.colorMap=0.8*coldwarm;
         end
         if ~isfield(optStruct,'FaceAlpha')
-            optStruct.FaceAlpha=0.8;
+            optStruct.FaceAlpha=1;
+        end
+        if ~isfield(optStruct,'lineColor') % 'none' or 'k'
+            optStruct.lineColor='none';
         end
         faceMeasureTitle='1st principal Eulerian strain';
-            case {'epc2'}
+    case {'epc2'}
         for it=1:nFrames
             FC{it}=DIC3DPPresults.Deform.(faceMeasureString){it};
             if ~isempty(optStruct.maxCorrCoeff)
@@ -272,7 +300,10 @@ switch faceMeasureString
             optStruct.colorMap=0.8*coldwarm;
         end
         if ~isfield(optStruct,'FaceAlpha')
-            optStruct.FaceAlpha=0.8;
+            optStruct.FaceAlpha=1;
+        end
+        if ~isfield(optStruct,'lineColor') % 'none' or 'k'
+            optStruct.lineColor='none';
         end
         faceMeasureTitle='2nd principal Eulerian strain';
     case {'DispMgn'}
@@ -298,7 +329,10 @@ switch faceMeasureString
             optStruct.colorMap='parula';
         end
         if ~isfield(optStruct,'FaceAlpha')
-            optStruct.FaceAlpha=0.8;
+            optStruct.FaceAlpha=1;
+        end
+        if ~isfield(optStruct,'lineColor') % 'none' or 'k'
+            optStruct.lineColor='none';
         end
         faceMeasureTitle='Displacement magnitude';
     case {'DispX'}
@@ -324,7 +358,10 @@ switch faceMeasureString
             optStruct.colorMap='parula';
         end
         if ~isfield(optStruct,'FaceAlpha')
-            optStruct.FaceAlpha=0.8;
+            optStruct.FaceAlpha=1;
+        end
+        if ~isfield(optStruct,'lineColor') % 'none' or 'k'
+            optStruct.lineColor='none';
         end
         faceMeasureTitle='X Displacement';
     case {'DispY'}
@@ -350,7 +387,10 @@ switch faceMeasureString
             optStruct.colorMap='parula';
         end
         if ~isfield(optStruct,'FaceAlpha')
-            optStruct.FaceAlpha=0.8;
+            optStruct.FaceAlpha=1;
+        end
+        if ~isfield(optStruct,'lineColor') % 'none' or 'k'
+            optStruct.lineColor='none';
         end
         faceMeasureTitle='Y Displacement';
     case {'DispZ'}
@@ -376,7 +416,10 @@ switch faceMeasureString
             optStruct.colorMap='parula';
         end
         if ~isfield(optStruct,'FaceAlpha')
-            optStruct.FaceAlpha=0.8;
+            optStruct.FaceAlpha=1;
+        end
+        if ~isfield(optStruct,'lineColor') % 'none' or 'k'
+            optStruct.lineColor='none';
         end
         faceMeasureTitle='Z Displacement';
     case {'FaceIsoInd'}
@@ -395,7 +438,10 @@ switch faceMeasureString
             optStruct.colorMap='parula';
         end
         if ~isfield(optStruct,'FaceAlpha')
-            optStruct.FaceAlpha=0.8;
+            optStruct.FaceAlpha=1;
+        end
+        if ~isfield(optStruct,'lineColor') % 'none' or 'k'
+            optStruct.lineColor='none';
         end
         faceMeasureTitle='Triangular face isotropy (regularity) index ';
     case {'FaceCorrComb'}
@@ -415,7 +461,10 @@ switch faceMeasureString
             optStruct.colorMap='parula';
         end
         if ~isfield(optStruct,'FaceAlpha')
-            optStruct.FaceAlpha=0.8;
+            optStruct.FaceAlpha=1;
+        end
+        if ~isfield(optStruct,'lineColor') % 'none' or 'k'
+            optStruct.lineColor='none';
         end
         faceMeasureTitle='Combined correlation coefficient';
         
