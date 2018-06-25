@@ -20,7 +20,7 @@ function []=anim8_DIC_3D_pairs_pointMeasure(DIC3DAllPairsResults,pointMeasureStr
 %   - colorMap
 %   - zDirection: 1 for z up and -1 for z down
 %   - lineColor: line color for the mesh. can be for example 'b','k','none',etc...
-%   - supTitleString=faceMeasureString;
+%   - TitleString=faceMeasureString;
 
 %%
 Narg=numel(varargin);
@@ -129,8 +129,8 @@ end
 if ~isfield(optStruct,'zDirection') % 1 or -1
     optStruct.zDirection=1;
 end
-if ~isfield(optStruct,'supTitleString')
-    optStruct.supTitleString=pointMeasureString;
+if ~isfield(optStruct,'TitleString')
+    optStruct.TitleString=pointMeasureString;
 end
 if ~isfield(optStruct,'maxCorrCoeff')
     optStruct.maxCorrCoeff=[];
@@ -147,7 +147,7 @@ hf.Units='normalized'; hf.OuterPosition=[.05 .05 .9 .9]; hf.Units='pixels';
 
 axisGeom;
 
-suptitle(optStruct.supTitleString);
+gtitle(optStruct.TitleString,20);
 % axis off
 % camlight headlight
 

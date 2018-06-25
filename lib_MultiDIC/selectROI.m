@@ -40,7 +40,7 @@ while ~strcmp(polyOK,'Yes')
     hf=figure('Name','Select ROI');
     hf.Units='normalized'; hf.OuterPosition=[.05 .05 .9 .9]; hf.Units='pixels';
 
-    suptitle(['Draw ' num2str(nROI) ' ROI polygons on the reference images. double-click on the polygon to finish']);
+    gtitle(['Draw ' num2str(nROI) ' ROI polygons on the reference images. double-click on the polygon to finish'],20);
 
     imshow(IM); hold on; axis on;
 %     title('Reference image');

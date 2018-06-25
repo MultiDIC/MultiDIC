@@ -61,7 +61,7 @@ for ii=1:nCur
     % current points
     Points{ii}=[Pref(:,1)+UrefROIVec,Pref(:,2)+VrefROIVec];
     
-    % save for further 3D analysis
+    % save face colors for further 3D analysis
     if ii==1
         % pixel colors
         IMrefSmall=IMref(1:Factor:end,1:Factor:end);

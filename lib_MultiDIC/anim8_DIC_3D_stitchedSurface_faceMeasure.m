@@ -20,7 +20,7 @@ function []=anim8_DIC_3D_stitchedSurface_faceMeasure(DIC3DStitched,faceMeasureSt
 %   - colorMap
 %   - zDirection: 1 for z up and -1 for z down
 %   - lineColor: line color for the mesh. can be for example 'b','k','none',etc...
-%   - supTitleString=faceMeasureString;
+%   - TitleString=faceMeasureString;
 
 %% Assign plot options
 Narg=numel(varargin);
@@ -46,8 +46,8 @@ end
 if ~isfield(optStruct,'lineColor') % 'none' or 'k'
     optStruct.lineColor='none';
 end
-if ~isfield(optStruct,'supTitleString')
-    optStruct.supTitleString=faceMeasureString;
+if ~isfield(optStruct,'TitleString')
+    optStruct.TitleString=faceMeasureString;
 end
 if ~isfield(optStruct,'maxCorrCoeff')
     optStruct.maxCorrCoeff=[];
@@ -335,7 +335,7 @@ if colorBarLogic
     caxis(optStruct.colorBarLimits);
 end
 
-suptitle(optStruct.supTitleString);
+gtitle(optStruct.supTitleString,20);
 % axis off
 % camlight headlight
 

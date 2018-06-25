@@ -20,7 +20,7 @@ function []=anim8_DIC3DPP_faceMeasure(DIC3DPPresults,faceMeasureString,RBMlogic,
 %   - colorMap
 %   - zDirection: 1 for z up and -1 for z down
 %   - lineColor: line color for the mesh. can be for example 'b','k','none',etc...
-%   - supTitleString=faceMeasureString;
+%   - TitleString=faceMeasureString;
 
 %% Assign plot options
 Narg=numel(varargin);
@@ -495,7 +495,7 @@ if colorBarLogic
     end
 end
 
-suptitle(faceMeasureTitle);
+gtitle(faceMeasureTitle,20);
 % axis off
 % camlight headlight
 
@@ -550,8 +550,15 @@ for it=1:nFrames
     h_ax.XLim = xl; h_ax.YLim = yl; h_ax.ZLim = zl;
     
 end
+
+
+%% animate
 anim8(hf,animStruct);
 
+%% add colorbar button
+addColorbarLimitsButton(hf);
+addQuiverFactorButton(hf);
+addLightButton(hf);
 
 end
 

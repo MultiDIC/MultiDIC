@@ -11,7 +11,7 @@ function []=anim8_DIC3D_reconstructedPairs_faceMeasure(DIC3DAllPairsResults,face
 % Inputs:
 % * DIC3DAllPairsResults
 % * faceMeasureString: can be any of the following:
-%   'J','Emgn','emgn','Epc1','Epc2','epc1','epc2','dispMgn','dispX','dispY','dispZ','FaceColors','FaceIsoInd','pairInd','Lamda1','Lamda2'
+%   'dispMgn','dispX','dispY','dispZ','FaceColors','FaceIsoInd','pairInd'
 % * optStruct: optional structure for plotting options which may include any of the following fields:
 %   - smoothLogic: logical variable for smoothing (true)/not smoothing (false) the face measure 
 %   - FaceAlpha: transparacy of the faces (scalar between 0 and 1, where zero is transparent and 1 is opaque) 
@@ -20,7 +20,7 @@ function []=anim8_DIC3D_reconstructedPairs_faceMeasure(DIC3DAllPairsResults,face
 %   - colorMap
 %   - zDirection: 1 for z up and -1 for z down
 %   - lineColor: line color for the mesh. can be for example 'b','k','none',etc...
-%   - supTitleString=faceMeasureString;
+%   - TitleString=faceMeasureString;
 
 %% Assign plot options
 Narg=numel(varargin);
@@ -46,8 +46,8 @@ end
 if ~isfield(optStruct,'lineColor') % 'none' or 'k'
     optStruct.lineColor='none';
 end
-if ~isfield(optStruct,'supTitleString') 
-    optStruct.supTitleString=faceMeasureString;
+if ~isfield(optStruct,'TitleString') 
+    optStruct.TitleString=faceMeasureString;
 end
 if ~isfield(optStruct,'maxCorrCoeff')
     optStruct.maxCorrCoeff=[];
@@ -252,7 +252,7 @@ if colorBarLogic
     caxis(optStruct.colorBarLimits);
 end
 
-suptitle(optStruct.supTitleString);
+gtitle(optStruct.TitleString,20);
 % axis off
 % camlight headlight
 

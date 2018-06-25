@@ -261,9 +261,10 @@ for it=1:nFrames
 end
 
 anim8(hf,animStruct);
-
-
-
+%%
+addColorbarLimitsButton(hf);
+addQuiverFactorButton(hf);
+addLightButton(hf);
 
 end
 

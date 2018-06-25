@@ -144,7 +144,10 @@ close(handles_ncorr.handles_gui.figure);
 if isvalid(h)
     close(h);
 end
+% close first animation figure
+if isvalid(hf1)
 close(hf1);
+end
 
 %% finish
 hm=msgbox(['STEP2 for the camera pair [' num2str([nCamRef nCamDef]) '] is completed']);

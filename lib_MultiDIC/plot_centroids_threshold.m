@@ -49,7 +49,7 @@ set(ax2,'Position',ax1.Position);
 
 % plot centroids
 hp=plot(Ctemp(:,1),Ctemp(:,2),'b+','LineWidth',1,'MarkerSize',5);
-ht=suptitle(['Threshold level = ' num2str(level)]);
+ht=gtitle(['Threshold level = ' num2str(level)],20);
 
 % set axes limits
 [r,c]=find(IM~=255);

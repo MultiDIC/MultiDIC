@@ -60,7 +60,7 @@ for ii=1:1:nSteps
    
 end
 
-suptitle('Image set from camera pair for correlation. Press play to preview all images,press stop button and then press enter in the command window to continue');
+gtitle('Image set from camera pair for correlation. Press play to preview all images,press stop button and then press enter in the command window to continue',14);
 
 % Start |anim8| gui
 anim8(hf,animStruct);

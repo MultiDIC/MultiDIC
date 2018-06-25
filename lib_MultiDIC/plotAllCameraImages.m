@@ -18,7 +18,6 @@ figure('name',['Camera ' num2str(icam) ', all checkerboard images'],'units','nor
 
 Nimages=size(I,4);
 Nsubplots=numSubplots(Nimages);
-% suptitle(['Camera ' num2str(icam)]);
 for ip=1:Nimages
     subtightplot(Nsubplots(1),Nsubplots(2),ip);
     imshow(I(:,:,:,ip)); hold on

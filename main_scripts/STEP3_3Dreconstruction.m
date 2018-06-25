@@ -217,6 +217,7 @@ else
     [DIC3Dcombined]= DIC3DsurfaceStitch(DIC3DAllPairsResults,[]);
 end
 
+% add all information to DIC3Dcombined structure
 for ipair=1:nPairs
     % add distortion model information to DIC3Dcombined
     DIC3Dcombined.distortionModel{ipair,1}=DIC3DAllPairsResults{ipair}.distortionModel{1};
@@ -226,7 +227,6 @@ for ipair=1:nPairs
     % add 3D-DIC data to DIC3Dcombined
     DIC3Dcombined.AllPairsResults=DIC3DAllPairsResults;
 end
-
 
 %% save 
 

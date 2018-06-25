@@ -20,7 +20,7 @@ function []=anim8_DIC_3D_pairs_faceMeasure_RBM(DIC3DAllPairsResults,faceMeasureS
 %   - colorMap
 %   - zDirection: 1 for z up and -1 for z down
 %   - lineColor: line color for the mesh. can be for example 'b','k','none',etc...
-%   - supTitleString=faceMeasureString;
+%   - TitleString=faceMeasureString;
 
 %% Assign plot options
 Narg=numel(varargin);
@@ -49,8 +49,8 @@ end
 if ~isfield(optStruct,'lineColor') % 'none' or 'k'
     optStruct.lineColor='none';
 end
-if ~isfield(optStruct,'supTitleString') 
-    optStruct.supTitleString=faceMeasureString;
+if ~isfield(optStruct,'TitleString') 
+    optStruct.TitleString=faceMeasureString;
 end
 if ~isfield(optStruct,'maxCorrCoeff')
     optStruct.maxCorrCoeff=[];
@@ -327,7 +327,7 @@ if colorBarLogic
     caxis(optStruct.colorBarLimits);
 end
 
-suptitle(optStruct.supTitleString);
+gtitle(optStruct.TitleString,20);
 % axis off
 % camlight headlight
 

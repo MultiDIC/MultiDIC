@@ -15,7 +15,6 @@ f = figure('name',['Camera ' num2str(cameraCBparameters.icam) ' Parameters'],'un
 tabgp = uitabgroup(f);
 
 %% before correction
-%     suptitle(['Camera ' num2str(cameraCBparameters.icam)]);
 tab(1) = uitab(tabgp,'Title','Before Distortion Correction');
 axes('Parent',tab(1));
 
@@ -56,8 +55,6 @@ cameraCBparametersMod=cameraCBparameters;
 cameraCBparametersMod.cameraParameters=cameraCBparameters.cameraParametersAUD;
 cameraCBparametersMod.estimationErrors=cameraCBparameters.estimationErrorsAUD;
 
-
-%      suptitle(['Camera ' num2str(cameraCBparameters.icam)]);
 
 %% top row
 % show Intrinsic parameters and their errors

@@ -24,7 +24,6 @@ if ~isempty(pairIndList)
     DIC3DStitched.PointPairInds=pairInd1*ones(size(s1.Points3D{1},1),1);
     
     numFreeBytes=freeMemory;
-%   izip=0  
     for imesh=1:nPairsForStitching-1
         
         pairInd2=pairIndList(imesh+1);
@@ -61,7 +60,7 @@ if ~isempty(pairIndList)
         
         %% plot original surfaces
         hf(imesh)=cFigure; hold all
-        suptitle(['Stitching [' num2str(pairIndList(1):pairIndList(imesh)) '] to [' num2str(pairInd2) ']']);
+        gtitle(['Stitching [' num2str(pairIndList(1):pairIndList(imesh)) '] to [' num2str(pairInd2) ']'],20);
         
         subplot(1,3,1); hold all
         gpatch(F1,V1,colors(FC1,:),'k',.5);
@@ -72,6 +71,7 @@ if ~isempty(pairIndList)
         % reduced surfaces
         minGap=.6*nanmean([patchEdgeLengths(F1,V1) ; patchEdgeLengths(F2,V2)]);
         minDistValue=3*minGap;
+        
         % Q1=
         % Q2=
         % [CT1,CT2] = removeOverlapSurface(F1,F2,V1,V2,Q1,Q2,minGap);
@@ -286,10 +286,15 @@ if ~isempty(pairIndList)
                         inputStruct.ind1=curve1;
                         inputStruct.ind2=curve2;
                         
-%                         izip=izip+1
-                        [FzTemp,~,CzTemp]=delaunayZip(F1r,V1r,F2r,V2r,inputStruct);
-                        Fz{ii}=FzTemp(CzTemp>=3,:);
-                        
+                        try
+                            % zip
+                            [FzTemp,~,CzTemp]=delaunayZip(F1r,V1r,F2r,V2r,inputStruct);
+                            Fz{ii}=FzTemp(CzTemp>=3,:);
+                        catch
+                            warning(['Problem zipping ' num2str(pairIndList(1):pairIndList(imesh)) '] to [' num2str(pairInd2) '] . Continuing without zipping']);
+                            % take the zipped part (without the original surfaces)
+                            Fz{ii}=[];    
+                        end
                         %                     gpatch(Fz{ii},[V1r;V2r],CzTemp(CzTemp>=3,:),'k',.5);
                         
                         Fcombined=[Fcombined; Fz{ii}];
@@ -345,6 +350,40 @@ if ~isempty(pairIndList)
         DIC3DStitched.pairIndices(pairInd2,:)=s2.cameraPairInd;
         
     end
+    
+    %% Fill holes - by groups of boundaries %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    F=DIC3DStitched.Faces;
+    V=DIC3DStitched.Points3D{1};
+    [Eb,E,indBoundary]=patchBoundary(F,V); % find boundaries
+    
+%     gpatch(Eb,V,'none','m',1,5);
+    
+    [G,G_iter]=tesgroup(Eb); % group boundaries
+    for ii=1:size(G,2) % loop over all groups of closed boundaries
+        EbNow=Eb(G(:,ii),:);
+        if size(EbNow,1)==3 % if the hole is the size of one triangle
+            F(end+1,:)=unique(EbNow)' ;% add this face to face list
+            [IND_F,IND_V,IND_FF]=tesIND(F,V); % connectivity
+            % find the faces that are connected to both vertex 1 and 2
+            indF12=intersect(nonzeros(IND_F(F(end,1),:)),nonzeros(IND_F(F(end,2),:)));
+            indF12(indF12==size(F,1),:)=[];
+            % find the faces that are connected to both vertex 1 and 3
+            indF13=intersect(nonzeros(IND_F(F(end,1),:)),nonzeros(IND_F(F(end,3),:)));
+            indF13(indF13==size(F,1),:)=[];
+            % find the faces that are connected to both vertex 2 and 3
+            indF23=intersect(nonzeros(IND_F(F(end,3),:)),nonzeros(IND_F(F(end,2),:)));
+            indF23(indF23==size(F,1),:)=[];
+            
+            % assign the median pairInd
+            DIC3DStitched.FacePairInds(end+1)=median(DIC3DStitched.FacePairInds([indF12 indF13 indF23]));
+            % assign the mean color
+            DIC3DStitched.FaceColors(end+1)=mean(DIC3DStitched.FaceColors([indF12 indF13 indF23]));
+            
+            DIC3DStitched.Faces=F;
+            
+        end
+    end
+    
     
     %% append surfaces that are not part of the stitching
     % surfaces not stitched
