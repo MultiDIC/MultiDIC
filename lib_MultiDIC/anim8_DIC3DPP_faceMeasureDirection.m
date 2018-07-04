@@ -269,7 +269,9 @@ addFaceAlphaButton(hf);
 addLightButton(hf);
 addAmbientStrengthButton(hf);
 addDiffuseStrengthButton(hf);
+addSpecularStrengthButton(hf);
 addQuiverFactorButton(hf);
+addFaceLightingButton(hf);
 
 end
 

@@ -28,7 +28,7 @@ if size(S,3)==1
 end
 
 % Create a uipushtool in the toolbar
-uipushtool(hb(1),'TooltipString','ambient strength','CData',S,'Tag','ambientStrength_button','ClickedCallback',{@DiffuseStrengthFunc,{hf}});
+uipushtool(hb(1),'TooltipString','diffuse strength','CData',S,'Tag','diffuseStrength_button','ClickedCallback',{@DiffuseStrengthFunc,{hf}});
 end
 
 %% Ambient strength function  ambientStrengthFunc
@@ -37,7 +37,7 @@ function DiffuseStrengthFunc(~,~,inputCell)
 
 hf = inputCell{1};
 prompt = {'Input a value [0,1]:'};
-dlg_title = 'Set ambient strength';
+dlg_title = 'Set diffuse strength';
 
 hpatches = findobj(hf,'type','patch');
 if ~isempty(hpatches)
