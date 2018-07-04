@@ -126,6 +126,12 @@ end
 
 anim8(hf,animStruct);
 
+addColorbarLimitsButton(hf);
+addColormapButton(hf);
+addEdgeColorButton(hf);
+addFaceAlphaButton(hf);
+addLightButton(hf);
+addAmbientStrengthButton(hf);
 
 end
 
@@ -135,6 +141,8 @@ end
 % License: <https://github.com/MultiDIC/MultiDIC/blob/master/LICENSE.txt>
 % 
 % Copyright (C) 2018  Dana Solav
+% 
+% Modified by Rana Odabas 2018
 % 
 % If you use the toolbox/function for your research, please cite our paper:
 % <https://engrxiv.org/fv47e>

@@ -20,7 +20,7 @@ function []=anim8_DIC3DPP_faceMeasure(DIC3DPPresults,faceMeasureString,RBMlogic,
 %   - colorMap
 %   - zDirection: 1 for z up and -1 for z down
 %   - lineColor: line color for the mesh. can be for example 'b','k','none',etc...
-%   - TitleString=faceMeasureString;
+%   - supTitleString=faceMeasureString;
 
 %% Assign plot options
 Narg=numel(varargin);
@@ -495,7 +495,7 @@ if colorBarLogic
     end
 end
 
-gtitle(faceMeasureTitle,20);
+suptitle(faceMeasureTitle);
 % axis off
 % camlight headlight
 
@@ -550,24 +550,27 @@ for it=1:nFrames
     h_ax.XLim = xl; h_ax.YLim = yl; h_ax.ZLim = zl;
     
 end
-
-
-%% animate
 anim8(hf,animStruct);
 
-%% add colorbar button
 addColorbarLimitsButton(hf);
-addQuiverFactorButton(hf);
+addColormapButton(hf);
+addEdgeColorButton(hf);
+addFaceAlphaButton(hf);
 addLightButton(hf);
+addAmbientStrengthButton(hf);
+addDiffuseStrengthButton(hf);
+
 
 end
 
 %%
 % MultiDIC: a MATLAB Toolbox for Multi-View 3D Digital Image Correlation
-%
+% 
 % License: <https://github.com/MultiDIC/MultiDIC/blob/master/LICENSE.txt>
-%
+% 
 % Copyright (C) 2018  Dana Solav
-%
+% 
+% Modified by Rana Odabas 2018
+% 
 % If you use the toolbox/function for your research, please cite our paper:
 % <https://engrxiv.org/fv47e>

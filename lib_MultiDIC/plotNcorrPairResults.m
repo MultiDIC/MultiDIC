@@ -52,8 +52,10 @@ end
 %% plot correlated points - ANIMATION
 % plot Ref image on left and all current on right
 anim8_DIC_images_corr_points_1_2n(ImSet,DIC2DpairResults,CorCoeffCutOff,CorCoeffDispMax);
+
 % plot ref camera on left and Def camera on right
 anim8_DIC_images_corr_points_n_n(ImSet,DIC2DpairResults,CorCoeffCutOff,CorCoeffDispMax);
+
 % plot correlated points with colors on the faces
 % plot ref camera on left and Def camera on right
 anim8_DIC_images_corr_faces_n_n(ImSet,DIC2DpairResults,CorCoeffCutOff,CorCoeffDispMax);

@@ -20,7 +20,7 @@ function []=anim8_DIC3DPP_pointMeasure(DIC3DPPresults,pointMeasureString,RBMlogi
 %   - colorMap
 %   - zDirection: 1 for z up and -1 for z down
 %   - lineColor: line color for the mesh. can be for example 'b','k','none',etc...
-%   - TitleString=faceMeasureString;
+%   - supTitleString=faceMeasureString;
 
 %%
 Narg=numel(varargin);
@@ -133,8 +133,8 @@ end
 if ~isfield(optStruct,'zDirection') % 1 or -1
     optStruct.zDirection=1;
 end
-if ~isfield(optStruct,'TitleString')
-    optStruct.TitleString=pointMeasureTitle;
+if ~isfield(optStruct,'supTitleString')
+    optStruct.supTitleString=pointMeasureTitle;
 end
 if ~isfield(optStruct,'maxCorrCoeff')
     optStruct.maxCorrCoeff=[];
@@ -150,7 +150,7 @@ hf.Units='normalized'; hf.OuterPosition=[.05 .05 .9 .9]; hf.Units='pixels';
 
 axisGeom;
 
-gtitle(optStruct.TitleString,20);
+suptitle(optStruct.supTitleString);
 % axis off
 % camlight headlight
 
@@ -236,18 +236,19 @@ for it=1:nFrames
 end
 anim8(hf,animStruct);
 
-
 addColorbarLimitsButton(hf);
-
+addColormapButton(hf); % only applicable for plots without designated colors
 
 end
 
 %%
 % MultiDIC: a MATLAB Toolbox for Multi-View 3D Digital Image Correlation
-%
+% 
 % License: <https://github.com/MultiDIC/MultiDIC/blob/master/LICENSE.txt>
-%
+% 
 % Copyright (C) 2018  Dana Solav
-%
+% 
+% Modified by Rana Odabas 2018
+% 
 % If you use the toolbox/function for your research, please cite our paper:
 % <https://engrxiv.org/fv47e>
