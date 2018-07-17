@@ -28,9 +28,8 @@ Nimages=images.Count;
 I1=imread(images.ImageLocation{1});
 
 if size(size(I1),2)==2
-    imageSize3=[size(I1) 1];
 else
-    imageSize3=size(I1);
+imageSize3=size(I1);
 end
 imageSize=imageSize3(1,1:2);
 

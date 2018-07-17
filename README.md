@@ -3,10 +3,10 @@
 - [Summary](#Summary)  
 - [Installation](#Installation)  
 - [Getting started](#Start)
-- [Application Highlights](#Applications)
 - [License](#License)  
 - [Citing](#Cite)
 - [Contributing](#Contributing)  
+- [Application Highlights](#Applications)
 
 ## Summary <a name="Summary"></a>
 This is the official repository associated with the paper: [MultiDIC: an Open-Source Toolbox for Multi-View 3D Digital Image Correlation](https://ieeexplore.ieee.org/document/8371235/) (DOI:[ 10.1109/ACCESS.2018.2843725](https://ieeexplore.ieee.org/document/8371235/)).  
@@ -39,22 +39,9 @@ Use **one** of these two options:
 **b.** In MATLAB, Add the MultiDIC folder (with subfolders) to the path and save the path definitions.
 
 
-
 ## Getting started <a name="Start"></a>
 Check out the [instruction manual](https://github.com/MultiDIC/MultiDIC/blob/master/docs/pdf/MultiDIC_InstructionManual.pdf). It should have all the information you need to get started.
 
-## Application Highlights <a name="Applications"></a>
-### These are some examples of figures obtained using MultiDIC:
-#### Shape change and skin deformation induced by joint movement and muscle contraction
-<img src="docs/img/Shank2D_corr_204_205.gif">     
-<img src="docs/img/ShankFull_L1_L2.gif">       
-
-#### Shape change and skin deformation induced by indentation    
-<img src="docs/img/indentation_204_205_DispMgn_onImages.gif">
-<img src="docs/img/indentation_3D_Lamda1_Lamda2_reducedLight.gif">
-
-## License <a name="License"></a>
-MultiDIC is provided under the [Apache-2.0 license](https://www.apache.org/licenses/). The [license file](https://www.github.com/MultiDIC/MultiDIC/blob/master/LICENSE) is found on the GitHub repository.
 
 ## Citing <a name="Cite"></a>   
 This is the official repository for:
@@ -68,3 +55,16 @@ Please cite this paper if you use the toolbox.
 
 ## Contributing <a name="Contributing"></a>   
 If you wish to contribute code/algorithms to this project, or to propose a collaboration study, please send an email to danask (at) mit (dot) edu.
+
+## Application Highlights <a name="Applications"></a>
+### These are some examples of figures obtained using MultiDIC:
+#### Shape change and skin deformation induced by joint movement and muscle contraction
+<img src="docs/img/Shank2D_corr_204_205.gif">     
+<img src="docs/img/ShankFull_L1_L2.gif">       
+
+#### Shape change and skin deformation induced by indentation    
+<img src="docs/img/indentation_204_205_DispMgn_onImages.gif">
+<img src="docs/img/indentation_3D_Lamda1_Lamda2_reducedLight.gif">
+
+## License <a name="License"></a>
+MultiDIC is provided under the [Apache-2.0 license](https://www.apache.org/licenses/). The [license file](https://www.github.com/MultiDIC/MultiDIC/blob/master/LICENSE) is found on the GitHub repository.
