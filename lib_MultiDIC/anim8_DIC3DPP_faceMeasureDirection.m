@@ -52,13 +52,14 @@ end
 if ~isfield(optStruct,'maxCorrCoeff')
     optStruct.maxCorrCoeff=[];
 end
-
+if ~isfield(optStruct,'quiverScaleFactor')
+    optStruct.quiverScaleFactor=20;
+end
 %%
 nFrames=numel(DIC3DPPresults.Points3D);
 
-quiverScaleFactor=20;
-
 [xl,yl,zl]=axesLimits(DIC3DPPresults.Points3D);
+meanEdgeLength=nanmean(patchEdgeLengths(DIC3DPPresults.Faces,DIC3DPPresults.Points3D{1}));
 
 %% Assign the right face measure into FC
 
@@ -119,11 +120,37 @@ for is=1:nStrains
         if RBMlogic
             FC{it,is}=DIC3DPPresults.Deform_ARBM.(faceMeasureCell{is}){it}; % face color (strain)
             D{it,is}=DIC3DPPresults.Deform_ARBM.(directionStringCell{is}){it}; % direction (unit vector)
-            Vc{it,is}=DIC3DPPresults.FaceCentroids_ARBM{it};
+            
+            switch faceMeasureCell{is}
+                case {'Epc1','Epc2','epc1','epc2'}
+                    Ds{it,is}=optStruct.quiverScaleFactor*FC{it,is}.*D{it,is}; % direction with magnitude (scaled vector)
+                    DsLengths=sqrt((sum(Ds{it,is}.^2,2)));
+                    LogicTooLong=DsLengths>meanEdgeLength;
+                    Ds{it,is}(LogicTooLong,:)=meanEdgeLength*Ds{it,is}(LogicTooLong,:)./DsLengths(LogicTooLong);        
+                case {'Lamda1','Lamda2'}
+                    Ds{it,is}=optStruct.quiverScaleFactor*(FC{it,is}-1).*D{it,is}; % direction with magnitude (scaled vector)
+                    DsLengths=sqrt((sum(Ds{it,is}.^2,2)));
+                    LogicTooLong=DsLengths>meanEdgeLength;
+                    Ds{it,is}(LogicTooLong,:)=meanEdgeLength*Ds{it,is}(LogicTooLong,:)./DsLengths(LogicTooLong);
+            end
+            Vc{it,is}=DIC3DPPresults.FaceCentroids_ARBM{it}-.5*Ds{it,is};
         else
             FC{it,is}=DIC3DPPresults.Deform.(faceMeasureCell{is}){it}; % face color (strain)
             D{it,is}=DIC3DPPresults.Deform.(directionStringCell{is}){it}; % direction (unit vector)
-            Vc{it,is}=DIC3DPPresults.FaceCentroids{it};
+            
+            switch faceMeasureCell{is}
+                case {'Epc1','Epc2','epc1','epc2'}
+                    Ds{it,is}=optStruct.quiverScaleFactor*FC{it,is}.*D{it,is}; % direction with magnitude (scaled vector)
+                    DsLengths=sqrt((sum(Ds{it,is}.^2,2)));
+                    LogicTooLong=DsLengths>meanEdgeLength;
+                    Ds{it,is}(LogicTooLong,:)=meanEdgeLength*Ds{it,is}(LogicTooLong,:)./DsLengths(LogicTooLong);                    
+                case {'Lamda1','Lamda2'}
+                    Ds{it,is}=optStruct.quiverScaleFactor*(FC{it,is}-1).*D{it,is}; % direction with magnitude (scaled vector)
+                    DsLengths=sqrt((sum(Ds{it,is}.^2,2)));
+                    LogicTooLong=DsLengths>meanEdgeLength;
+                    Ds{it,is}(LogicTooLong,:)=meanEdgeLength*Ds{it,is}(LogicTooLong,:)./DsLengths(LogicTooLong);                    
+            end
+            Vc{it,is}=DIC3DPPresults.FaceCentroids{it}-.5*Ds{it,is};
         end
 
         if ~isempty(optStruct.maxCorrCoeff)
@@ -131,13 +158,7 @@ for is=1:nStrains
             FC{it,is}(corrNow>optStruct.maxCorrCoeff,:)=NaN;
             D{it,is}(corrNow>optStruct.maxCorrCoeff,:)=NaN;
             Vc{it,is}(corrNow>optStruct.maxCorrCoeff,:)=NaN;
-        end
-        switch faceMeasureCell{is}
-            case {'Epc1','Epc2','epc1','epc2'}
-                Ds{it,is}=quiverScaleFactor*FC{it,is}.*D{it,is}; % direction with magnitude (scaled vector)
-            case {'Lamda1','Lamda2'}
-                Ds{it,is}=quiverScaleFactor*(FC{it,is}-1).*D{it,is}; % direction with magnitude (scaled vector)
-        end
+        end        
 
     end
 end
@@ -197,7 +218,7 @@ for is=1:nStrains
     FCnow(FCnow>optStruct.dataLimits(2))=NaN;
 
     hp(is)=gpatch(Fnow,Pnow,FCnow,optStruct.lineColor,optStruct.FaceAlpha); hold on
-    hq(is)=quiver3(Vnow(:,1),Vnow(:,2),Vnow(:,3),Dnow(:,1),Dnow(:,2),Dnow(:,3),0,'Color',.2*[1 1 1],'ShowArrowHead','off','AutoScale','on'); hold on;
+    hq(is)=quiver3(Vnow(:,1),Vnow(:,2),Vnow(:,3),Dnow(:,1),Dnow(:,2),Dnow(:,3),0,'Color',.2*[1 1 1],'ShowArrowHead','off','AutoScale','off'); hold on;
 %         
     h_ax=gca;
     h_ax.XLim = xl; h_ax.YLim = yl; h_ax.ZLim = zl;

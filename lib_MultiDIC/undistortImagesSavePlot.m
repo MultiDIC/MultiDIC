@@ -25,12 +25,20 @@ if saveUndistortedImagesLogic
         % warn about overwriting if already exists
         if exist(imName,'file')
             if overWriteUDimagesLogic
-                imwrite(J(:,:,:,ip),imName,'Quality',100);
+                if strcmp(CBimagesInfo.imageType,'.png')
+                    imwrite(J(:,:,:,ip),imName,'Compression','none');
+                else
+                    imwrite(J(:,:,:,ip),imName,'Quality',100);
+                end
             else
                 waitfor(warndlg({'Undistorted image'; name ;' already exist so it will not be overwritten'}));
             end
         else
-            imwrite(J(:,:,:,ip),imName,'Quality',100);
+                if strcmp(CBimagesInfo.imageType,'.png')
+                    imwrite(J(:,:,:,ip),imName,'Compression','none');
+                else
+                    imwrite(J(:,:,:,ip),imName,'Quality',100);
+                end
         end
     end
 end

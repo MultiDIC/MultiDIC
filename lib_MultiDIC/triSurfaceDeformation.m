@@ -77,11 +77,17 @@ epc1=cell(nFrames,1);
 epc1vec=cell(nFrames,1); 
 epc2=cell(nFrames,1); 
 epc2vec=cell(nFrames,1);
+EShearMax=cell(nFrames,1);
+eShearMax=cell(nFrames,1);
+Eeq=cell(nFrames,1);
+eeq=cell(nFrames,1);
+Area=cell(nFrames,1);
 
 hw = waitbar(0,'Calculating deformations and strains');
+
 for itime=1:nFrames
-    waitbar(itime/nFrames);
-       
+    waitbar(itime/(nFrames));
+    
     % preallocation for speed
     D1{itime}=zeros(size(F,1),3); 
     D2{itime}=zeros(size(F,1),3); 
@@ -111,6 +117,11 @@ for itime=1:nFrames
     epc1vec{itime}=zeros(size(F,1),3);
     epc2{itime}=zeros(size(F,1),1); 
     epc2vec{itime}=zeros(size(F,1),3);
+    EShearMax{itime}=zeros(size(F,1),1);
+    eShearMax{itime}=zeros(size(F,1),1);
+    Eeq{itime}=zeros(size(F,1),1);
+    eeq{itime}=zeros(size(F,1),1);
+    Area{itime}=zeros(size(F,1),1);
     
     for itri=1:nFaces
         
@@ -128,6 +139,9 @@ for itime=1:nFrames
         Dnorm{itime}(itri)=cross(D1{itime}(itri,:),D2{itime}(itri,:))*D3{itime}(itri,:)';
         Drec1{itime}(itri,:) = cross(D2{itime}(itri,:),D3{itime}(itri,:))/Dnorm{itime}(itri);
         Drec2{itime}(itri,:) = cross(D3{itime}(itri,:),D1{itime}(itri,:))/Dnorm{itime}(itri);
+        
+        % area
+        Area{itime}(itri)=0.5*Dnorm{itime}(itri);
         
         % deformation gradient tensor
         for ii=1:3
@@ -189,6 +203,16 @@ for itime=1:nFrames
             [epc2{itime}(itri),epc2Ind]=max([eigVale(eigVecPlanInd(1),eigVecPlanInd(1)) eigVale(eigVecPlanInd(2),eigVecPlanInd(2))]); % largest principal strain that is no zero
             epc1vec{itime}(itri,:)=eigVece(:,eigVecPlanInd(epc1Ind)); % direction of ePrinc1 in deformed configuration
             epc2vec{itime}(itri,:)=eigVece(:,eigVecPlanInd(epc2Ind)); % same for EPrinc2
+                 
+            % Max shear strain
+            EShearMax{itime}(itri)=.5*(Epc2{itime}(itri)-Epc1{itime}(itri));
+            eShearMax{itime}(itri)=.5*(epc2{itime}(itri)-epc1{itime}(itri));
+            
+            % Equivalent strain (von-mises)
+            Edev=E{itime}(:,:,itri)-(1/3)*trace(E{itime}(:,:,itri))*eye(3);
+            Eeq{itime}(itri)=sqrt((2/3)*sum(sum(Edev.*Edev)));
+            edev=e{itime}(:,:,itri)-(1/3)*trace(e{itime}(:,:,itri))*eye(3);
+            eeq{itime}(itri)=sqrt((2/3)*sum(sum(edev.*edev)));
             
         else % if F has NaNs, all the resulting measures are also NaN
             Cmat{itime}(:,:,itri)=[NaN NaN NaN; NaN NaN NaN; NaN NaN NaN];
@@ -209,13 +233,19 @@ for itime=1:nFrames
             epc1vec{itime}(itri,:)=[NaN NaN NaN];
             epc2{itime}(itri)=NaN; 
             epc2vec{itime}(itri,:)=[NaN NaN NaN];
+            EShearMax{itime}(itri)=NaN;
+            eShearMax{itime}(itri)=NaN;
+            Eeq{itime}(itri)=NaN;
+            eeq{itime}(itri)=NaN;
+            Area{itime}(itri)=NaN;
         end
         
     end
-   
-   
+    
 end
- delete(hw)
+
+delete(hw);
+
 % save all results in the structure
 
 deformationStruct.Fmat=Fmat; % deformation gradient tensor
@@ -238,17 +268,12 @@ deformationStruct.epc1=epc1; % smallest planar Almansi principal strain
 deformationStruct.epc2=epc2; % largest planar Almansi principal strain
 deformationStruct.epc1vec=epc1vec; % 1st planar Almansi principal strain direction (corresponds to Epc1). it is planar in the current conf.
 deformationStruct.epc2vec=epc2vec; % 2nd planar Almansi principal strain direction (corresponds to epc2). it is planar in the current conf.
-
+deformationStruct.EShearMax=EShearMax; % Max shear strain (Lagrangian)
+deformationStruct.eShearMax=eShearMax; % Max shear strain (Eulerian)
+deformationStruct.Eeq=Eeq; % Equivalent strain (Lagrangian)
+deformationStruct.eeq=eeq; % Equivalent strain (Eulerian)
+deformationStruct.Area=Area;
 
 end
- 
-%% 
-% MultiDIC: a MATLAB Toolbox for Multi-View 3D Digital Image Correlation
-% 
-% License: <https://github.com/MultiDIC/MultiDIC/blob/master/LICENSE.txt>
-% 
-% Copyright (C) 2018  Dana Solav
-% 
-% If you use the toolbox/function for your research, please cite our paper:
-% <https://engrxiv.org/fv47e>
+
 

@@ -214,6 +214,98 @@ switch faceMeasureString
             optStruct.lineColor='none';
         end
         faceMeasureTitle='Eulerian strain norm';
+    case {'Eeq'}
+        for it=1:nFrames
+            FC{it}=DIC3DPPresults.Deform.(faceMeasureString){it};
+            if ~isempty(optStruct.maxCorrCoeff)
+                corrNow=DIC3DPPresults.FaceCorrComb{it};
+                FC{it}(corrNow>optStruct.maxCorrCoeff,:)=NaN;
+            end
+        end
+        FCmat = cell2mat(FC);
+        if ~isfield(optStruct,'colorBarLimits')
+            optStruct.colorBarLimits=[0 prctile(FCmat(:),100)];
+        end
+        colorBarLogic=1;
+        if ~isfield(optStruct,'colorMap')
+            optStruct.colorMap='parula';
+        end
+        if ~isfield(optStruct,'FaceAlpha')
+            optStruct.FaceAlpha=1;
+        end
+        if ~isfield(optStruct,'lineColor') % 'none' or 'k'
+            optStruct.lineColor='none';
+        end
+        faceMeasureTitle='Equivalent Lagrangian strain';
+    case {'eeq'}
+        for it=1:nFrames
+            FC{it}=DIC3DPPresults.Deform.(faceMeasureString){it};
+            if ~isempty(optStruct.maxCorrCoeff)
+                corrNow=DIC3DPPresults.FaceCorrComb{it};
+                FC{it}(corrNow>optStruct.maxCorrCoeff,:)=NaN;
+            end
+        end
+        FCmat = cell2mat(FC);
+        if ~isfield(optStruct,'colorBarLimits')
+            optStruct.colorBarLimits=[0 prctile(FCmat(:),100)];
+        end
+        colorBarLogic=1;
+        if ~isfield(optStruct,'colorMap')
+            optStruct.colorMap='parula';
+        end
+        if ~isfield(optStruct,'FaceAlpha')
+            optStruct.FaceAlpha=1;
+        end
+        if ~isfield(optStruct,'lineColor') % 'none' or 'k'
+            optStruct.lineColor='none';
+        end
+        faceMeasureTitle='Equivalent Eulerian strain';
+    case {'EShearMax'}
+        for it=1:nFrames
+            FC{it}=DIC3DPPresults.Deform.(faceMeasureString){it};
+            if ~isempty(optStruct.maxCorrCoeff)
+                corrNow=DIC3DPPresults.FaceCorrComb{it};
+                FC{it}(corrNow>optStruct.maxCorrCoeff,:)=NaN;
+            end
+        end
+        FCmat = cell2mat(FC);
+        if ~isfield(optStruct,'colorBarLimits')
+            optStruct.colorBarLimits=[0 prctile(FCmat(:),100)];
+        end
+        colorBarLogic=1;
+        if ~isfield(optStruct,'colorMap')
+            optStruct.colorMap='parula';
+        end
+        if ~isfield(optStruct,'FaceAlpha')
+            optStruct.FaceAlpha=1;
+        end
+        if ~isfield(optStruct,'lineColor') % 'none' or 'k'
+            optStruct.lineColor='none';
+        end
+        faceMeasureTitle='Max Lagrangian shear strain';
+    case {'eShearMax'}
+        for it=1:nFrames
+            FC{it}=DIC3DPPresults.Deform.(faceMeasureString){it};
+            if ~isempty(optStruct.maxCorrCoeff)
+                corrNow=DIC3DPPresults.FaceCorrComb{it};
+                FC{it}(corrNow>optStruct.maxCorrCoeff,:)=NaN;
+            end
+        end
+        FCmat = cell2mat(FC);
+        if ~isfield(optStruct,'colorBarLimits')
+            optStruct.colorBarLimits=[0 prctile(FCmat(:),100)];
+        end
+        colorBarLogic=1;
+        if ~isfield(optStruct,'colorMap')
+            optStruct.colorMap='parula';
+        end
+        if ~isfield(optStruct,'FaceAlpha')
+            optStruct.FaceAlpha=1;
+        end
+        if ~isfield(optStruct,'lineColor') % 'none' or 'k'
+            optStruct.lineColor='none';
+        end
+        faceMeasureTitle='Max Eulerian shear strain';
     case {'Epc1'}
         for it=1:nFrames
             FC{it}=DIC3DPPresults.Deform.(faceMeasureString){it};
@@ -567,12 +659,12 @@ end
 
 %%
 % MultiDIC: a MATLAB Toolbox for Multi-View 3D Digital Image Correlation
-% 
+%
 % License: <https://github.com/MultiDIC/MultiDIC/blob/master/LICENSE.txt>
-% 
+%
 % Copyright (C) 2018  Dana Solav
-% 
+%
 % Modified by Rana Odabas 2018
-% 
+%
 % If you use the toolbox/function for your research, please cite our paper:
 % <https://engrxiv.org/fv47e>
