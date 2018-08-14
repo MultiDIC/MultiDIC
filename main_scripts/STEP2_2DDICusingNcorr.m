@@ -17,7 +17,7 @@ folderPathInitial=pwd;
 
 % select the folder containing the analysis images (if imagePathInitial=[] then the initial path is the current path)
 folderPathRef=uigetdir(folderPathInitial,'Select the folder containing speckle images from the reference camera');
-folderPathInitial2 = fileparts(folderPathRef)
+folderPathInitial2 = fileparts(folderPathRef);
 folderPathDef=uigetdir(folderPathInitial2,'Select the folder containing speckle images from the "deformed" camera');
 folderPaths=cell(1,2);
 folderPaths{1}=folderPathRef;
