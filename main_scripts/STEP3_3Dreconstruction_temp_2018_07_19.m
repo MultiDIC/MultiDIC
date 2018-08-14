@@ -3,12 +3,15 @@
 % for running this step, you need to have DIC2DpairResults structures of
 % the pairs you want to reconstruct from STEP2, as well as the DLT
 % parameters of the cameras from STEP1.
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MODIFIED to do only remove overlap instead of stitching
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
 clearvars; close all
 
 fs=get(0, 'DefaultUIControlFontSize');
 set(0, 'DefaultUIControlFontSize', 10);
+
 
 %% CHOOSE PATHS OPTIONS
 
@@ -30,10 +33,8 @@ nCams=numel(indCams);
 folderPathInitial=pwd;
 DLTparameterFolder = uipickfiles('FilterSpec',folderPathInitial,'Prompt',['Select the folder containing DLT parameters for cameras ' num2str(indCams')]);
 DLTstructAllCams=cell(nCams,1);
-DLTpath=cell(nCams,1);
 for ic=1:nCams
-    DLTpath{ic}=[DLTparameterFolder{1} '\DLTstruct_cam_' num2str(indCams(ic))];
-    DLTstructTemp=load(DLTpath{ic});
+    DLTstructTemp=load([DLTparameterFolder{1} '\DLTstruct_cam_' num2str(indCams(ic))]);
     DLTstructAllCams{ic}=DLTstructTemp.DLTstructCam;
 end
 
@@ -56,15 +57,13 @@ switch distortionRemovalLogic
         
     case 1
         distortionPar=cell(nCams,1);
-        distortionParPath=cell(nCams,1);
         for ic=1:nCams
             icam=indCams(ic);
             P2Dtemp=DLTstructAllCams{ic}.imageCentroids;
             columns=DLTstructAllCams{ic}.columns;
             C3Dtrue=DLTstructAllCams{ic}.C3Dtrue;
             % undistort image points
-            distortionParPath{ic}=[distortionParametersPath '\cameraCBparameters_cam_' num2str(icam)];
-            distortionParTemp=load(distortionParPath{ic});
+            distortionParTemp=load([distortionParametersPath '\cameraCBparameters_cam_' num2str(icam)]);
             distortionPar{ic}=distortionParTemp.cameraCBparameters.cameraParameters;
             [P2Dtemp] = undistortPoints(P2Dtemp,distortionPar{ic});
             % calculate new DLT parameters
@@ -97,11 +96,7 @@ for ip=1:nPairs % loop over stereo pairs
     % DLT parameters
     L1=DLTstructAllCams{iCamRef}.DLTparams; % DLT parameters for 1st camera
     L2=DLTstructAllCams{iCamDef}.DLTparams; % DLT parameters for 2nd camera
-    DIC3DpairResults.calibration.DLTpath{1}=DLTpath{iCamRef};
-    DIC3DpairResults.calibration.DLTpath{2}=DLTpath{iCamDef};
-    DIC3DpairResults.calibration.DLTparameters{1}=L1;
-    DIC3DpairResults.calibration.DLTparameters{2}=L2;
-            
+    
     % extract information from 2d-dic results
     nImages=DIC2D{ip}.nImages;
     CorCoeff=DIC2D{ip}.CorCoeffVec;
@@ -116,14 +111,10 @@ for ip=1:nPairs % loop over stereo pairs
             Points=DIC2D{ip}.Points;
             DIC3DpairResults.distortionModel{1}='none';
             DIC3DpairResults.distortionModel{2}='none';
-            DIC3DpairResults.distortionPath{1}='none';
-            DIC3DpairResults.distortionPath{2}='none';
         case 1 % if yes distortion correction, correct points and set distortion model
             Points=DIC2D{ip}.Points;
             DIC3DpairResults.distortionModel{1}=distortionPar{iCamRef};
             DIC3DpairResults.distortionModel{2}=distortionPar{iCamDef};
-            DIC3DpairResults.distortionPath{1}=distortionParPath{iCamRef};
-            DIC3DpairResults.distortionPath{2}=distortionParPath{iCamDef};
             step=min([40,size(Points{1},1)]);
             % remove distortion from points
             % first camera
@@ -210,7 +201,7 @@ end
 
 %% Stitch pairs
 % Stitch pairs? If yes, selesct which pairs to stitch and in which order
-stitchButton = questdlg('Stitch surfaces together?', 'Stitch surfaces together?', 'Yes', 'No', 'Yes');
+stitchButton = questdlg('remove overlaps?', 'remove overlaps?', 'Yes', 'No', 'Yes');
 switch stitchButton
     case 'Yes'
         stitchButton=true(1);
@@ -223,24 +214,17 @@ if stitchButton
     anim8_DIC3D_reconstructedPairs_faceMeasure(DIC3DAllPairsResults,'pairInd');
     answer = inputdlg({sprintf('Enter the indices of camera-pairs to stitch to each other (in the order they should be stitched):\nSurfaces deleted from the list will not be stitched, but will be included in the results')},'Input',[1,100],{mat2str(1:nPairs)});
     pairIndList=str2num(answer{1});
-    [DIC3Dcombined]= DIC3DsurfaceStitch(DIC3DAllPairsResults,pairIndList);
+    [DIC3Dcombined]= DIC3DsurfacesRemoveOverlap(DIC3DAllPairsResults,pairIndList);
 else
     % only append
-    [DIC3Dcombined]= DIC3DsurfaceStitch(DIC3DAllPairsResults,[]);
+    [DIC3Dcombined]= DIC3DsurfacesRemoveOverlap(DIC3DAllPairsResults,[]);
 end
 
 % add all information to DIC3Dcombined structure
 for ipair=1:nPairs
     % add distortion model information to DIC3Dcombined
-    DIC3Dcombined.distortion.distortionPath{ipair,1}=DIC3DAllPairsResults{ipair}.distortionPath{1};
-    DIC3Dcombined.distortion.distortionPath{ipair,2}=DIC3DAllPairsResults{ipair}.distortionPath{2};
-    DIC3Dcombined.distortion.distortionModel{ipair,1}=DIC3DAllPairsResults{ipair}.distortionModel{1};
-    DIC3Dcombined.distortion.distortionModel{ipair,2}=DIC3DAllPairsResults{ipair}.distortionModel{2};
-    % add calibration information to DIC3Dcombined
-    DIC3Dcombined.calibration.DLTpath{ipair,1}=DIC3DAllPairsResults{ipair}.calibration.DLTpath{1};
-    DIC3Dcombined.calibration.DLTpath{ipair,2}=DIC3DAllPairsResults{ipair}.calibration.DLTpath{2};
-    DIC3Dcombined.calibration.DLTparameters{ipair,1}=DIC3DAllPairsResults{ipair}.calibration.DLTparameters{1};
-    DIC3Dcombined.calibration.DLTparameters{ipair,2}=DIC3DAllPairsResults{ipair}.calibration.DLTparameters{2};
+    DIC3Dcombined.distortionModel{ipair,1}=DIC3DAllPairsResults{ipair}.distortionModel{1};
+    DIC3Dcombined.distortionModel{ipair,2}=DIC3DAllPairsResults{ipair}.distortionModel{2};
     % add 2D-DIC data to DIC3Dcombined
     DIC3Dcombined.DIC2Dinfo{ipair}=DIC2D{ipair};
     % add 3D-DIC data to DIC3Dcombined
@@ -251,7 +235,7 @@ end
 
 if save3DDIClogic
     if stitchButton
-        saveName=[savePath '\DIC3Dcombined_' num2str(nPairs) 'Pairs_stitched.mat'];
+        saveName=[savePath '\DIC3Dcombined_' num2str(nPairs) 'Pairs_reduced.mat'];
     else
         saveName=[savePath '\DIC3Dcombined_' num2str(nPairs) 'Pairs.mat'];
     end

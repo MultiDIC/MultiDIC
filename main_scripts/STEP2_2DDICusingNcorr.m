@@ -17,8 +17,7 @@ folderPathInitial=pwd;
 
 % select the folder containing the analysis images (if imagePathInitial=[] then the initial path is the current path)
 folderPathRef=uigetdir(folderPathInitial,'Select the folder containing speckle images from the reference camera');
-folderPathInitial2 = strsplit(folderPathRef,'\');
-folderPathInitial2 = strjoin(folderPathInitial2(1:end-1),'\');
+folderPathInitial2 = fileparts(folderPathRef)
 folderPathDef=uigetdir(folderPathInitial2,'Select the folder containing speckle images from the "deformed" camera');
 folderPaths=cell(1,2);
 folderPaths{1}=folderPathRef;
@@ -27,10 +26,12 @@ folderPaths{2}=folderPathDef;
 % camera indeces for current analysis  
 folderNameCell=strsplit(folderPaths{1},'\');
 folderNameStr=folderNameCell{end};
-nCamRef=str2double(folderNameStr);
+folderNameStrSplit=strsplit(folderNameStr,'_');
+nCamRef=str2double(folderNameStrSplit{end});
 folderNameCell=strsplit(folderPaths{2},'\');
 folderNameStr=folderNameCell{end};
-nCamDef=str2double(folderNameStr);
+folderNameStrSplit=strsplit(folderNameStr,'_');
+nCamDef=str2double(folderNameStrSplit{end});
 
 % save 2D-DIC results? choose save path
 [save2DDIClogic,savePath]=Qsave2DDICresults(folderPaths);
