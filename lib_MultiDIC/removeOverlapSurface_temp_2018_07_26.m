@@ -1,5 +1,9 @@
-function [CT1,CT2] = removeOverlapSurface(F1,F2,V1,V2,varargin)
-
+function [CT1,CT2] = removeOverlapSurface_temp_2018_07_26(F1,F2,V1,V2,varargin)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% trying to speed up this function by removing groups of faces at a time
+% and not one by one
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
 % [CT1,CT2] = removeOverlapSurface(F1,F2,V1,V2)
 % [CT1,CT2] = removeOverlapSurface(F1,F2,V1,V2,Q1,Q2)
 % [CT1,CT2] = removeOverlapSurface(F1,F2,V1,V2,Q1,Q2,minGap)

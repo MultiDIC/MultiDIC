@@ -128,7 +128,7 @@ end
 
 %% save important variables for further analysis (write text files of correlated 2D points, their cirrelation coefficients, triangular faces, and face colors
 if save2DDIClogic
-    save([savePath '\DIC2DpairResults_C_' num2str(nCamRef) '_C_' num2str(nCamDef)] ,'DIC2DpairResults');
+    save([savePath '\DIC2DpairResults_C_' num2str(nCamRef) '_C_' num2str(nCamDef)] ,'DIC2DpairResults',	'-v7.3');
 end
 
 %% plot?
@@ -151,7 +151,7 @@ close(hf1);
 end
 
 %% finish
-hm=msgbox(['STEP2 for the camera pair [' num2str([nCamRef nCamDef]) '] is completed']);
+hm=msgbox(['STEP2 for the camera pair  [' num2str([nCamRef nCamDef]) ']  is completed']);
 
 set(0, 'DefaultUIControlFontSize', fs);
 

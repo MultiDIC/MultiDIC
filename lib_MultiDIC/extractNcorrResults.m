@@ -84,6 +84,9 @@ EdgeLengthsMax=max(EdgeLengths,[],2);
 
 F(EdgeLengthsMax>1.1*sqrt(2)*Factor,:)=[];
 
+% flip direction to have normals pointing out
+F=F(:,[1 3 2]);
+
 % face colors (average node colors)
 CF=mean(ColorRef(F),2);
 

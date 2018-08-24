@@ -79,6 +79,12 @@ epc2=cell(nFrames,1);
 epc2vec=cell(nFrames,1);
 EShearMax=cell(nFrames,1);
 eShearMax=cell(nFrames,1);
+EShearMaxVec1=cell(nFrames,1);
+EShearMaxVec2=cell(nFrames,1);
+EShearMaxVecCur1=cell(nFrames,1);
+EShearMaxVecCur2=cell(nFrames,1);
+eShearMaxVec1=cell(nFrames,1);
+eShearMaxVec2=cell(nFrames,1);
 Eeq=cell(nFrames,1);
 eeq=cell(nFrames,1);
 Area=cell(nFrames,1);
@@ -119,6 +125,12 @@ for itime=1:nFrames
     epc2vec{itime}=zeros(size(F,1),3);
     EShearMax{itime}=zeros(size(F,1),1);
     eShearMax{itime}=zeros(size(F,1),1);
+    EShearMaxVec1{itime}=zeros(size(F,1),3);
+    EShearMaxVec2{itime}=zeros(size(F,1),3);
+    EShearMaxVecCur1{itime}=zeros(size(F,1),3);
+    EShearMaxVecCur2{itime}=zeros(size(F,1),3);
+    eShearMaxVec1{itime}=zeros(size(F,1),3);
+    eShearMaxVec2{itime}=zeros(size(F,1),3);
     Eeq{itime}=zeros(size(F,1),1);
     eeq{itime}=zeros(size(F,1),1);
     Area{itime}=zeros(size(F,1),1);
@@ -204,9 +216,17 @@ for itime=1:nFrames
             epc1vec{itime}(itri,:)=eigVece(:,eigVecPlanInd(epc1Ind)); % direction of ePrinc1 in deformed configuration
             epc2vec{itime}(itri,:)=eigVece(:,eigVecPlanInd(epc2Ind)); % same for EPrinc2
                  
-            % Max shear strain
+            % Max shear strain and its direction
+            % Lagrangian
             EShearMax{itime}(itri)=.5*(Epc2{itime}(itri)-Epc1{itime}(itri));
+            EShearMaxVec1{itime}(itri,:)=(1/sqrt(2))*(Epc1vec{itime}(itri,:)+Epc2vec{itime}(itri,:));
+            EShearMaxVec2{itime}(itri,:)=(1/sqrt(2))*(Epc2vec{itime}(itri,:)-Epc1vec{itime}(itri,:));
+            EShearMaxVecCur1{itime}(itri,:)=(1/sqrt(2))*(Epc1vecCur{itime}(itri,:)+Epc2vecCur{itime}(itri,:));
+            EShearMaxVecCur2{itime}(itri,:)=(1/sqrt(2))*(Epc2vecCur{itime}(itri,:)-Epc1vecCur{itime}(itri,:));
+            % Eulerian
             eShearMax{itime}(itri)=.5*(epc2{itime}(itri)-epc1{itime}(itri));
+            eShearMaxVec1{itime}(itri,:)=(1/sqrt(2))*(epc1vec{itime}(itri,:)+epc2vec{itime}(itri,:));
+            eShearMaxVec2{itime}(itri,:)=(1/sqrt(2))*(epc2vec{itime}(itri,:)-epc1vec{itime}(itri,:));
             
             % Equivalent strain (von-mises)
             Edev=E{itime}(:,:,itri)-(1/3)*trace(E{itime}(:,:,itri))*eye(3);
@@ -270,6 +290,11 @@ deformationStruct.epc1vec=epc1vec; % 1st planar Almansi principal strain directi
 deformationStruct.epc2vec=epc2vec; % 2nd planar Almansi principal strain direction (corresponds to epc2). it is planar in the current conf.
 deformationStruct.EShearMax=EShearMax; % Max shear strain (Lagrangian)
 deformationStruct.eShearMax=eShearMax; % Max shear strain (Eulerian)
+deformationStruct.EShearMaxVec1=EShearMaxVec1;
+deformationStruct.EShearMaxVec2=EShearMaxVec2;
+deformationStruct.EShearMaxVecCur1=EShearMaxVecCur1;
+deformationStruct.EShearMaxVecCur2=EShearMaxVecCur2;
+deformationStruct.eShearMaxVec2=eShearMaxVec2;
 deformationStruct.Eeq=Eeq; % Equivalent strain (Lagrangian)
 deformationStruct.eeq=eeq; % Equivalent strain (Eulerian)
 deformationStruct.Area=Area;

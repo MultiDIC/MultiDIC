@@ -21,13 +21,15 @@ currentPointIndex=find(DIC3DPPresults.PointPairInds==pairIndex);
 firstCurrentPointIndex=currentPointIndex(1);
 F=DIC3DPPresults.Faces(currentFacesLogic,:);
 F=F-firstCurrentPointIndex+1;
+FaceCorr=cell(nImages,1);
 for ii=1:nImages
     FaceCorr{ii}=DIC3DPPresults.FaceCorrComb{ii}(currentFacesLogic,:);
 end
+ImSet=cell(2*nImages,1);
 for ii=1:2*nImages
     ImSet{ii}=imread(DIC3DPPresults.DIC2Dinfo{pairIndex}.ImPaths{ii});
-        if size(ImSet{ii},3)==3
-        ImSet{ii}=rgb2gray(ImSet{ii});     
+    if size(ImSet{ii},3)==3
+        ImSet{ii}=rgb2gray(ImSet{ii});
     end
 end
 
@@ -52,6 +54,7 @@ for ii=1:nImages
 end
 
 %%
+FC=cell(nImages,1);
 switch faceMeasureString
     case {'J','Lamda1','Lamda2'}
         for ii=1:nImages
@@ -67,8 +70,7 @@ switch faceMeasureString
         else
             FClimits=optStruct.FClimits;
         end
-        FClimits
-    case {'Emgn','emgn'}
+    case {'Emgn','emgn','Eeq','eeq','EShearMax','eShearMax'}
         for ii=1:nImages
             FC{ii}=DIC3DPPresults.Deform.(faceMeasureString){ii}(currentFacesLogic,:);
         end
@@ -103,7 +105,19 @@ end
 for ii=1:nImages
     FC{ii}(isnan(FaceCorr{ii}))=NaN;
 end
-%%
+
+%% cut out point with extreme face color values
+if ~isfield(optStruct,'dataLimits')
+    dataLimits=[min(min(cell2mat(FaceCorr))) max(max(cell2mat(FaceCorr)))];
+else
+    dataLimits=optStruct.dataLimits;
+end
+
+for ii=1:nImages
+    FC{ii}(FC{ii}<dataLimits(1) | FC{ii}>dataLimits(2))=NaN;
+end
+
+%% plot
 hf=cFigure;
 hf.Units='normalized'; hf.OuterPosition=[.05 .05 .9 .9]; hf.Units='pixels';
 

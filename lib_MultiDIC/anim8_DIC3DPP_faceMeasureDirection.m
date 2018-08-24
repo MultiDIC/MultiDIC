@@ -166,9 +166,15 @@ FCmat = cell2mat(FC);
 if ~isfield(optStruct,'colorBarLimits')
     switch faceMeasureCell{is}
         case {'Epc1','Epc2','epc1','epc2'}
-            optStruct.colorBarLimits=[-prctile(abs(FCmat(:)),100) prctile(abs(FCmat(:)),100)];
+            Emax=max(abs(FCmat(:)));
+            optStruct.colorBarLimits=[-Emax Emax];
         case {'Lamda1','Lamda2'}
-            optStruct.colorBarLimits=[1-prctile(abs(FCmat(:)-1),100) 1+prctile(abs(FCmat(:)-1),100)];
+            Lmax=max(abs(FCmat(:)-1));
+            if Lmax>1
+                optStruct.colorBarLimits=[0 2];
+            else
+                optStruct.colorBarLimits=[1-prctile(abs(FCmat(:)-1),100) 1+prctile(abs(FCmat(:)-1),100)];
+            end
     end
 end
 colorBarLogic=1;
@@ -212,7 +218,7 @@ for is=1:nStrains
     FCnow=FC{it,is};
     Dnow=Ds{it,is};
     if optStruct.smoothLogic
-        [FCnow]=triSmoothFaceMeasure(FCnow,Fnow,Pnow,[],[]);
+        [FCnow]=patchSmoothFaceMeasure(Fnow,Pnow,FCnow);
     end
     FCnow(FCnow<optStruct.dataLimits(1))=NaN;
     FCnow(FCnow>optStruct.dataLimits(2))=NaN;
@@ -248,7 +254,7 @@ for it=1:nFrames
         Fnow=DIC3DPPresults.Faces;
         FCnow=FC{it,is};
         if optStruct.smoothLogic
-            [FCnow]=triSmoothFaceMeasure(FCnow,Fnow,Pnow,[],[]);
+            [FCnow]=patchSmoothFaceMeasure(Fnow,Pnow,FCnow);
         end
         FCnow(FCnow<optStruct.dataLimits(1))=NaN;
         FCnow(FCnow>optStruct.dataLimits(2))=NaN;

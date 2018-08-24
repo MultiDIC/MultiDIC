@@ -102,7 +102,7 @@ if save3DDIClogic
         saveName=[savePath '\DIC3DPPresults_' num2str(nPairs) 'Pairs(' num2str(icount) ').mat'];
         icount=icount+1;
     end
-    save(saveName,'DIC3DPPresults');
+    save(saveName,'DIC3DPPresults','-v7.3');
 end
 
 %% Plot results?
@@ -115,7 +115,7 @@ switch plotButton
             optStruct=struct;
             optStruct.zDirection=1;
             optStruct.FaceAlpha=1;
-            
+            optStruct.smoothLogic=1;
             % PLOT
             plot3DDICPPresults(DIC3DPPresults,optStruct);
             
@@ -135,7 +135,6 @@ h=msgbox('STEP4 is completed');
 h.CurrentAxes.Children.FontSize=11;
 
 set(0, 'DefaultUIControlFontSize', fs);
-
 
 %%
 % MultiDIC: a MATLAB Toolbox for Multi-View 3D Digital Image Correlation

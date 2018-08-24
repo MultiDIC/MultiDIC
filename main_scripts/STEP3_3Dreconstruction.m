@@ -38,7 +38,7 @@ for ic=1:nCams
 end
 
 % remove distortion? If yes, choose the folder where the parameters exist
-distortionRemovalButton = questdlg('Remove distortion from calibration points?', 'Remove distortion?', 'Yes', 'No', 'Yes');
+distortionRemovalButton = questdlg('Remove distortion?', 'Remove distortion?', 'Yes', 'No', 'Yes');
 switch distortionRemovalButton
     case 'Yes'
         distortionRemovalLogic=true(1);
@@ -264,7 +264,7 @@ if save3DDIClogic
         end
         icount=icount+1;
     end
-    save(saveName,'DIC3Dcombined');
+    save(saveName,'DIC3Dcombined','-v7.3');
 end
 
 %% finish

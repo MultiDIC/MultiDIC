@@ -109,12 +109,13 @@ switch faceMeasureString
         end
         FCmat = cell2mat(FC);
         if ~isfield(optStruct,'colorBarLimits')
-            Jmax=max(abs(FCmat(:)-1));
-            if Jmax>1
+                        Lmax=max(abs(FCmat(:)-1));
+            if Lmax>1
                 optStruct.colorBarLimits=[0 2];
             else
                 optStruct.colorBarLimits=[1-prctile(abs(FCmat(:)-1),100) 1+prctile(abs(FCmat(:)-1),100)];
             end
+            optStruct.colorBarLimits=[1-prctile(abs(FCmat(:)-1),100) 1+prctile(abs(FCmat(:)-1),100)];
         end
         colorBarLogic=1;
         if ~isfield(optStruct,'colorMap')
@@ -137,12 +138,7 @@ switch faceMeasureString
         end
         FCmat = cell2mat(FC);
         if ~isfield(optStruct,'colorBarLimits')
-            Lmax=max(abs(FCmat(:)-1));
-            if Lmax>1
-                optStruct.colorBarLimits=[0 2];
-            else
-                optStruct.colorBarLimits=[1-prctile(abs(FCmat(:)-1),100) 1+prctile(abs(FCmat(:)-1),100)];
-            end
+            optStruct.colorBarLimits=[1-prctile(abs(FCmat(:)-1),100) 1+prctile(abs(FCmat(:)-1),100)];
         end
         colorBarLogic=1;
         if ~isfield(optStruct,'colorMap')
@@ -165,12 +161,7 @@ switch faceMeasureString
         end
         FCmat = cell2mat(FC);
         if ~isfield(optStruct,'colorBarLimits')
-            Lmax=max(abs(FCmat(:)-1));
-            if Lmax>1
-                optStruct.colorBarLimits=[0 2];
-            else
-                optStruct.colorBarLimits=[1-prctile(abs(FCmat(:)-1),100) 1+prctile(abs(FCmat(:)-1),100)];
-            end
+            optStruct.colorBarLimits=[1-prctile(abs(FCmat(:)-1),100) 1+prctile(abs(FCmat(:)-1),100)];
         end
         colorBarLogic=1;
         if ~isfield(optStruct,'colorMap')

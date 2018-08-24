@@ -1,7 +1,42 @@
-function [DIC3DStitched]= DIC3DsurfaceStitch(DIC3DAllPairsResults,pairIndList)
+function [DIC3DStitched]= DIC3DsurfaceStitch_temp_2018_07_25(DIC3DAllPairsResults,pairIndList,varargin)
+%[DIC3DStitched]= DIC3DsurfaceStitch_temp_2018_07_25(DIC3DAllPairsResults,pairIndList)
+%[DIC3DStitched]= DIC3DsurfaceStitch_temp_2018_07_25(DIC3DAllPairsResults,pairIndList,inputStruct)
 
-% pairIndList = lists of surfaces indices to stitch
+% * DIC3DAllPairsResults = cell array containing in each cell (from STEP3):
+% cameraPairInd [ind1 ind2]
+% Faces (nF-by-3)
+% FaceColors (nF-by-3)
+% distortionModel
+% Points3D cell array {nT-by-1} containing (nV-by-3) coordinates
+% Disp
+% FaceCentroids
+% corrComb
+% FaceCorrComb
+%
+% * pairIndList = lists of surfaces indices to stitch
+%
+% * inputStruct = structure with the optional fields:
+% minGap
 
+%%
+nargin=numel(varargin);
+switch nargin
+    case 0
+        minGap=[]; % minimum gap to keep between surfaces
+        minDistValue=[]; % minimum distance to stitch
+    case 1
+        inputStruct=varargin{1};
+        if isfield(inputStruct,'minGap')
+          minGap=inputStruct.minGap;
+        end
+        if isfield(inputStruct,'minDistValue')
+          minDistValue=inputStruct.minDistValue;
+        end
+    otherwise
+        error('Wrong number of input arguments');
+end
+
+%%
 if ~isempty(pairIndList)
     %% assign first surfaces for stitching
     
@@ -67,10 +102,14 @@ if ~isempty(pairIndList)
         gpatch(F2,V2,colors(FC2,:),'k',.5);
         axisGeom
         
-        %%
-        % reduced surfaces
-        minGap=.6*nanmean([patchEdgeLengths(F1,V1) ; patchEdgeLengths(F2,V2)]);
-        minDistValue=3*minGap;
+        %% reduced surfaces
+        if isempty(minGap)
+%         minGap=.6*nanmean([patchEdgeLengths(F1,V1) ; patchEdgeLengths(F2,V2)]); 
+        minGap=.6*min([nanmean(patchEdgeLengths(F1,V1)) nanmean(patchEdgeLengths(F2,V2))]); % minimum gap to keep between surfaces
+        end
+        if isempty(minDistValue)
+            minDistValue=4*minGap; % minimum distance to stitch
+        end
         
         % Q1=
         % Q2=
@@ -84,6 +123,7 @@ if ~isempty(pairIndList)
         FC2r=FC2(CT2,:);
         FCT1r=FCT1(CT1,:); % colors that represent the pair index
         FCT2r=FCT2(CT2,:);
+        
         % remove NaN faces
         F1rNaNLogic=any(isnan(V1(F1r)),2);
         F2rNaNLogic=any(isnan(V2(F2r)),2);
@@ -238,28 +278,28 @@ if ~isempty(pairIndList)
                         end
                         
                         % retract vertices from the beginning and end of the lists if they are further
-                        while 1
-                            if pdist2(V1r(curve1(1),:),V2r(curve2(1),:))>pdist2(V1r(curve1(2),:),V2r(curve2(1),:))
-                                curve1(1)=[];
-                                %             plotV(V1r(curve1(1),:),'sk','MarkerSize',10,'MarkerFaceColor','b'); % plot closest point on mesh 2
-                            elseif pdist2(V1r(curve1(1),:),V2r(curve2(1),:))>pdist2(V1r(curve1(1),:),V2r(curve2(2),:))
-                                curve2(1)=[];
-                                %             plotV(V2r(curve2(1),:),'sk','MarkerSize',10,'MarkerFaceColor','r'); % plot closest point on mesh 2
-                            else
-                                break
-                            end
-                        end
-                        while 1
-                            if pdist2(V1r(curve1(end),:),V2r(curve2(end),:))>pdist2(V1r(curve1(end-1),:),V2r(curve2(end),:))
-                                curve1(end)=[];
-                                %             plotV(V1r(curve1(end),:),'sk','MarkerSize',10,'MarkerFaceColor','b'); % plot closest point on mesh 2
-                            elseif pdist2(V1r(curve1(end),:),V2r(curve2(end),:))>pdist2(V1r(curve1(end),:),V2r(curve2(end-1),:))
-                                curve2(end)=[];
-                                %             plotV(V2r(curve2(end),:),'sk','MarkerSize',10,'MarkerFaceColor','r'); % plot closest point on mesh 2
-                            else
-                                break
-                            end
-                        end
+%                         while 1
+%                             if pdist2(V1r(curve1(1),:),V2r(curve2(1),:))>pdist2(V1r(curve1(2),:),V2r(curve2(1),:))
+%                                 curve1(1)=[];
+%                                 %             plotV(V1r(curve1(1),:),'sk','MarkerSize',10,'MarkerFaceColor','b'); % plot closest point on mesh 2
+%                             elseif pdist2(V1r(curve1(1),:),V2r(curve2(1),:))>pdist2(V1r(curve1(1),:),V2r(curve2(2),:))
+%                                 curve2(1)=[];
+%                                 %             plotV(V2r(curve2(1),:),'sk','MarkerSize',10,'MarkerFaceColor','r'); % plot closest point on mesh 2
+%                             else
+%                                 break
+%                             end
+%                         end
+%                         while 1
+%                             if pdist2(V1r(curve1(end),:),V2r(curve2(end),:))>pdist2(V1r(curve1(end-1),:),V2r(curve2(end),:))
+%                                 curve1(end)=[];
+%                                 %             plotV(V1r(curve1(end),:),'sk','MarkerSize',10,'MarkerFaceColor','b'); % plot closest point on mesh 2
+%                             elseif pdist2(V1r(curve1(end),:),V2r(curve2(end),:))>pdist2(V1r(curve1(end),:),V2r(curve2(end-1),:))
+%                                 curve2(end)=[];
+%                                 %             plotV(V2r(curve2(end),:),'sk','MarkerSize',10,'MarkerFaceColor','r'); % plot closest point on mesh 2
+%                             else
+%                                 break
+%                             end
+%                         end
                         % plotV(V1r(curve1(1),:),'sk','MarkerSize',10,'MarkerFaceColor','b');
                         % plotV(V2r(curve2(1),:),'sk','MarkerSize',10,'MarkerFaceColor','r');
                         % plotV(V1r(curve1(end),:),'sk','MarkerSize',10,'MarkerFaceColor','b');
@@ -291,7 +331,7 @@ if ~isempty(pairIndList)
                             [FzTemp,~,CzTemp]=delaunayZip(F1r,V1r,F2r,V2r,inputStruct);
                             Fz{ii}=FzTemp(CzTemp>=3,:);
                         catch
-                            warning(['Problem zipping ' num2str(pairIndList(1):pairIndList(imesh)) '] to [' num2str(pairInd2) '] . Continuing without zipping']);
+                            warning(['Problem zipping pair [' num2str(pairIndList(1):pairIndList(imesh)) '] to [' num2str(pairInd2) '] . Continuing without zipping']);
                             % take the zipped part (without the original surfaces)
                             Fz{ii}=[];    
                         end
