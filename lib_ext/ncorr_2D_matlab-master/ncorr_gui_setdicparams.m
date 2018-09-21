@@ -58,7 +58,7 @@ function [radius,spacing,cutoff_diffnorm,cutoff_iteration,total_threads,stepanal
         min_total_threads = 1;   
         min_step = 1;
         max_radius = 200;
-        max_spacing = 20;
+        max_spacing = 50;
         max_cutoff_diffnorm = 1e-2;
         max_cutoff_iteration = 100;
         max_total_threads = 64;

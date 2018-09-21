@@ -218,7 +218,9 @@ for is=1:nStrains
     FCnow=FC{it,is};
     Dnow=Ds{it,is};
     if optStruct.smoothLogic
-        [FCnow]=patchSmoothFaceMeasure(Fnow,Pnow,FCnow);
+        smoothPar.lambda=0.5;
+        smoothPar.n=2;
+        [FCnow]=patchSmoothFaceMeasure(Fnow,Pnow,FCnow,smoothPar);
     end
     FCnow(FCnow<optStruct.dataLimits(1))=NaN;
     FCnow(FCnow>optStruct.dataLimits(2))=NaN;
@@ -254,7 +256,7 @@ for it=1:nFrames
         Fnow=DIC3DPPresults.Faces;
         FCnow=FC{it,is};
         if optStruct.smoothLogic
-            [FCnow]=patchSmoothFaceMeasure(Fnow,Pnow,FCnow);
+            [FCnow]=patchSmoothFaceMeasure(Fnow,Pnow,FCnow,smoothPar);
         end
         FCnow(FCnow<optStruct.dataLimits(1))=NaN;
         FCnow(FCnow>optStruct.dataLimits(2))=NaN;
