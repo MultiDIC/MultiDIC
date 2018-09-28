@@ -134,7 +134,7 @@ for ic=1:Ncam % loop over all cameras
     delete(hm);
     
     % remove images with high errors
-    answer=questdlg('Do you want to remove some of the images with higher errors?','Remove images?','Yes','No','No');
+    answer=questdlg('Do you want to remove some of the images?','Remove images?','Yes','No','No');
     switch answer
         case 'Yes'
             % reprojection errors per image
@@ -147,24 +147,26 @@ for ic=1:Ncam % loop over all cameras
             threshold=str2num(answer{1});
             indImgHighError=cameraCBparameters.imagesUsed(find(meanError>threshold));
             if length(indImgHighError)>0
-                msgbox([ num2str(length(indImgHighError)) ' images will be removed from the calibration parameters calculation']);
-                fileNamesImgHighError=cameraCBparameters.imagesInfo.imageFileNames(indImgHighError)';
-                % delete high error images
-                CBimagesInfo.I(:,:,:,indImgHighError)=[];
-                CBimagesInfo.imageFileNames(indImgHighError)=[];
-                CBimagesInfo.Nimages=numel(CBimagesInfo.imageFileNames);
-                % plot all images in one figure
-                plotAllCameraImages(CBimagesInfo);
-                % Extract images, Detect the checkerboard points, calculate camera paramters, and save a structure containing all necessary parameters
-                hm=msgbox(['Please wait while re-computing distortion parameters for camera ' num2str(CBimagesInfo.icam)]);
-                cameraCBparameters=calculateCBcalibrationParameters(CBimagesInfo,squareSize,optStruct);
-                delete(hm);
-                % plot camera parameters and reorojection errors before and after distortion correction
-                plot_camera_parameters_2tabs(cameraCBparameters);
-                if saveCameraParametersLogic
-                    savefig([figuresPath '\params_cam' num2str(CBimagesInfo.icam)]);
-                end
-            end
+            msgbox([ num2str(length(indImgHighError)) ' images will be removed from the calibration parameters calculation']);
+            fileNamesImgHighError=cameraCBparameters.imagesInfo.imageFileNames(indImgHighError)';
+            % delete high error images
+            CBimagesInfo.I(:,:,:,indImgHighError)=[];
+            CBimagesInfo.imageFileNames(indImgHighError)=[];
+            CBimagesInfo.Nimages=numel(CBimagesInfo.imageFileNames);
+             
+        % plot all images in one figure
+        plotAllCameraImages(CBimagesInfo);
+        % Extract images, Detect the checkerboard points, calculate camera paramters, and save a structure containing all necessary parameters
+        hm=msgbox(['Please wait while re-computing distortion parameters for camera ' num2str(CBimagesInfo.icam)]);
+        cameraCBparameters=calculateCBcalibrationParameters(CBimagesInfo,squareSize,optStruct);
+        delete(hm);
+        
+            CBimagesInfo
+            cameraCBparameters=calculateCBcalibrationParameters(CBimagesInfo,squareSize,optStruct);
+            
+
+        case 'No'
+            
     end
     
     % save camera parameters into the cell array of all cameras
