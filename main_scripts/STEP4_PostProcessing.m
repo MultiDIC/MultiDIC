@@ -96,10 +96,10 @@ DIC3DPPresults=DIC3D;
 %% save results
 nPairs=size(DIC3DPPresults.pairIndices,1);
 if save3DDIClogic
-    saveName=[savePath '\DIC3DPPresults_' num2str(nPairs) 'Pairs.mat'];
+    saveName=fullfile(savePath, ['DIC3DPPresults_' num2str(nPairs) 'Pairs.mat']);
     icount=1;
     while exist(saveName,'file')
-        saveName=[savePath '\DIC3DPPresults_' num2str(nPairs) 'Pairs(' num2str(icount) ').mat'];
+        saveName=fullfile(savePath, ['DIC3DPPresults_' num2str(nPairs) 'Pairs(' num2str(icount) ').mat']);
         icount=icount+1;
     end
     save(saveName,'DIC3DPPresults','-v7.3');

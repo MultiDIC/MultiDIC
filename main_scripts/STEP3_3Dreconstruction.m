@@ -32,7 +32,7 @@ DLTparameterFolder = uipickfiles('FilterSpec',folderPathInitial,'Prompt',['Selec
 DLTstructAllCams=cell(nCams,1);
 DLTpath=cell(nCams,1);
 for ic=1:nCams
-    DLTpath{ic}=[DLTparameterFolder{1} '\DLTstruct_cam_' num2str(indCams(ic))];
+    DLTpath{ic}=fullfile(DLTparameterFolder{1}, ['DLTstruct_cam_' num2str(indCams(ic))]);
     DLTstructTemp=load(DLTpath{ic});
     DLTstructAllCams{ic}=DLTstructTemp.DLTstructCam;
 end
@@ -63,7 +63,7 @@ switch distortionRemovalLogic
             columns=DLTstructAllCams{ic}.columns;
             C3Dtrue=DLTstructAllCams{ic}.C3Dtrue;
             % undistort image points
-            distortionParPath{ic}=[distortionParametersPath '\cameraCBparameters_cam_' num2str(icam)];
+            distortionParPath{ic}=fullfile(distortionParametersPath, ['cameraCBparameters_cam_' num2str(icam)]);
             distortionParTemp=load(distortionParPath{ic});
             distortionPar{ic}=distortionParTemp.cameraCBparameters.cameraParameters;
             [P2Dtemp] = undistortPoints(P2Dtemp,distortionPar{ic});
@@ -199,10 +199,6 @@ for ip=1:nPairs % loop over stereo pairs
     
     % put all pairs in a cell array
     DIC3DAllPairsResults{ip}=DIC3DpairResults;
-            
-%      if save3DDIClogic
-%         save([savePath '\DIC3DpairResults_C_' num2str(nCamRef) '_C_' num2str(nCamDef)] ,'DIC3DpairResults');
-%      end
     
      delete(hw) 
 end
@@ -251,16 +247,16 @@ end
 
 if save3DDIClogic
     if stitchButton
-        saveName=[savePath '\DIC3Dcombined_' num2str(nPairs) 'Pairs_stitched.mat'];
+        saveName=fullfile(savePath, ['DIC3Dcombined_' num2str(nPairs) 'Pairs_stitched.mat']);
     else
-        saveName=[savePath '\DIC3Dcombined_' num2str(nPairs) 'Pairs.mat'];
+        saveName=fullfile(savePath, ['DIC3Dcombined_' num2str(nPairs) 'Pairs.mat']);
     end
     icount=1;
     while exist(saveName,'file')
         if stitchButton
-            saveName=[savePath '\DIC3Dcombined_' num2str(nPairs) 'Pairs_stitched (' num2str(icount) ').mat'];
+            saveName=fullfile(savePath, ['DIC3Dcombined_' num2str(nPairs) 'Pairs_stitched (' num2str(icount) ').mat']);
         else
-            saveName=[savePath '\DIC3Dcombined_' num2str(nPairs) 'Pairs (' num2str(icount) ').mat'];
+            saveName=fullfile(savePath, ['DIC3Dcombined_' num2str(nPairs) 'Pairs (' num2str(icount) ').mat']);
         end
         icount=icount+1;
     end

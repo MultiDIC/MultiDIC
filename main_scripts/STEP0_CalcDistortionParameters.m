@@ -42,7 +42,7 @@ end
 [saveUndistortedImagesLogic,overWriteUDimagesLogic]=QsaveUndistortedImages;
 
 % figures path to save the plotted results
-figuresPath=[savePath '\figures'];
+figuresPath=fullfile(savePath, 'figures');
 warning('off','MATLAB:MKDIR:DirectoryExists');
 mkdir(figuresPath);
 
@@ -122,7 +122,7 @@ for ic=1:Ncam % loop over all cameras
     % plot camera parameters and reorojection errors before and after distortion correction
     plot_camera_parameters_2tabs(cameraCBparameters);
         if saveCameraParametersLogic
-            savefig([figuresPath '\params_cam' num2str(CBimagesInfo.icam)]);
+            savefig(fullfile(figuresPath,[ 'params_cam' num2str(CBimagesInfo.icam)]));
         end
     
     % plot reprojected points vs. true points and straight lines on each image
@@ -162,7 +162,7 @@ for ic=1:Ncam % loop over all cameras
                 % plot camera parameters and reorojection errors before and after distortion correction
                 plot_camera_parameters_2tabs(cameraCBparameters);
                 if saveCameraParametersLogic
-                    savefig([figuresPath '\params_cam' num2str(CBimagesInfo.icam)]);
+                    savefig(fullfile(figuresPath,[ 'params_cam', num2str(CBimagesInfo.icam)]));
                 end
             end
     end
@@ -171,14 +171,14 @@ for ic=1:Ncam % loop over all cameras
     cameraCBparametersAllCams{ic}=cameraCBparameters;
     % save parameters into savePath
     if saveCameraParametersLogic
-        save([savePath '\cameraCBparameters_cam_' num2str(cameraCBparameters.icam)],'cameraCBparameters');
+        save(fullfile(savePath, ['cameraCBparameters_cam_', num2str(cameraCBparameters.icam)]),'cameraCBparameters');
     end
     
 end
 
 % save cell array containing the camera parameters for all cameras in this analysis
 if saveCameraParametersLogic
-    save([savePath '\cameraCBparametersAllCams'],'cameraCBparametersAllCams');
+    save(fullfile(savePath, 'cameraCBparametersAllCams'),'cameraCBparametersAllCams');
 end
 
 %% plot camera instrinsic statistics for all cameras (if more than 1 camera)
@@ -189,7 +189,7 @@ if Ncam>1
     if strcmp(plotButton,'Yes')         
         plotIntrinsicStatsAll(cameraCBparametersAllCams);
                 if saveCameraParametersLogic   
-                    savefig([figuresPath '\IntrinsicStats']); 
+                    savefig(fullfile(figuresPath, 'IntrinsicStats')); 
                 end        
     end
 end

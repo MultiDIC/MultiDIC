@@ -24,11 +24,11 @@ folderPaths{1}=folderPathRef;
 folderPaths{2}=folderPathDef;
 
 % camera indeces for current analysis  
-folderNameCell=strsplit(folderPaths{1},'\');
+folderNameCell=strsplit(folderPaths{1},filesep);
 folderNameStr=folderNameCell{end};
 folderNameStrSplit=strsplit(folderNameStr,'_');
 nCamRef=str2double(folderNameStrSplit{end});
-folderNameCell=strsplit(folderPaths{2},'\');
+folderNameCell=strsplit(folderPaths{2},filesep);
 folderNameStr=folderNameCell{end};
 folderNameStrSplit=strsplit(folderNameStr,'_');
 nCamDef=str2double(folderNameStrSplit{end});
@@ -36,14 +36,6 @@ nCamDef=str2double(folderNameStrSplit{end});
 % save 2D-DIC results? choose save path
 [save2DDIClogic,savePath]=Qsave2DDICresults(folderPaths);
 
-% % create folder for processed images and warn for overwriting
-% if save2DDIClogic
-%     processedImagePath=[savePath '\processedImages'];
-%     warning('off','MATLAB:MKDIR:DirectoryExists');
-%     mkdir(processedImagePath);
-% else
-%     processedImagePath=[];
-% end
 
 %% create structure for saving the 2DDIC results
 DIC2DpairResults = struct;
@@ -82,12 +74,12 @@ switch chooseMaskButton
         if save2DDIClogic
             % save image mask
             % The format is ROIMask_C01_C02, where 01 is the reference camera of the pair, and 02 is the "deformed" camera of the pair.
-            save([savePath '\ROIMask' '_C_' num2str(nCamRef) '_C_' num2str(nCamDef)],'ROImask');
+            save(fullfile(savePath, ['ROIMask' '_C_' num2str(nCamRef) '_C_' num2str(nCamDef)]),'ROImask');
         end
         DIC2DpairResults.ROImask=ROImask;
     case 'Saved'
         if save2DDIClogic
-            PathInitial=[savePath '\ROIMask' '_C_' num2str(nCamRef) '_C_' num2str(nCamDef)];
+            PathInitial=fullfile(savePath, ['ROIMask' '_C_' num2str(nCamRef) '_C_' num2str(nCamDef)]);
         else
             PathInitial=folderPathInitial;
         end
@@ -128,7 +120,7 @@ end
 
 %% save important variables for further analysis (write text files of correlated 2D points, their cirrelation coefficients, triangular faces, and face colors
 if save2DDIClogic
-    save([savePath '\DIC2DpairResults_C_' num2str(nCamRef) '_C_' num2str(nCamDef)] ,'DIC2DpairResults',	'-v7.3');
+    save(fullfile(savePath, ['DIC2DpairResults_C_' num2str(nCamRef) '_C_' num2str(nCamDef)]),'DIC2DpairResults','-v7.3');
 end
 
 %% plot?
