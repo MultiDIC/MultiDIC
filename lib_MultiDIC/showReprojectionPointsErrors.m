@@ -7,7 +7,7 @@ function []=showReprojectionPointsErrors(camera_parameters)
 %%
 errors=camera_parameters.ReprojectionErrors;
 for ii=1:size(camera_parameters.ReprojectionErrors,3)   
-    scatter(errors(:,1,ii),errors(:,2,ii),'.'); hold on
+    scatter(errors(:,1,ii),errors(:,2,ii),'+'); hold on
 end
 
 axis equal

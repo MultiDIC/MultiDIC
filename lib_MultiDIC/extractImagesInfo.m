@@ -16,7 +16,7 @@ function [CBimagesInfo]=extractImagesInfo(imagesFolderPath)
 %       * imageSize: in pixels
 
 %%
-pathStringCell=strsplit(imagesFolderPath,'\');
+pathStringCell=strsplit(imagesFolderPath,filesep);
 icamString=pathStringCell{end};
 icamCell=strsplit(icamString,'_');
 icam=str2num(icamCell{end});

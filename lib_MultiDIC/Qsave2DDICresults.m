@@ -26,7 +26,7 @@ switch saveButton
             % check if DIC2DpairResults in this folder already exist
             icam1=imagePaths{1}(end-1:end);
             icam2=imagePaths{2}(end-1:end);
-            filename=[savePath '\DIC2DpairResults_C' icam1 'C' icam2];
+            filename=fullfile(savePath, ['DIC2DpairResults_C' icam1 'C' icam2]);
             if exist(filename,'file')
                 
                 promptMessage={'This results file already exists: '; filename; 'Do you want to overwrite?'};

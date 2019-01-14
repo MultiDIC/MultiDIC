@@ -132,7 +132,7 @@ end
 
 %% cut out point with extreme face color values
 if ~isfield(optStruct,'dataLimits')
-    dataLimits=[min(min([cell2mat(FaceCorr1); cell2mat(FaceCorr2)])) max(max([cell2mat(FaceCorr1); cell2mat(FaceCorr2)]))];
+    dataLimits=[min(min([cell2mat(FC1); cell2mat(FC2)])) max(max([cell2mat(FC1); cell2mat(FC2)]))];
 else
     dataLimits=optStruct.dataLimits;
 end
@@ -184,103 +184,103 @@ anim8(hf,animStruct);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%% cut out point with large correlation coefficient
-if ~isfield(optStruct,'CorCoeffCutOff')
-    CorCoeffCutOff=max([cell2mat(FaceCorrL); cell2mat(FaceCorrR)]);
-else
-    CorCoeffCutOff=optStruct.CorCoeffCutOff;
-end
-
-for ii=1:nImages
-    FaceCorrL{ii}(FaceCorrL{ii}>CorCoeffCutOff)=NaN;
-    FaceCorrR{ii}(FaceCorrR{ii}>CorCoeffCutOff)=NaN;
-end
-
-%%
-switch faceMeasureString
-    case {'J','Lamda1','Lamda2'}
-        FCL=DIC3DpairResultsL.Deform.(faceMeasureString);
-        FCR=DIC3DpairResultsR.Deform.(faceMeasureString);
-        cMap=coldwarm;
-        if ~isfield(optStruct,'FClimits')
-            FCmax=0;
-            for ii=1:nImages
-                FCmax=max([max(abs(FCL{ii}(~isnan(FaceCorrL{ii}))-1)) max(abs(FCR{ii}(~isnan(FaceCorrR{ii}))-1)) FCmax]);
-            end
-            FClimits=[1-FCmax 1+FCmax];
-        else
-            FClimits=optStruct.FClimits;
-        end
-    case {'Emgn','emgn'}
-        FCL=DIC3DpairResultsL.Deform.(faceMeasureString);
-        FCR=DIC3DpairResultsR.Deform.(faceMeasureString);        cMap='parula';
-        if ~isfield(optStruct,'FClimits')
-            FCmax=0;
-            for ii=1:nImages
-                FCmax=max([max(FCL{ii}(~isnan(FaceCorrL{ii}))) max(FCR{ii}(~isnan(FaceCorrR{ii}))) FCmax]);
-            end
-            FClimits=[0 FCmax];
-        else
-            FClimits=optStruct.FClimits;
-        end
-    case {'Epc1','Epc2','epc1','epc2'}
-        FCL=DIC3DpairResultsL.Deform.(faceMeasureString);
-        FCR=DIC3DpairResultsR.Deform.(faceMeasureString);        cMap=coldwarm;
-        if ~isfield(optStruct,'FClimits')
-            FCmax=0;
-            for ii=1:nImages
-                FCmax=max([max(abs(FCL{ii}(~isnan(FaceCorrL{ii})))) max(abs(FCR{ii}(~isnan(FaceCorrR{ii})))) FCmax]);
-            end
-            FClimits=[-FCmax FCmax];
-        else
-            FClimits=optStruct.FClimits;
-        end
-    otherwise
-        error('unexpected face measure string. plots not created');      
-end
-
-for ii=1:nImages
-    FCL{ii}(isnan(FaceCorrL{ii}))=NaN;
-    FCR{ii}(isnan(FaceCorrR{ii}))=NaN;
-end
-%%
-hf=figure; hold all;
-hf.Units='normalized'; hf.OuterPosition=[.05 .05 .9 .9]; hf.Units='pixels';
-
-ii=1;
-hp1=imagesc(repmat(ImSet{ii},1,1,3)); hold on; axis ij
-hp2=gpatch(FL,PointsL{1},FCL{ii},'none',0.5);
-hp3=gpatch(FR,PointsR{1},FCR{ii},'none',0.5);
-pbaspect([size(ImSet{ii},2) size(ImSet{ii},1) 1])
-hs1=title(['Cam ' num2str(nCam) ' frame ' num2str(1)]);
-colormap(cMap);
-hc1=colorbar;
-caxis(FClimits)
-title(hc1, faceMeasureString);
-hc1.FontSize=16;
-axis off
-drawnow
-
-%Create the time vector
-animStruct.Time=linspace(0,1,nImages);
-
-for ii=1:nImages
-    PnowL=PointsL{ii};
-    PnowR=PointsR{ii};
-    
-    cNowL=FCL{ii};
-    cNowR=FCR{ii};
-    
-    TitleNow=['Cam ' num2str(nCam) ' frame ' num2str(ii)];
-    
-    %Set entries in animation structure
-    animStruct.Handles{ii}=[hp1,hp2,hp2,hp3,hp3,hs1]; %Handles of objects to animate
-    animStruct.Props{ii}={'CData','CData','Vertices','CData','Vertices','String'}; %Properties of objects to animate
-    animStruct.Set{ii}={repmat(ImSet{ii},1,1,3),cNowL,PnowL,cNowR,PnowR,TitleNow}; %Property values for to set in order to animate
-    
-end
-
-anim8(hf,animStruct);
+% %% cut out point with large correlation coefficient
+% if ~isfield(optStruct,'CorCoeffCutOff')
+%     CorCoeffCutOff=max([cell2mat(FaceCorrL); cell2mat(FaceCorrR)]);
+% else
+%     CorCoeffCutOff=optStruct.CorCoeffCutOff;
+% end
+% 
+% for ii=1:nImages
+%     FaceCorrL{ii}(FaceCorrL{ii}>CorCoeffCutOff)=NaN;
+%     FaceCorrR{ii}(FaceCorrR{ii}>CorCoeffCutOff)=NaN;
+% end
+% 
+% %%
+% switch faceMeasureString
+%     case {'J','Lamda1','Lamda2'}
+%         FCL=DIC3DpairResultsL.Deform.(faceMeasureString);
+%         FCR=DIC3DpairResultsR.Deform.(faceMeasureString);
+%         cMap=coldwarm;
+%         if ~isfield(optStruct,'FClimits')
+%             FCmax=0;
+%             for ii=1:nImages
+%                 FCmax=max([max(abs(FCL{ii}(~isnan(FaceCorrL{ii}))-1)) max(abs(FCR{ii}(~isnan(FaceCorrR{ii}))-1)) FCmax]);
+%             end
+%             FClimits=[1-FCmax 1+FCmax];
+%         else
+%             FClimits=optStruct.FClimits;
+%         end
+%     case {'Emgn','emgn'}
+%         FCL=DIC3DpairResultsL.Deform.(faceMeasureString);
+%         FCR=DIC3DpairResultsR.Deform.(faceMeasureString);        cMap='parula';
+%         if ~isfield(optStruct,'FClimits')
+%             FCmax=0;
+%             for ii=1:nImages
+%                 FCmax=max([max(FCL{ii}(~isnan(FaceCorrL{ii}))) max(FCR{ii}(~isnan(FaceCorrR{ii}))) FCmax]);
+%             end
+%             FClimits=[0 FCmax];
+%         else
+%             FClimits=optStruct.FClimits;
+%         end
+%     case {'Epc1','Epc2','epc1','epc2'}
+%         FCL=DIC3DpairResultsL.Deform.(faceMeasureString);
+%         FCR=DIC3DpairResultsR.Deform.(faceMeasureString);        cMap=coldwarm;
+%         if ~isfield(optStruct,'FClimits')
+%             FCmax=0;
+%             for ii=1:nImages
+%                 FCmax=max([max(abs(FCL{ii}(~isnan(FaceCorrL{ii})))) max(abs(FCR{ii}(~isnan(FaceCorrR{ii})))) FCmax]);
+%             end
+%             FClimits=[-FCmax FCmax];
+%         else
+%             FClimits=optStruct.FClimits;
+%         end
+%     otherwise
+%         error('unexpected face measure string. plots not created');      
+% end
+% 
+% for ii=1:nImages
+%     FCL{ii}(isnan(FaceCorrL{ii}))=NaN;
+%     FCR{ii}(isnan(FaceCorrR{ii}))=NaN;
+% end
+% %%
+% hf=figure; hold all;
+% hf.Units='normalized'; hf.OuterPosition=[.05 .05 .9 .9]; hf.Units='pixels';
+% 
+% ii=1;
+% hp1=imagesc(repmat(ImSet{ii},1,1,3)); hold on; axis ij
+% hp2=gpatch(FL,PointsL{1},FCL{ii},'none',0.5);
+% hp3=gpatch(FR,PointsR{1},FCR{ii},'none',0.5);
+% pbaspect([size(ImSet{ii},2) size(ImSet{ii},1) 1])
+% hs1=title(['Cam ' num2str(nCam) ' frame ' num2str(1)]);
+% colormap(cMap);
+% hc1=colorbar;
+% caxis(FClimits)
+% title(hc1, faceMeasureString);
+% hc1.FontSize=16;
+% axis off
+% drawnow
+% 
+% %Create the time vector
+% animStruct.Time=linspace(0,1,nImages);
+% 
+% for ii=1:nImages
+%     PnowL=PointsL{ii};
+%     PnowR=PointsR{ii};
+%     
+%     cNowL=FCL{ii};
+%     cNowR=FCR{ii};
+%     
+%     TitleNow=['Cam ' num2str(nCam) ' frame ' num2str(ii)];
+%     
+%     %Set entries in animation structure
+%     animStruct.Handles{ii}=[hp1,hp2,hp2,hp3,hp3,hs1]; %Handles of objects to animate
+%     animStruct.Props{ii}={'CData','CData','Vertices','CData','Vertices','String'}; %Properties of objects to animate
+%     animStruct.Set{ii}={repmat(ImSet{ii},1,1,3),cNowL,PnowL,cNowR,PnowR,TitleNow}; %Property values for to set in order to animate
+%     
+% end
+% 
+% anim8(hf,animStruct);
 
 end
 

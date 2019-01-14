@@ -66,16 +66,18 @@ if ~isempty(pairIndList)
         gpatch(F1,V1,colors(FC1,:),'k',.5);
         gpatch(F2,V2,colors(FC2,:),'k',.5);
         axisGeom
+        %         legend({num2str(pairIndList(1):pairIndList(imesh)), num2str(pairInd2)});
         
         %%
         % reduced surfaces
-        minGap=.6*nanmean([patchEdgeLengths(F1,V1) ; patchEdgeLengths(F2,V2)]);
-        minDistValue=3*minGap;
+        minGap=.4*nanmean([patchEdgeLengths(F1,V1) ; patchEdgeLengths(F2,V2)]);
+        minDistValue=5*minGap;
         
         % Q1=
         % Q2=
         % [CT1,CT2] = removeOverlapSurface(F1,F2,V1,V2,Q1,Q2,minGap);
-        [CT1,CT2] = removeOverlapSurface(F1,F2,V1,V2,[],[],minGap);
+        %         [CT1,CT2] = removeOverlapSurface(F1,F2,V1,V2,[],[],minGap);
+        [CT1,CT2] = removeOverlapSurface_temp_2018_10_30(F1,F2,V1,V2,[],[],minGap);
         
         %reduced faces
         F1r=F1(CT1,:);
@@ -165,20 +167,31 @@ if ~isempty(pairIndList)
         Ccombined=[FC1r; FC2r];
         FCTcombined=[FCT1r; FCT2r];
         
+        if ~isempty(F1r) && ~isempty(F2r)
         %% check if the boundaries form more than 1 closed group
-        G1=tesgroup(E1);
-        G2=tesgroup(E2);
+        indVertexBowtied1=findIndVertexBowtied(F1r,V1r);
+        indVertexBowtied2=findIndVertexBowtied(F2r,V2r);
+        
+        optionStruct=struct;
+        optionStruct.indExclude=indVertexBowtied1;
+        G1=tesgroup(E1,optionStruct);
+        optionStruct=struct;
+        optionStruct.indExclude=indVertexBowtied2;
+        G2=tesgroup(E2,optionStruct);
+
+%         G1=tesgroup(E1);
+%         G2=tesgroup(E2);
         nBorders1=size(G1,2);
         nBorders2=size(G2,2);
         
         for ib1=1:nBorders1
             for ib2=1:nBorders2
-                
+
                 E1now=E1(G1(:,ib1),:);
                 E2now=E2(G2(:,ib2),:);
                 
-%                             gpatch(E1now,V1r,'c','c',.5);
-%                             gpatch(E2now,V2r,'m','m',.5);
+                hp1=gpatch(E1now,V1r,'c','c',.5); hp1.LineWidth=2;
+                hp2=gpatch(E2now,V2r,'g','g',.5); hp2.LineWidth=2;
                 
                 %% find closest points to start marching from (from 1 to 2)
                 c1=edgeListToCurve(E1now)';
@@ -198,37 +211,39 @@ if ~isempty(pairIndList)
                 E1close=E1now(LogicD12,:);
                 if ~isempty(E1close)
                     Groups1=tesgroup(E1close);
+                    % delete groups that have only one memeber
+                    Groups1(:,sum(Groups1)==1)=[];
                     numGroups1=size(Groups1,2);
                     
                     Fz=cell(numGroups1,1);
                     for ii=1:numGroups1
                         
                         curve1=edgeListToCurve(E1close(Groups1(:,ii),:))';
-                        %                     plotV(V1r(curve1,:),'ok','MarkerFaceColor','r');
+                        curve1=unique(curve1,'stable');
+                        plotV(V1r(curve1,:),'sk','MarkerFaceColor','r');
                         
                         % find the vertices on the other mesh that are close to this group
                         [~,indD12]=minDist(V1r(curve1,:),V2r(c2,:),[],0,numFreeBytes);
                         
                         indD12Diff=diff(indD12);
-                        upOrDown=sum(sign(indD12Diff))>0; % up=true, down=false
+                        if sum(sign(indD12Diff))<0 % if series is going down, flip it
+                            indD12=flip(indD12);
+                        end
                         
-                        if upOrDown
-                            if indD12(1)<indD12(end)
-                                indD12=indD12(1):indD12(end);
-                            else
-                                indD12=[indD12(1):length(c2) 1:indD12(end)];
-                            end
+                        % take all numbers between extremes
+                        if indD12(1)<=indD12(end)
+                            %                                 indD12=indD12(1):indD12(end);
+                            indD12=min(indD12):max(indD12);
                         else
-                            if indD12(end)<indD12(1)
-                                indD12=indD12(end):indD12(1);
-                            else
-                                indD12=[indD12(end):length(c2) 1:indD12(1)];
-                            end
-                            
+                            %                                 indD12=[indD12(1):length(c2) 1:indD12(end)];
+                            [~,indMin]=min(indD12);
+                            min1=min(indD12(1:indMin-1));
+                            max1=max(indD12(indMin:end));
+                            indD12=[min1:length(c2) 1:max1];
                         end
                         
                         curve2=c2(indD12);
-                        %                     plotV(V2r(curve2,:),'ok','MarkerFaceColor','y');
+                        plotV(V2r(curve2,:),'ok','MarkerFaceColor','y');
                         
                         % flip curve 2 if V2(curve2(1),:) is closer to V1(curve1(end),:) than V1(curve1(1),:)
                         distV21V11=pdist([V1(curve1(1),:);V2(curve2(1),:)],'euclidean');
@@ -238,7 +253,7 @@ if ~isempty(pairIndList)
                         end
                         
                         % retract vertices from the beginning and end of the lists if they are further
-                        while 1
+                        while length(curve1)>=2 && length(curve2)>=2
                             if pdist2(V1r(curve1(1),:),V2r(curve2(1),:))>pdist2(V1r(curve1(2),:),V2r(curve2(1),:))
                                 curve1(1)=[];
                                 %             plotV(V1r(curve1(1),:),'sk','MarkerSize',10,'MarkerFaceColor','b'); % plot closest point on mesh 2
@@ -249,7 +264,7 @@ if ~isempty(pairIndList)
                                 break
                             end
                         end
-                        while 1
+                        while length(curve1)>=2 && length(curve2)>=2
                             if pdist2(V1r(curve1(end),:),V2r(curve2(end),:))>pdist2(V1r(curve1(end-1),:),V2r(curve2(end),:))
                                 curve1(end)=[];
                                 %             plotV(V1r(curve1(end),:),'sk','MarkerSize',10,'MarkerFaceColor','b'); % plot closest point on mesh 2
@@ -260,60 +275,69 @@ if ~isempty(pairIndList)
                                 break
                             end
                         end
-                        % plotV(V1r(curve1(1),:),'sk','MarkerSize',10,'MarkerFaceColor','b');
-                        % plotV(V2r(curve2(1),:),'sk','MarkerSize',10,'MarkerFaceColor','r');
-                        % plotV(V1r(curve1(end),:),'sk','MarkerSize',10,'MarkerFaceColor','b');
-                        % plotV(V2r(curve2(end),:),'sk','MarkerSize',10,'MarkerFaceColor','r');
                         
-                        %Create edges list
-                        ind1=curve1;
-                        ind2=(size(V1r,1)+curve2);
-                        ind=[ind1;flipud(ind2);ind1(1)];
-                        V=[V1r;V2r];
-                        E=[ind(1:end-1) ind(2:end)];
-                        
-                        set(0, 'currentfigure', hf(imesh));
-                        hp=gpatch(E,V,'none','m',.5); hp.LineWidth=2;
-                        
-                        startInd=[curve1(1) curve2(1)]';
-                        
-                        % stitching using delaunayZip
-                        %Create input structure
-                        inputStruct=struct;
-                        inputStruct.plotOn=0;
-                        inputStruct.distLocal=4*max([max(patchEdgeLengths(F1r,V1r)) max(patchEdgeLengths(F2r,V2r))]);
-                        inputStruct.startInd=startInd;
-                        inputStruct.ind1=curve1;
-                        inputStruct.ind2=curve2;
-                        
-                        try
-                            % zip
-                            [FzTemp,~,CzTemp]=delaunayZip(F1r,V1r,F2r,V2r,inputStruct);
-                            Fz{ii}=FzTemp(CzTemp>=3,:);
-                        catch
-                            warning(['Problem zipping ' num2str(pairIndList(1):pairIndList(imesh)) '] to [' num2str(pairInd2) '] . Continuing without zipping']);
-                            % take the zipped part (without the original surfaces)
-                            Fz{ii}=[];    
-                        end
-                        %                     gpatch(Fz{ii},[V1r;V2r],CzTemp(CzTemp>=3,:),'k',.5);
-                        
-                        Fcombined=[Fcombined; Fz{ii}];
-                        Ccombined=[Ccombined; (nPairs+imesh)*ones(size(Fz{ii},1),1)];
-                        
-                        % sample face colors from neighboring faces into the stitched faces
-                        FCTz=zeros(size(Fz{ii},1),1);
-                        for iif=1:size(FCTz,1)
-                            % find touching faces
-                            Ftemp=Fz{ii};
+                        if length(curve1)>=2 && length(curve2)>=2
+                            plotV(V1r(curve1(1),:),'sk','MarkerSize',10,'MarkerFaceColor','k');
+                            plotV(V2r(curve2(1),:),'sk','MarkerSize',10,'MarkerFaceColor','w');
+                            plotV(V1r(curve1(end),:),'^k','MarkerSize',10,'MarkerFaceColor','k');
+                            plotV(V2r(curve2(end),:),'^k','MarkerSize',10,'MarkerFaceColor','w');
                             
-                            Etemp=[Ftemp(:,1) Ftemp(:,2); Ftemp(:,2) Ftemp(:,3); Ftemp(:,3) Ftemp(:,1)];
-                            logicTouch=any(reshape(sum(ismember(Etemp,Ftemp(iif,:)),2)==2,size(Ftemp,1),3),2);
-                            logicTouch(iif)=0;
-                            FCTz(iif)=mean(FCTcombined(logicTouch));
+                            %Create edges list
+                            ind1=curve1;
+                            ind2=(size(V1r,1)+curve2);
+                            ind=[ind1;flipud(ind2);ind1(1)];
+                            V=[V1r;V2r];
+                            E=[ind(1:end-1) ind(2:end)];
                             
+                            set(0, 'currentfigure', hf(imesh));
+                            hp=gpatch(E,V,'none','m',.5); hp.LineWidth=2;
+                            
+                            startInd=[curve1(1) curve2(1)]';
+                            
+                            
+                            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                            % stitching using delaunayZip
+                            %Create input structure
+                            inputStruct=struct;
+                            inputStruct.plotOn=1;
+                            inputStruct.distLocal=4*max([max(patchEdgeLengths(F1r,V1r)) max(patchEdgeLengths(F2r,V2r))]);
+                            inputStruct.startInd=startInd;
+                            inputStruct.ind1=curve1;
+                            inputStruct.ind2=curve2;
+                            
+                            try
+                                % zip
+                                [FzTemp,~,CzTemp]=delaunayZip(F1r,V1r,F2r,V2r,inputStruct);
+                                Fz{ii}=FzTemp(CzTemp>=3,:);
+                            catch
+                                warning(['Problem zipping [' num2str(pairIndList(1):pairIndList(imesh)) '] to [' num2str(pairInd2) '] . Continuing without zipping']);
+                                % take the zipped part (without the original surfaces)
+                                Fz{ii}=[]; 
+%                                 [num2str(imesh) '_' num2str(ib1) '_' num2str(ib2)  '_' num2str(ii)]
+%                                 save(['C:\Users\Dana\Dropbox (Personal)\Research\DANA_KEVIN\MATLAB\Projects\surfaceStitching\zipInput_' num2str(imesh) '_' num2str(ib1) '_' num2str(ib2)  '_' num2str(ii)],'F1r','V1r','F2r','V2r','inputStruct'); 
+                            end
+                            
+                            set(0, 'currentfigure', hf(imesh));
+                            %                     gpatch(Fz{ii},[V1r;V2r],CzTemp(CzTemp>=3,:),'k',.5);
+                            
+                            Fcombined=[Fcombined; Fz{ii}];
+                            Ccombined=[Ccombined; (nPairs+imesh)*ones(size(Fz{ii},1),1)];
+                            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                            
+                            % sample face colors from neighboring faces into the stitched faces
+                            FCTz=zeros(size(Fz{ii},1),1);
+                            for iif=1:size(FCTz,1)
+                                % find touching faces
+                                Ftemp=Fz{ii};
+                                
+                                Etemp=[Ftemp(:,1) Ftemp(:,2); Ftemp(:,2) Ftemp(:,3); Ftemp(:,3) Ftemp(:,1)];
+                                logicTouch=any(reshape(sum(ismember(Etemp,Ftemp(iif,:)),2)==2,size(Ftemp,1),3),2);
+                                logicTouch(iif)=0;
+                                FCTz(iif)=mean(FCTcombined(logicTouch));
+                                
+                            end
+                            FCTcombined=[FCTcombined; FCTz];
                         end
-                        FCTcombined=[FCTcombined; FCTz];
-                        
                     end
                     
                 end
@@ -323,7 +347,7 @@ if ~isempty(pairIndList)
         
         Vcombined=[V1r;V2r];
         DIC3DStitched.PointPairInds=[DIC3DStitched.PointPairInds; pairInd2*ones(size(V2r,1),1)];
-
+        
         % plot stitched surface
         set(0, 'currentfigure', hf(imesh));
         hs3=subplot(1,3,3); hold all
@@ -339,7 +363,7 @@ if ~isempty(pairIndList)
             Points3D{it}(any(isnan(Vcombined),2),:)=NaN;
             corrComb{it}=[s1.corrComb{it}; s2.corrComb{it}];
         end
-        
+        end 
         %% update DIC3DStitched
         
         DIC3DStitched.Faces=Fcombined;
@@ -356,7 +380,7 @@ if ~isempty(pairIndList)
     V=DIC3DStitched.Points3D{1};
     [Eb,E,indBoundary]=patchBoundary(F,V); % find boundaries
     
-%     gpatch(Eb,V,'none','m',1,5);
+    %     gpatch(Eb,V,'none','m',1,5);
     
     [G,G_iter]=tesgroup(Eb); % group boundaries
     for ii=1:size(G,2) % loop over all groups of closed boundaries

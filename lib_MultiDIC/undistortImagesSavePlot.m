@@ -17,11 +17,11 @@ for ip=1:CBimagesInfoJ.Nimages
 end
 if saveUndistortedImagesLogic
     warning('off','MATLAB:MKDIR:DirectoryExists');
-    mkdir([savePath '\undistortedImages\' num2str(CBimagesInfo.icam)]);
+    mkdir(fullfile(savePath, 'undistortedImages', num2str(CBimagesInfo.icam)));
     for ip=1:CBimagesInfo.Nimages
         [~,name,~]=fileparts(CBimagesInfo.imageFileNames{ip});
         % save undistorted image as J_001_originalNAme.ext
-        imName=[savePath '\undistortedImages\' num2str(CBimagesInfo.icam) '\J_' num2str(ip,'%03i') '_' name CBimagesInfo.imageType];
+        imName=fullfile(savePath, 'undistortedImages', num2str(CBimagesInfo.icam), ['J_' num2str(ip,'%03i') '_' name CBimagesInfo.imageType]);;
         % warn about overwriting if already exists
         if exist(imName,'file')
             if overWriteUDimagesLogic

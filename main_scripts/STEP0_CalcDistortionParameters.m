@@ -57,9 +57,9 @@ else % new analysis. ask for checkerboard parameters
     %initial parameters: these are the default parameters which appear in the dialog box. Change them if you want other numbers to appear instead
     Nrows=15; % Number of black rows (should be uneven)
     Ncols=20; % Number of black columns (should be even)
-    squareSize=0.01; %[m]
+    squareSize=10; %[mm]
     % dialog box
-    answer = inputdlg({'Enter number of rows (odd):','Enter number of columns (even):','Enter square size in meters:'},'Input',[1,50],{num2str(Nrows),num2str(Ncols),num2str(squareSize)});
+    answer = inputdlg({'Enter number of rows (odd):','Enter number of columns (even):','Enter square size [mm]:'},'Input',[1,50],{num2str(Nrows),num2str(Ncols),num2str(squareSize)});
     % extract answers
     Nrows=str2double(answer{1}); 
     Ncols=str2double(answer{2}); 
@@ -69,7 +69,7 @@ end
 %% SELECT DISTORTION MODEL
 
 % dialog box for selecting the distortion model. 
-% The default is the full model (3 radial parameters, 2 tangential (1 stands for true), and a skew parameter (1 stands for true).
+% The default is the full model (3 radial parameters, 2 tangential (1 stands for true), and a skew parameter (1 = true).
 answer = inputdlg({'Enter number of radial distortion coefficients (2 or 3):',...
     'Estimate tangential distortion? (1 or 0 for yes/no):',...
     'Estimate skew? (1 or 0 for yes/no)'},...
