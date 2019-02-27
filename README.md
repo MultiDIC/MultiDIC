@@ -3,10 +3,11 @@
 - [Summary](#Summary)  
 - [Installation](#Installation)  
 - [Getting started](#Start)
-- [License](#License)  
 - [Citing](#Cite)
 - [Contributing](#Contributing)  
 - [Application Highlights](#Applications)
+- [Publications](#Publications)
+- [License](#License)  
 
 ## Summary <a name="Summary"></a>
 This is the official repository associated with the paper: [MultiDIC: an Open-Source Toolbox for Multi-View 3D Digital Image Correlation](https://ieeexplore.ieee.org/document/8371235/) (DOI:[ 10.1109/ACCESS.2018.2843725](https://ieeexplore.ieee.org/document/8371235/)).  
@@ -65,6 +66,12 @@ If you wish to contribute code/algorithms to this project, or to propose a colla
 #### Shape change and skin deformation induced by indentation    
 <img src="docs/img/indentation_204_205_DispMgn_onImages.gif">
 <img src="docs/img/indentation_3D_Lamda1_Lamda2_reducedLight.gif">
+
+## Publications <a name="Publications"></a>
+### Studies who have used MultiDIC:
+1. [MultiDIC: An Open-Source Toolbox for Multi-View 3D Digital Image Correlation](https://ieeexplore.ieee.org/abstract/document/8371235)
+2. [A framework for measuring the time-varying shape and full-field deformation of residual limbs using 3D digital image correlation](https://ieeexplore.ieee.org/document/8625546)
+
 
 ## License <a name="License"></a>
 MultiDIC is provided under the [Apache-2.0 license](https://www.apache.org/licenses/). The [license file](https://www.github.com/MultiDIC/MultiDIC/blob/master/LICENSE) is found on the GitHub repository.
