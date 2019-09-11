@@ -81,7 +81,13 @@ for ii=1:numel(imagePaths)
             [~,imName,ext]=fileparts(imagePaths{ii});
             imwrite(IMr,[folderName '\' imName ext],'Quality',100);
         case 1
-            imwrite(IMr,imagePaths{ii},'Quality',100);
+            [~,imName,ext]=fileparts(imagePaths{ii});
+            if strcmp(ext,'.png')
+                imwrite(IMr,imagePaths{ii},'Compression','none');
+            else
+                imwrite(IMr,imagePaths{ii},'Quality',100);
+            end
+            
     end
 end
 

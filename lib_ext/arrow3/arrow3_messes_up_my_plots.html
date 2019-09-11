@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+  <title>Arrow3 Messes Up My Plots!</title>
+  <meta name="author" content="Arrow3 Apologist">
+  <link type="text/css" rel="stylesheet" href="text.css">
+</head>
+<body>
+<h2 style="text-align: center; color: rgb(102, 0, 0);">ARROW3&nbsp;
+MESSES&nbsp; UP&nbsp; MY&nbsp; PLOTS!<br>
+A Dialog Between a Reasonable
+User and an Arrow3 Apologist</h4>
+<table style="width: 600px;" border="0" cellpadding="0" cellspacing="0">
+  <tbody>
+    <tr>
+      <td>
+      <div class="indent"><span
+ style="color: rgb(102, 0, 0); font-style: italic;">Reasonable
+User:</span>&nbsp; Why should I use Arrow3 when there are many other
+solutions on the File Exchange, most notably Erik Johnson's <a
+ href="http://www.mathworks.com/matlabcentral/fileexchange/278">Arrow.m</a>?</div>
+      <br>
+      <div class="indent"><span
+ style="color: rgb(102, 0, 0); font-style: italic;">Arrow3
+Apologist:</span>&nbsp; Arrow.m is an excellent tool for labeling
+because it draws two-dimensional patches in a plane.&nbsp; <a
+ href="http://www.mathworks.com/matlabcentral/fileexchange/14056">Arrow3.m</a>,
+on the other hand, draws cones and spheres in 3-space.&nbsp; The
+programmer says it draws an "astonishing" number of vectors with a
+"bewildering" variety of colors in "practically no time at all," and
+that it "looks real pretty when you twirl 'em around."</div>
+      <br>
+      <div class="indent"><span
+ style="color: rgb(102, 0, 0); font-style: italic;">Reasonable
+User:</span>&nbsp; That is not what I want to do.</div>
+      <br>
+      <div class="indent"><span
+ style="color: rgb(102, 0, 0); font-style: italic;">Arrow3
+Apologist:</span>&nbsp;
+Oh, OK.&nbsp; Sorry.</div>
+      <br>
+      <div class="indent"><span
+ style="color: rgb(102, 0, 0); font-style: italic;">Reasonable
+User:</span>&nbsp;
+I want to use Arrow3 to indicate the path of a
+particle that moves along the helix in fig. 1.</div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<div style="margin-left: 38px;">
+<div class="code" style="width:562px;"><code>t=0:pi/40:8*pi;<br>
+plot3(20*t,cos(t),sin(t))<br>
+axis([0,600,-1.5,1.5,-1.5,1.5])<br>
+grid <span style="color: rgb(160, 32, 240);">on</span>, view(35,40)<br>
+</code>
+</div>
+<br>
+<table style="text-align: left; width: 560px;" border="0"
+ cellpadding="0">
+  <caption align="bottom">Figure 1.<br>
+  </caption><tbody>
+    <tr>
+      <td style="padding:0px;"><img src="fig01.png" alt="Figure 1." title="Figure 1."
+      style="border: 1px solid ; width: 560px; height: 420px;" vspace="7"></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<br>
+<table style="width: 600px;" border="0" cellpadding="0" cellspacing="0">
+  <tbody>
+    <tr>
+      <td>
+      <div class="indent"><span
+ style="color: rgb(102, 0, 0); font-style: italic;">Arrow3
+Apologist:</span>&nbsp;
+Well OK, but it's gonna mess up your plot because you didn't fix the
+aspect
+ratio.</div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<div style="margin-left: 38px;">
+<div class="code" style="width:562px;"><code>t=0:pi/40:8*pi;<br>
+plot3(20*t,cos(t),sin(t))<br>
+axis([0,600,-1.5,1.5,-1.5,1.5])<br>
+grid <span style="color: rgb(160, 32, 240);">on</span>, view(35,40)<br>
+hold <span style="color: rgb(160, 32, 240);">on</span><br>
+arrow3([0,0,0],[600,0,0],<span style="color: rgb(160, 32, 240);">''</span>,2,[],0)<br>
+hold <span style="color: rgb(160, 32, 240);">off</span><br>
+</code>
+</div>
+<br>
+<table style="text-align: left; width: 560px;" border="0"
+ cellpadding="0">
+  <caption align="bottom">Figure 2.<br>
+  </caption><tbody>
+    <tr>
+      <td style="padding:0px;"><img src="fig02.png" alt="Figure 2." title="Figure 2."
+      style="border: 1px solid ; width: 560px; height: 420px;" vspace="7"></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<br>
+<table style="width: 600px;" border="0" cellpadding="0" cellspacing="0">
+  <tbody>
+    <tr>
+      <td>
+      <div class="indent"><span
+ style="color: rgb(102, 0, 0); font-style: italic;">Reasonable
+User:</span>&nbsp;
+Fig. 2 does not look anything like fig. 1.</div>
+      <br>
+      <div class="indent"><span
+ style="color: rgb(102, 0, 0); font-style: italic;">Arrow3
+Apologist:</span>&nbsp;
+Sure it does ... sort of.&nbsp; Arrow3 is graphically similar to the
+      <font style="font-family:monospace">coneplot</font>
+      function:&nbsp; only with a fixed aspect ratio can the
+surfaces be properly rendered.&nbsp; Arrow3 overrides stretch-to-fill
+behavior by setting DataAspectRatioMode, PlotBoxAspectRatioMode, and
+CameraViewAngleMode to manual.&nbsp; You can restore stretch-to-fill
+scaling with <font style="font-family:monospace">axis normal</font>,
+but that will warp the surfaces.</div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<div style="margin-left: 38px;">
+<div class="code" style="width:562px;"><code>t=0:pi/40:8*pi;<br>
+plot3(20*t,cos(t),sin(t))<br>
+axis([0,600,-1.5,1.5,-1.5,1.5])<br>
+grid <span style="color: rgb(160, 32, 240);">on</span>, view(35,40)<br>
+hold <span style="color: rgb(160, 32, 240);">on</span><br>
+arrow3([0,0,0],[600,0,0],<span style="color: rgb(160, 32, 240);">''</span>,2,[],0)<br>
+hold <span style="color: rgb(160, 32, 240);">off</span><br>
+axis <span style="color: rgb(160, 32, 240);">normal</span><br>
+</code>
+</div>
+<br>
+<table style="text-align: left; width: 560px;" border="0"
+ cellpadding="0">
+  <caption align="bottom">Figure 3.<br>
+  </caption><tbody>
+    <tr>
+      <td style="padding:0px;"><img src="fig03.png" alt="Figure 3." title="Figure 3."
+      style="border: 1px solid ; width: 560px; height: 420px;" vspace="7"></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<br>
+<table style="width: 600px;" border="0" cellpadding="0" cellspacing="0">
+  <tbody>
+    <tr>
+      <td>
+      <div class="indent"><span
+ style="color: rgb(102, 0, 0); font-style: italic;">Reasonable
+User:</span>&nbsp;
+Now the arrowhead and origin marker are distorted.</div>
+      <br>
+      <div class="indent"><span
+ style="color: rgb(102, 0, 0); font-style: italic;">Arrow3
+Apologist:</span>&nbsp;
+Yep, they're squished.&nbsp; If you set <font style="font-family:monospace">pbaspect</font>
+and change <font style="font-family:monospace">view</font>, you can get a plot with a manual aspect
+ratio that fills the plot box in much the same fashion as fig. 1.</div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<div style="margin-left: 38px;">
+<div class="code" style="width:562px;"><code>t=0:pi/40:8*pi;<br>
+plot3(20*t,cos(t),sin(t))<br>
+axis([0,600,-1.5,1.5,-1.5,1.5])<br>
+grid <span style="color: rgb(160, 32, 240);">on</span>, view(35,25)<br>
+hold <span style="color: rgb(160, 32, 240);">on</span><br>
+pbaspect([1.8,1.4,1])<br>
+<span style="color: rgb(34, 139, 34);">% similar results may be
+obtained by using</span><br style="color: rgb(34, 139, 34);">
+<span style="color: rgb(34, 139, 34);">% daspect([111,0.7,1])</span><br>
+arrow3([0,0,0],[600,0,0],<span style="color: rgb(160, 32, 240);">''</span>,1.25,[],0)<br>
+hold <span style="color: rgb(160, 32, 240);">off</span><br>
+</code>
+</div>
+<br>
+<table style="text-align: left; width: 560px;" border="0"
+ cellpadding="0">
+  <caption align="bottom">Figure 4.<br>
+  </caption><tbody>
+    <tr>
+      <td style="padding:0px;"><img src="fig04.png" alt="Figure 4." title="Figure 4."
+      style="border: 1px solid ; width: 560px; height: 420px;" vspace="7"></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<br>
+<table style="width: 600px;" border="0" cellpadding="0" cellspacing="0">
+  <tbody>
+    <tr>
+      <td>
+      <div class="indent"><span
+ style="color: rgb(102, 0, 0); font-style: italic;">Reasonable
+User:</span>&nbsp; Why doesn't the
+program accommodate stretch-to-fill
+scaling automatically?</div>
+      <br>
+      <div class="indent"><span
+ style="color: rgb(102, 0, 0); font-style: italic;">Arrow3
+Apologist:</span>&nbsp;
+I asked the programmer, and he said that the stretch-to-fill thing is
+"really hard" and "awfully
+complicated."&nbsp; Personally, I think he just can't figure it out.</div>
+      <br>
+      <div class="indent"><span
+ style="color: rgb(102, 0, 0); font-style: italic;">Reasonable
+User:</span>&nbsp;
+Alright, but what I really wanted was low-impact coordinate axes with
+dark blue little arrows at quarter pi increments along the helix.</div>
+      <br>
+      <div class="indent"><span
+ style="color: rgb(102, 0, 0); font-style: italic;">Arrow3
+Apologist:</span>&nbsp;
+Oh, OK.&nbsp; Sorry.</div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<div style="margin-left: 38px;">
+<div class="code" style="width:562px;"><code>t=(0:pi/40:8*pi)';
+u=cos(t); v=sin(t);<br>
+plot3(20*t,u,v)<br>
+axis([0,600,-1.5,1.5,-1.5,1.5])<br>
+grid <span style="color: rgb(160, 32, 240);">on</span>, view(35,25)<br>
+hold <span style="color: rgb(160, 32, 240);">on</span><br>
+pbaspect([1.8,1.4,1])<br>
+arrow3(zeros(3),diag([500,1.5,1.5]),<span
+ style="color: rgb(160, 32, 240);">'l'</span>,0.7,[],0)<br>
+p=[20*t,u,v]; ndx=11:10:length(t);<br>
+p2=p(ndx,:); p1=p(ndx-3,:);<br>
+arrow3(p1,p2,<span style="color: rgb(160, 32, 240);">'0_b'</span>,0.7)<br>
+hold <span style="color: rgb(160, 32, 240);">off</span><br>
+</code>
+</div>
+<br>
+<table style="text-align: left; width: 560px;" border="0"
+ cellpadding="0">
+  <caption align="bottom">Figure 5.<br>
+  </caption><tbody>
+    <tr>
+      <td style="padding:0px;"><img src="fig05.png" alt="Figure 5." title="Figure 5."
+      style="border: 1px solid ; width: 560px; height: 420px;" vspace="7"></td>
+    </tr>
+  </tbody>
+</table>
+<br>&nbsp;
+<br>
+See also <a href="arrow3_examples.html#Update">Example 16.</a><br>
+<br>
+<br>
+</div>
+</body>
+</html>

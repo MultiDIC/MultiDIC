@@ -10,7 +10,8 @@ if ~iscell(V)
 end
 
 
-xl=[0 0]; yl=[0 0]; zl=[0 0];
+% xl=[0 0]; yl=[0 0]; zl=[0 0];
+xl=[min(V{1}(:,1)) max(V{1}(:,1))]; yl=[min(V{1}(:,2)) max(V{1}(:,2))]; zl=[min(V{1}(:,3)) max(V{1}(:,3))];
 for it=1:numel(V)
     xl(1)=min([min(V{it}(:,1)) xl(1)]);
     xl(2)=max([max(V{it}(:,1)) xl(2)]);

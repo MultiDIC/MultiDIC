@@ -44,9 +44,9 @@ end
 hText = uicontrol(hf,'Style','text','String',titleString,'BackgroundColor',backGroundColor,'HorizontalAlignment','Center','FontSize',fontSize,'FontWeight','bold','Units','Points','ForegroundColor',textColor);
 
 % Set the control to be non-opaque and repaint it
-j_hText = findjobj(hText);
-j_hText.setOpaque(false);
-j_hText.repaint();
+% j_hText = findjobj(hText);
+% j_hText.setOpaque(false);
+% j_hText.repaint();
 
 hText.Units = 'Points';
 

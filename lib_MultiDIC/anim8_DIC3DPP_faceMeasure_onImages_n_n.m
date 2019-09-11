@@ -84,6 +84,7 @@ switch faceMeasureString
         else
             FClimits=optStruct.FClimits;
         end
+        
     case {'Epc1','Epc2','epc1','epc2'}
         for ii=1:nImages
             FC{ii}=DIC3DPPresults.Deform.(faceMeasureString){ii}(currentFacesLogic,:);
@@ -108,7 +109,7 @@ end
 
 %% cut out point with extreme face color values
 if ~isfield(optStruct,'dataLimits')
-    dataLimits=[min(min(cell2mat(FaceCorr))) max(max(cell2mat(FaceCorr)))];
+    dataLimits=[min(min(cell2mat(FC))) max(max(cell2mat(FC)))];
 else
     dataLimits=optStruct.dataLimits;
 end
@@ -172,7 +173,7 @@ for ii=1:nImages
 end
 
 anim8(hf,animStruct);
-
+addFigureButtons;
 end
 
 %%

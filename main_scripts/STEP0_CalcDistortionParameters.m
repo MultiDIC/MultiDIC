@@ -185,7 +185,7 @@ end
 
 Ncam=numel(cameraCBparametersAllCams);
 if Ncam>1
-    plotButton = questdlg('Plot intrinsic parameters statistics for all cameras?', 'Save?', 'Yes', 'No', 'Yes');    
+    plotButton = questdlg('Plot intrinsic parameters statistics for all cameras?', 'Plot?', 'Yes', 'No', 'Yes');    
     if strcmp(plotButton,'Yes')         
         plotIntrinsicStatsAll(cameraCBparametersAllCams);
                 if saveCameraParametersLogic   

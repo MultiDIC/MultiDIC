@@ -1,0 +1,35 @@
+body {
+  font-size:        10pt;
+  font-weight:      normal;
+  font-family:      sans-serif;
+  color:            black;
+  background:       white;}
+table, td, th {
+  border-collapse:  collapse;
+  font-size:        10pt;
+  font-weight:      normal;
+  font-family:      sans-serif;
+  color:            black;
+  background:       white;}
+tr {
+  vertical-align:   top;}
+div.code {
+  width:            562px;
+  font-size:        10pt;
+  font-weight:      normal;
+  font-family:      monospace;
+  color:            black;
+  background-color: rgb(238, 238, 238);}
+div.indent {
+  font-size:        10pt;
+  margin-left:      38px;
+  text-indent:     -38px;}
+h2 {
+  font-size:        12pt;
+  width:            600px;}
+a:visited   {color: black;}
+a:link      {color: black;}
+a:active    {color: black;}
+a:hover     {color: black;
+  background:       yellow;
+  text-decoration:  none;}

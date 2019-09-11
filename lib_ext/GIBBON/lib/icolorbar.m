@@ -8,9 +8,10 @@ function [varargout]=icolorbar(varargin)
 % 2018/05/10 Fixed bug in relation to older matlab versions which do not
 % support h.Colormap=c for axis specific color maps. Older versions use
 % colormap(h,c) instead. 
+% 2019/08/14 Added colorbar handle output
 %-------------------------------------------------------------------------
-%% parse input
 
+%% parse input
 
 switch nargin
     case 0 
@@ -57,9 +58,7 @@ else
     end
 end
 
-figure(hf);  
-
-%Get colormap
+%% Get colormap
 if isprop(h,'Colormap') %Available in MATLAB 2018  
     c=h.Colormap;
     matlabNew=1;
@@ -68,6 +67,7 @@ else %Older MATLAB versions
     matlabNew=0;
 end
 
+%% Set limits and tick labels
 caxis([cLim(1)-0.5 cLim(2)+0.5]);
 hc=colorbar; 
 hc.Ticks=cLim(1):1:cLim(2);
@@ -78,8 +78,13 @@ else %Figure colormap
     colormap(h,cn);
 end
 
-if nargout==1
-    varargout{1}=h;
+%% Collect output
+switch nargout
+    case 1
+        varargout{1}=h;
+    case 2
+        varargout{1}=h;
+        varargout{2}=hc;
 end
  
 %% 
@@ -91,7 +96,7 @@ end
 % image segmentation, image-based modeling, meshing, and finite element
 % analysis.
 % 
-% Copyright (C) 2018  Kevin Mattheus Moerman
+% Copyright (C) 2019  Kevin Mattheus Moerman
 % 
 % This program is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by

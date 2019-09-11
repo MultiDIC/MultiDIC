@@ -49,8 +49,8 @@ for ii=1:nImages
     [~,name2,~]=fileparts(imagePaths2{ii});
     imNumCell1=strsplit(name1,'_');
     imNumCell2=strsplit(name2,'_');
-    imNum1=str2double(imNumCell1{end});
-    imNum2=str2double(imNumCell2{end});
+    imNum1=str2double(imNumCell1{2});
+    imNum2=str2double(imNumCell2{2});
     if imNum1==imNum2
         imNums(ii)=imNum1;
     else

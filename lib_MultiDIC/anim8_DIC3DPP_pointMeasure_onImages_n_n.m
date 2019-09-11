@@ -44,6 +44,12 @@ else
     CorCoeffCutOff=optStruct.CorCoeffCutOff;
 end
 
+if ~isfield(optStruct,'logicRBM')
+    logicRBM=0;
+else
+    logicRBM=optStruct.logicRBM;
+end
+
 for ii=1:nImages
     CorCoeffVec{ii}(CorCoeffVec{ii}>CorCoeffCutOff)=NaN;   
 end
@@ -51,8 +57,14 @@ end
 %%
 switch pointMeasureStr
     case {'DispMgn'}
-        for ii=1:nImages
-            PC{ii}=DIC3DPPresults.Disp.DispMgn{ii}(currentPointLogic,:);
+        if logicRBM
+            for ii=1:nImages
+                PC{ii}=DIC3DPPresults.Disp.DispMgn_ARBM{ii}(currentPointLogic,:);
+            end
+        else
+            for ii=1:nImages
+                PC{ii}=DIC3DPPresults.Disp.DispMgn{ii}(currentPointLogic,:);
+            end
         end
         cMap='parula';
     case {'DispX'}
@@ -158,6 +170,7 @@ for ii=1:nImages
 end
 
 anim8(hf,animStruct);
+addFigureButtons;
 
 end
 

@@ -68,6 +68,7 @@ end
 
 PfromTransformed=(R*a'+t)'; %transformed constructed coordinates
 
+
 % residuals=PfromTransformed-Pto;
 % residualsMgn=sqrt(sum(residuals.^2,2));
 % residulasMgnRMS=sqrt(nansum(residualsMgn.^2)/sum(~isnan(residualsMgn)));

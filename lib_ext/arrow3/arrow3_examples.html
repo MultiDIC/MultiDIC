@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"  http-equiv="content-type">
+  <title>Arrow3 Examples</title>
+  <meta content="Tom Davis" name="author">
+  <link type="text/css" rel="stylesheet" href="text.css">
+</head>
+<body>
+<h2 style="text-align: center; color: rgb(102, 0, 0);">ARROW3&nbsp;&nbsp; EXAMPLES&nbsp;&nbsp; (R13)
+</h2>
+<ul>
+  <li><a href="#Two-Dimensional_Quiver_Plots">Two-dimensional Quiver Plots</a></li>
+  <ul>
+    <li><a href="#Example_1.">Example 1.</a> </li>
+    <li><a href="#Example_2.">Example 2.</a> </li>
+    <li><a href="#Example_3.">Example 3.</a> </li>
+  </ul>
+  <li><a href="#Three-Dimensional_Quiver_Plots">Three-Dimensional Quiver Plots</a></li>
+  <ul>
+    <li><a href="#Example_4.">Example 4.</a> </li>
+    <li><a href="#Example_5.">Example 5.</a> </li>
+  </ul>
+  <li><a href="#Cone_Plots">Cone Plots</a></li>
+  <ul>
+    <li><a href="#Example_6.">Example 6.</a> </li>
+    <li><a href="#Example_7.">Example 7.</a> </li>
+  </ul>
+  <li><a href="#Feather_Plots">Feather Plots</a></li>
+  <ul>
+    <li><a href="#Example_8.">Example 8.</a> </li>
+    <li><a href="#Example_9.">Example 9.</a> </li>
+  </ul>
+  <li><a href="#Compass_Plots">Compass Plots</a></li>
+  <ul>
+    <li><a href="#Example_10.">Example 10.</a> </li>
+    <li><a href="#Example_11.">Example 11.</a> </li>
+  </ul>
+  <li><a href="#Reference_Frames">Reference Frames</a></li>
+  <ul>
+    <li><a href="#Example_12.">Example 12.</a> </li>
+    <li><a href="#Example_13.">Example 13.</a> </li>
+    <li><a href="#Example_14.">Example 14.</a> </li>
+  </ul>
+  <li><a href="#Named_Colors">Named Colors</a></li>
+  <ul>
+    <li><a href="#Example_15.">Example 15.</a> </li>
+  </ul>
+  <li><a href="#Update">Update (Modify and Restore)<br>
+    </a></li>
+  <ul>
+    <li><a href="#Example_16.">Example 16.</a> </li>
+  </ul>
+</ul>
+<h2 style="color: rgb(102, 0, 0);"><a
+ name="Two-Dimensional_Quiver_Plots"></a>Two-Dimensional Quiver Plots
+</h2>
+<div style="margin-left: 38px;"><a name="Example_1."></a>Example 1.&nbsp; (cf. <a
+ href="http://www.mathworks.com/matlabcentral/fileexchange/8870">Joukowski
+ Airfoil Transformation</a>)<br>
+<br>
+<div class="code" style="width:562px;">
+<code>t=10*pi/180; u=0.1; v=0.1; r=1.1; tol=8e-2;<br>
+s=u+i*v; k=2*r*sin(t); w=exp(i*t);<br>
+[x,y]=meshgrid(-2.5:0.1:3.5,-3:0.1:3);<br>
+z=x+i*y; z(abs(z-s)&lt;r-tol)=NaN;<br>
+f=w*z+exp(-i*t)*r^2./(z-s)+i*k*log(z);<br>
+a=0:0.1:2*pi; zc=r*(cos(a)+i*sin(a))+s;<br>
+c1=-1.5; c2=2.5; c3=c2-c1;<br>
+c=contour(x,y,imag(f),c1:c3/16:c2);<br>
+set(gca,<span style="color: rgb(160, 32, 240);">'color'</span>,0.5*[1 1 1])<br>
+hold <span style="color: rgb(160, 32, 240);">on</span>, daspect([1 1 1])<br>
+fill(real(zc),imag(zc),<span style="color: rgb(160, 32, 240);">'y'</span>), colorbar<br>
+map=get(gcf,<span style="color: rgb(160, 32, 240);">'colormap'</span>);<br>
+domain=0:1/(size(map,1)-1):1; m=1;<br>
+<span style="color: rgb(0, 0, 255);">while</span> m&lt;length(c),
+n=m+c(2,m);<br>
+&nbsp; <span style="color: rgb(0, 0, 255);">if</span> c(2,m)&gt;9,
+p=c(:,m+1:n)';<br>
+&nbsp;&nbsp;&nbsp; <span style="color: rgb(0, 0, 255);">if</span>
+p(end,1)&gt;p(1,1), p=flipud(p); <span style="color: rgb(0, 0, 255);">end</span><br>
+&nbsp;&nbsp;&nbsp; ndx=10:10:length(p);<br>
+&nbsp;&nbsp;&nbsp; p2=p(ndx,:); p1=p(ndx-3,:);<br>
+&nbsp;&nbsp;&nbsp; cc=interp1(domain,map,(c(1,m)-c1)/c3);<br>
+&nbsp;&nbsp;&nbsp; set(gca,<span style="color: rgb(160, 32, 240);">'ColorOrder'</span>,cc)<br>
+&nbsp;&nbsp;&nbsp; arrow3(p1,p2,<span style="color: rgb(160, 32, 240);">'0o'</span>,0.8)<br>
+&nbsp; <span style="color: rgb(0, 0, 255);">end</span>, m=n+1;<br>
+<span style="color: rgb(0, 0, 255);">end</span>, hold <span
+ style="color: rgb(160, 32, 240);">off</span><br>
+</code></div>
+<br>
+<table style="text-align: left; width: 560px;" border="0" cellpadding="0">
+  <caption align="bottom">Example 1.&nbsp; Joukowski Airfoil Transformation<br>
+  </caption><tbody>
+    <tr>
+      <td style="padding:0px;"><img src="ex01.png" alt="Example 1." title="Example 1."
+      style="border: 1px solid; width: 560px; height: 420px;" vspace="7"></td>
+    </tr>
+  </tbody>
+</table>
+<br>&nbsp;
+<br>
+</div>
+<div style="margin-left: 38px;"><a name="Example_2."></a>Example 2.&nbsp; (cf. <a
+ href="http://www.mathworks.com/help/techdoc/ref/quiver.html">Quiver</a>)<br>
+<br>
+<div class="code" style="width:562px;">
+<code>[x,y]=meshgrid(-1:1/21:1);<br>
+z=x.*exp(-x.^2-y.^2);<br>
+[c,h]=contour(x,y,z);<br>
+set(h,<span style="color: rgb(160, 32, 240);">'EdgeColor'</span>,0.45*[1 1 1])<br>
+ndx=1:3:length(x);<br>
+x=x(ndx,ndx); y=y(ndx,ndx); z=z(ndx,ndx);<br>
+[u,v]=gradient(z,1/7);<br>
+p1=[x(:),y(:)]; u=u(:); v=v(:);<br>
+m=abs(u+i*v); <span style="color: rgb(34, 139, 34);">% gradient magnitude</span><br>
+daspect([1 1 1]), set(gca,<span style="color: rgb(160, 32, 240);">'color'</span>,0.3*[1 1 1])<br>
+hold <span style="color: rgb(160, 32, 240);">on</span>, colormap <span
+ style="color: rgb(160, 32, 240);">hot</span>, scale=0.4;<br>
+arrow3(p1,p1+scale*[u,v],<span style="color: rgb(160, 32, 240);">'|'</span>,min(1.25*m,0.85))<br>
+hold <span style="color: rgb(160, 32, 240);">off</span>, h=colorbar;<br>
+set(h,<span style="color: rgb(160, 32, 240);">'YTickLabel'</span>,num2str(str2num(get(h,<span
+ style="color: rgb(0, 0, 255);">...</span><br>
+&nbsp; <span style="color: rgb(160, 32, 240);">'YTickLabel'</span>))/scale))<br>
+</code></div>
+<br>
+<table style="text-align: left; width: 560px;" border="0" cellpadding="0">
+  <caption align="bottom">Example 2.&nbsp; Surface Gradients<br>
+  </caption> <tbody>
+    <tr>
+      <td style="padding:0px;"><img src="ex02.png" alt="Example 2." title="Example 2."
+      style="border: 1px solid; width: 560px; height: 420px;" vspace="7"></td>
+    </tr>
+  </tbody>
+</table>
+<br>&nbsp;
+<br>
+</div>
+<div style="margin-left: 38px;"><a name="Example_3."></a>Example 3.&nbsp; (cf. <a
+ href="http://www.mathworks.com/help/techdoc/creating_plots/f10-1323.html#f10-1395">Two-Dimensional
+Quiver Plots</a>)<br>
+<br>
+<div class="code" style="width:562px;">
+<code>[x,y,z]=peaks(-2:0.05:2);<br>
+contour(x,y,z,10); h=gca;<br>
+ndx=1:4:length(x);<br>
+x=x(ndx,ndx); y=y(ndx,ndx); z=z(ndx,ndx);<br>
+[u,v]=gradient(z,0.2);<br>
+p1=[x(:),y(:)]; u=u(:); v=v(:);<br>
+m=abs(u+i*v); <span style="color: rgb(34, 139, 34);">% gradient magnitude</span><br>
+hold <span style="color: rgb(160, 32, 240);">on</span>, daspect([1 1 1]), scale=0.025;<br>
+arrow3(p1,p1+scale*[u,v],<span style="color: rgb(160, 32, 240);">'|'</span>,0.9*m/max(m))<br>
+hold <span style="color: rgb(160, 32, 240);">off</span>, title(<span
+ style="color: rgb(160, 32, 240);">'Dual Colormap'</span>)<br>
+h1=colorbar; h2=copyobj(h1,gcf);<br>
+set(h,<span style="color: rgb(160, 32, 240);">'color'</span>,0.4*[1 1
+1],<span style="color: rgb(0, 0, 255);">...</span><br>
+&nbsp; <span style="color: rgb(160, 32, 240);">'position'</span>,get(h,<span
+ style="color: rgb(160, 32, 240);">'position'</span>)+[0.05 0 0 0])<br>
+<span style="color: rgb(34, 139, 34);">%
+---------------------------------------------- Right Colorbar</span><br>
+p=get(h1,<span style="color: rgb(160, 32, 240);">'position'</span>);<br>
+set(h1,<span style="color: rgb(160, 32, 240);">'position'</span>,[0.87,p(2),0.05,p(4)],<span
+ style="color: rgb(0, 0, 255);">...</span><br>
+&nbsp; <span style="color: rgb(160, 32, 240);">'YTickLabel'</span>,num2str(str2num(get(h1,<span
+ style="color: rgb(0, 0, 255);">...</span><br> &nbsp;
+<span style="color: rgb(160, 32, 240);">'YTickLabel'</span>))/scale))&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp; <span style="color: rgb(34, 139, 34);">% freeze labels</span><br>
+map=colormap; cdata=reshape(map,size(map,1),1,3);<br>
+set(get(h1,<span style="color: rgb(160, 32, 240);">'children'</span>),<span
+ style="color: rgb(160, 32, 240);">'cdata'</span>,cdata)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp; <span style="color: rgb(34, 139, 34);">% freeze colors</span><br>
+set(get(h1,<span style="color: rgb(160, 32, 240);">'title'</span>),<span
+ style="color: rgb(160, 32, 240);">'string'</span>,<span
+ style="color: rgb(160, 32, 240);">'Gradient'</span>)<br>
+<span style="color: rgb(34, 139, 34);">%
+---------------------------------------------- Left Colorbar</span><br>
+caxis <span style="color: rgb(160, 32, 240);">auto</span>, colorbar,
+colormap <span style="color: rgb(160, 32, 240);">autumn</span><br>
+set(h2,<span style="color: rgb(160, 32, 240);">'YAxisLocation'</span>,<span
+ style="color: rgb(160, 32, 240);">'left'</span>,<span
+ style="color: rgb(0, 0, 255);">...</span><br>
+&nbsp; <span style="color: rgb(160, 32, 240);">'position'</span>,[0.08,p(2),0.05,p(4)])<br>
+set(get(h2,<span style="color: rgb(160, 32, 240);">'title'</span>),<span
+ style="color: rgb(160, 32, 240);">'string'</span>,<span
+ style="color: rgb(160, 32, 240);">'Contour'</span>)<br>
+</code></div>
+<br>
+<table style="text-align: left; width: 560px;" border="0" cellpadding="0">
+  <caption align="bottom">Example 3.&nbsp; Dual Colormap<br>
+  </caption> <tbody>
+    <tr>
+      <td style="padding:0px;"><img src="ex03.png" alt="Example 3." title="Example 3."
+      style="border: 1px solid; width: 560px; height: 420px;" vspace="7"></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+</div>
+<h2 style="color: rgb(102, 0, 0);"><a
+ name="Three-Dimensional_Quiver_Plots"></a>Three-Dimensional Quiver Plots
+</h2>
+<div style="margin-left: 38px;"><a name="Example_4."></a> Example 4.&nbsp; (cf. <a
+ href="http://www.mathworks.com/help/techdoc/ref/quiver3.html">Quiver3</a>)<br>
+<br>
+<div class="code" style="width:562px;">
+<code>[x,y]=meshgrid(-2:0.25:2,-1:0.25:1);<br>
+z=x.*exp(-x.^2-y.^2);<br>
+surf(x,y,z,<span style="color: rgb(160, 32, 240);">'EdgeColor'</span>,<span
+ style="color: rgb(160, 32, 240);">'none'</span>)<br>
+axis([-2.5 2.5 -1.5 1.5 -1 1]), daspect([1 1 1])<br>
+set(gca,<span style="color: rgb(160, 32, 240);">'CameraViewAngle'</span>,7)<br>
+[u,v,w]=surfnorm(x,y,z);<br>
+p1=[x(:),y(:),z(:)]; N=[u(:),v(:),w(:)];<br>
+hold <span style="color: rgb(160, 32, 240);">on</span><br>
+arrow3(p1,p1+0.5*N,<span style="color: rgb(160, 32, 240);">'1.5_b'</span>)<br>
+hold <span style="color: rgb(160, 32, 240);">off</span>, colormap <span
+ style="color: rgb(160, 32, 240);">spring</span><br>
+light(<span style="color: rgb(160, 32, 240);">'position'</span>,[-1 -1
+-1],<span style="color: rgb(160, 32, 240);">'style'</span>,<span
+ style="color: rgb(160, 32, 240);">'local'</span>)<br>
+light(<span style="color: rgb(160, 32, 240);">'position'</span>,[0 1
+1]), lighting <span style="color: rgb(160, 32, 240);">gouraud</span><br>
+</code></div>
+<br>
+<table style="text-align: left; width: 560px;" border="0" cellpadding="0">
+  <caption align="bottom">Example 4.&nbsp; Surface Normals<br>
+  </caption> <tbody>
+    <tr>
+      <td style="padding:0px;"><img src="ex04.png" alt="Example 4." title="Example 4."
+      style="border: 1px solid; width: 560px; height: 420px;" vspace="7"></td>
+    </tr>
+  </tbody>
+</table>
+<br>&nbsp;
+<br>
+</div>
+<div style="margin-left: 38px;"><a name="Example_5."></a> Example 5.&nbsp; (cf. <a
+ href="http://www.mathworks.com/help/techdoc/creating_plots/f10-1323.html#f10-1413">Three-Dimensional
+Quiver Plots</a>)<br>
+<br>
+<div class="code" style="width:562px;">
+<code>vx=2; vy=3; vz=10; a=-32; t=(0:.1:1)';<br>
+x=vx*t; y=vy*t; z=vz*t+1/2*a*t.^2;<br>
+r=[x,y,z]; v=gradient(r')';<br>
+axis([0 3 0 4 -10 2]), pbaspect([2 1 1])<br>
+hold <span style="color: rgb(160, 32, 240);">on</span>, grid <span
+ style="color: rgb(160, 32, 240);">on</span>, view([70 18])<br>
+arrow3(r,r+v,<span style="color: rgb(160, 32, 240);">'b'</span>,0.9)<br>
+hold <span style="color: rgb(160, 32, 240);">off</span><br>
+</code></div>
+<br>
+<table style="text-align: left; width: 560px;" border="0" cellpadding="0">
+  <caption align="bottom">Example 5.&nbsp; Velocity Vectors<br>
+  </caption> <tbody>
+    <tr>
+      <td style="padding:0px;"><img src="ex05.png" alt="Example 5." title="Example 5."
+      style="border: 1px solid; width: 560px; height: 420px;" vspace="7"></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+</div>
+<h2 style="color: rgb(102, 0, 0);"><a name="Cone_Plots"></a>Cone Plots
+</h2>
+<div style="margin-left: 38px;"><a name="Example_6."></a> Example 6.&nbsp; (cf. <a
+ href="http://www.mathworks.com/help/techdoc/ref/coneplot.html">Coneplot</a>)<br>
+<br>
+<div class="code" style="width:562px;">
+<code>load <span style="color: rgb(160, 32, 240);">wind</span>,
+wind_speed=sqrt(u.^2+v.^2+w.^2);<br>
+xmin=min(x(:)); xmax=max(x(:));<br>
+ymin=min(y(:)); ymax=max(y(:));<br>
+zmin=min(z(:));<br>
+hsurfaces=slice(x,y,z,wind_speed,[xmin,xmax],ymax,zmin);<br>
+set(hsurfaces,<span style="color: rgb(160, 32, 240);">'FaceColor'</span>,<span
+ style="color: rgb(160, 32, 240);">'interp'</span>,<span
+ style="color: rgb(160, 32, 240);">'EdgeColor'</span>,<span
+ style="color: rgb(160, 32, 240);">'none'</span>,<span
+ style="color: rgb(0, 0, 255);">...</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<span style="color: rgb(160, 32, 240);">'AmbientStrength'</span>,0.6)<br>
+hold <span style="color: rgb(160, 32, 240);">on</span>,
+daspect([2,2,1]),
+view(30,40), axis <span style="color: rgb(160, 32, 240);">tight</span><br>
+xrange=linspace(xmin,xmax,8);<br>
+yrange=linspace(ymin,ymax,8);<br>
+[cx cy cz]=meshgrid(xrange,yrange,3:4:15);<br>
+ui=interp3(x,y,z,u,cx,cy,cz);<br>
+vi=interp3(x,y,z,v,cx,cy,cz);<br>
+wi=interp3(x,y,z,w,cx,cy,cz);<br>
+m=sqrt(ui.^2+vi.^2+wi.^2); m=m(:)/30;<br>
+p1=[cx(:),cy(:),cz(:)]; p2=[ui(:),vi(:),wi(:)];<br>
+hcones=arrow3(p1,p2,<span style="color: rgb(160, 32, 240);">'r'</span>,m,3*m,<span
+ style="color: rgb(160, 32, 240);">'cone'</span>);<br>
+set(hcones,<span style="color: rgb(160, 32, 240);">'DiffuseStrength'</span>,0.8)<br>
+hold <span style="color: rgb(160, 32, 240);">off</span>, axis <span
+ style="color: rgb(160, 32, 240);">off</span><br>
+camproj <span style="color: rgb(160, 32, 240);">perspective</span>,
+camzoom(1.2)<br>
+camlight <span style="color: rgb(160, 32, 240);">right</span>,
+lighting <span style="color: rgb(160, 32, 240);">phong</span><br>
+</code></div>
+<br>
+<table style="text-align: left; width: 560px;" border="0" cellpadding="0">
+  <caption align="bottom">Example 6.&nbsp; Wind Speed and Direction<br>
+  </caption> <tbody>
+    <tr>
+      <td style="padding:0px;"><img src="ex06.png" alt="Example 6." title="Example 6."
+      style="border: 1px solid; width: 560px; height: 420px;" vspace="7"></td>
+    </tr>
+  </tbody>
+</table>
+<br>&nbsp;
+<br>
+</div>
+<div style="margin-left: 38px;"><a name="Example_7."></a>Example 7.&nbsp; (cf. <a
+ href="http://www.mathworks.com/help/techdoc/visualize/f5-7858.html">Vector
+ Field Displayed with Cone Plots</a>)<br>
+<br>
+<div class="code" style="width:562px;">
+<code>load <span style="color: rgb(160, 32, 240);">wind</span>,
+wind_speed=sqrt(u.^2+v.^2+w.^2);<br>
+hiso=patch(isosurface(x,y,z,wind_speed,40),<span
+ style="color: rgb(0, 0, 255);">...</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<span style="color: rgb(160, 32, 240);">'FaceColor'</span>,<span
+ style="color: rgb(160, 32, 240);">'red'</span>,<span
+ style="color: rgb(160, 32, 240);">'EdgeColor'</span>,<span
+ style="color: rgb(160, 32, 240);">'none'</span>);<br>
+isonormals(x,y,z,wind_speed,hiso)<br>
+hcap=patch(isocaps(x,y,z,wind_speed,40),<span
+ style="color: rgb(0, 0, 255);">...</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span
+ style="color: rgb(160, 32, 240);">'FaceColor'</span>,<span
+ style="color: rgb(160, 32, 240);">'interp'</span>,<span
+ style="color: rgb(160, 32, 240);">'EdgeColor'</span>,<span
+ style="color: rgb(160, 32, 240);">'none'</span>,<span
+ style="color: rgb(0, 0, 255);">...</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span
+ style="color: rgb(160, 32, 240);">'AmbientStrength'</span>,0.6);<br>
+hold <span style="color: rgb(160, 32, 240);">on</span>,
+colormap <span style="color: rgb(160, 32, 240);">hsv</span>,
+daspect([1,1,1]), view(65,45)<br>
+[f verts]=reducepatch(isosurface(x,y,z,wind_speed,30),0.07);<br>
+cx=verts(:,1); cy=verts(:,2); cz=verts(:,3);<br>
+ui=interp3(x,y,z,u,cx,cy,cz);<br>
+vi=interp3(x,y,z,v,cx,cy,cz);<br>
+wi=interp3(x,y,z,w,cx,cy,cz);<br>
+m=sqrt(ui.^2+vi.^2+wi.^2); m=m(:)/40;<br>
+p1=[cx(:),cy(:),cz(:)]; p2=[ui(:),vi(:),wi(:)];<br>
+h1=arrow3(p1,p2,<span style="color: rgb(160, 32, 240);">'b'</span>,m,3*m,<span
+ style="color: rgb(160, 32, 240);">'cone'</span>);<br>
+xrange=linspace(min(x(:)),max(x(:)),10);<br>
+yrange=linspace(min(y(:)),max(y(:)),10);<br>
+[cx,cy,cz]=meshgrid(xrange,yrange,3:4:15);<br>
+ui=interp3(x,y,z,u,cx,cy,cz);<br>
+vi=interp3(x,y,z,v,cx,cy,cz);<br>
+wi=interp3(x,y,z,w,cx,cy,cz);<br>
+m=sqrt(ui.^2 + vi.^2 + wi.^2); m=m(:)/50;<br>
+p1=[cx(:),cy(:),cz(:)]; p2=[ui(:),vi(:),wi(:)];<br>
+h2=arrow3(p1,p2,<span style="color: rgb(160, 32, 240);">'g'</span>,m,3*m,<span
+ style="color: rgb(160, 32, 240);">'cone'</span>);<br>
+hold <span style="color: rgb(160, 32, 240);">off</span>, axis <span
+ style="color: rgb(160, 32, 240);">tight</span>, box <span
+ style="color: rgb(160, 32, 240);">on</span><br>
+set(gca,<span style="color: rgb(160, 32, 240);">'xtick'</span>,[],<span
+ style="color: rgb(160, 32, 240);">'ytick'</span>,[],<span
+ style="color: rgb(160, 32, 240);">'ztick'</span>,[])<br>
+camproj <span style="color: rgb(160, 32, 240);">perspective</span>,
+camzoom(1.2)<br>
+camlight(-45,45), lighting <span style="color: rgb(160, 32, 240);">phong</span><br>
+</code></div>
+<br>
+<table style="text-align: left; width: 560px;" border="0" cellpadding="0">
+  <caption align="bottom">Example 7.&nbsp; Wind Speed and Direction<br>
+  </caption> <tbody>
+    <tr>
+      <td style="padding:0px;"><img src="ex07.png" alt="Example 7." title="Example 7."
+      style="border: 1px solid; width: 560px; height: 420px;" vspace="7"></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<br>
+<br>
+<h2 style="color: rgb(102, 0, 0);"><a name="Feather_Plots"></a>Feather Plots
+</h2>
+<div style="margin-left: 38px;"><a name="Example_8."></a> Example 8.&nbsp; (cf. <a
+ href="http://www.mathworks.com/help/techdoc/ref/feather.html">Feather</a>)<br>
+<br>
+<div class="code" style="width:562px;">
+<code>theta=(-90:10:90)'*pi/180; <br>
+n=length(theta); p1=[1:n;zeros(1,n)]';<br>
+r=2*ones(n,1); [u,v]=pol2cart(theta,r);<br>
+plot([1 n],[0 0],<span style="color: rgb(160, 32, 240);">'r'</span>)<br>
+axis([0 20 -2 2]), daspect([8 2 1])<br>
+hold <span style="color: rgb(160, 32, 240);">on</span>, grid <span
+ style="color: rgb(160, 32, 240);">on</span><br>
+arrow3(p1,p1+[u,v],<span style="color: rgb(160, 32, 240);">'r'</span>,0.9)<br>
+hold <span style="color: rgb(160, 32, 240);">off</span><br>
+</code></div>
+<br>
+<table style="text-align: left; width: 560px;" border="0" cellpadding="0">
+  <caption align="bottom">Example 8.&nbsp; Feather Plot<br>
+  </caption> <tbody>
+    <tr>
+      <td style="padding:0px;"><img src="ex08.png" alt="Example 8." title="Example 8."
+      style="border: 1px solid; width: 560px; height: 420px;" vspace="7"></td>
+    </tr>
+  </tbody>
+</table>
+<br>&nbsp;
+<br>
+</div>
+<div style="margin-left: 38px;"><a name="Example_9."></a>Example 9.&nbsp; (cf. <a
+ href="http://www.mathworks.com/help/techdoc/creating_plots/f10-1323.html#f10-9838">Plotting
+Complex Numbers</a>)<br>
+<br>
+<div class="code" style="width:562px;">
+<code>t=(0:0.5:10)'; s=0.05+i; Z=exp(-s*t);<br>
+n=length(Z); p1=[1:n;zeros(1,n)]';<br>
+plot([1 n],[0 0],<span style="color: rgb(160, 32, 240);">'b'</span>)<br>
+axis([0 22 -1 1]), daspect([8 1 1])<br>
+hold <span style="color: rgb(160, 32, 240);">on</span>, grid <span
+ style="color: rgb(160, 32, 240);">on</span><br>
+arrow3(p1,p1+[real(Z),imag(Z)],<span style="color: rgb(160, 32, 240);">'b'</span>,0.8)<br>
+hold <span style="color: rgb(160, 32, 240);">off</span><br>
+</code></div>
+<br>
+<table style="text-align: left; width: 560px;" border="0" cellpadding="0">
+  <caption align="bottom">Example 9.&nbsp; Complex Number Plot<br>
+  </caption> <tbody>
+    <tr>
+      <td style="padding:0px;"><img src="ex09.png" alt="Example 9." title="Example 9."
+      style="border: 1px solid; width: 560px; height: 420px;" vspace="7"></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+</div>
+<h2 style="color: rgb(102, 0, 0);"><a name="Compass_Plots"></a>Compass Plots
+</h2>
+<div style="margin-left: 38px;"><a name="Example_10."></a> Example 10.&nbsp; (cf. <a
+ href="http://www.mathworks.com/help/techdoc/creating_plots/f10-1323.html#f10-1352">Compass Plots</a>)<br>
+<br>
+<div class="code" style="width:562px;">
+<code>wdir =[45 90 90 45 360 335 360 270 335 270 335 335];<br>
+knots=[ 6&nbsp; 6&nbsp; 8&nbsp; 6&nbsp;&nbsp; 5&nbsp;&nbsp;
+9&nbsp;&nbsp; 8&nbsp;&nbsp; 8&nbsp;&nbsp; 9&nbsp; 10&nbsp; 14&nbsp; 12];<br>
+[x,y]=pol2cart(wdir*pi/180,knots);<br>
+polar(0,15), axis(15.9*[-1 1 -1 1])<br>
+hold <span style="color: rgb(160, 32, 240);">on</span><br>
+arrow3(zeros(length(x),2),[x',y'],<span
+ style="color: rgb(160, 32, 240);">'r'</span>,1.25)<br>
+hold <span style="color: rgb(160, 32, 240);">off</span><br>
+</code></div>
+<br>
+<table style="text-align: left; width: 560px;" border="0" cellpadding="0">
+  <caption align="bottom">Example 10.&nbsp; Wind Speed and Direction<br>
+  </caption> <tbody>
+    <tr>
+      <td style="padding:0px;"><img src="ex10.png" alt="Example 10." title="Example 10."
+      style="border: 1px solid; width: 560px; height: 420px;" vspace="7"></td>
+    </tr>
+  </tbody>
+</table>
+<br>&nbsp;
+<br>
+</div>
+<div style="margin-left: 38px;"><a name="Example_11."></a>Example 11.&nbsp; (cf. <a
+ href="http://www.mathworks.com/help/techdoc/ref/compass.html">Compass</a>)<br>
+<br>
+<div class="code" style="width:562px;">
+<code>Z=eig(randn(20)); m=abs(Z);<br>
+R=ceil(max(m)); r=R+0.3;<br>
+polar(0,R), axis(r*[-1 1 -1 1])<br>
+hold <span style="color: rgb(160, 32, 240);">on</span><br>
+arrow3(zeros(length(Z),2),[real(Z),imag(Z)],<span
+ style="color: rgb(160, 32, 240);">'b'</span>,1.75*m/R)<br>
+hold <span style="color: rgb(160, 32, 240);">off</span><br>
+</code></div>
+<br>
+<table style="text-align: left; width: 560px;" border="0" cellpadding="0">
+  <caption align="bottom">Example 11.&nbsp; Complex Number Plot<br>
+  </caption> <tbody>
+    <tr>
+      <td style="padding:0px;"><img src="ex11.png" alt="Example 11." title="Example 11."
+      style="border: 1px solid; width: 560px; height: 420px;" vspace="7"></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+</div>
+<h2 style="color: rgb(102, 0, 0);"><a name="Reference_Frames"></a>Reference Frames
+</h2>
+<div style="margin-left: 38px;"><a name="Example_12."></a> Example 12.&nbsp; Coordinate Axes<br>
+<br>
+<div class="code" style="width:562px;">
+<code>p=[4 2 1]; axis([-6 6 0 5 -1 1])<br>
+pbaspect([2 1.5 1]), view(55,15)<br>
+hold <span style="color: rgb(160, 32, 240);">on</span><br>
+arrow3(repmat([p(1:2),0],4,1),<span style="color: rgb(0, 0, 255);">...</span><br>
+&nbsp; [0 p(2) 0;p(1) 0 0;p;0 0 0],<span
+ style="color: rgb(160, 32, 240);">'--o'</span>,0,0,0.5)<br>
+arrow3(zeros(3),diag([7,5,1]),<span style="color: rgb(160, 32, 240);">'o'</span>)<br>
+arrow3([0 0 0],p,<span style="color: rgb(160, 32, 240);">'2.5s'</span>,1.5,[],0)<br>
+hold <span style="color: rgb(160, 32, 240);">off</span>, axis <span
+ style="color: rgb(160, 32, 240);">off</span>, camlight <span
+ style="color: rgb(160, 32, 240);">left</span><br>
+set(gca,<span style="color: rgb(160, 32, 240);">'CameraViewAngle'</span>,4)<br>
+text(7.1,0,0,<span style="color: rgb(160, 32, 240);">'X'</span>),
+text(0,5.05,0,<span style="color: rgb(160, 32, 240);">'Y'</span>)<br>
+text(0,0,1,<span style="color: rgb(160, 32, 240);">'Z'</span>,<span
+ style="color: rgb(160, 32, 240);">'VerticalAlignment'</span>,<span
+ style="color: rgb(160, 32, 240);">'bottom'</span>,<span
+ style="color: rgb(0, 0, 255);">...</span><br>
+&nbsp; <span style="color: rgb(160, 32, 240);">'HorizontalAlignment'</span>,<span
+ style="color: rgb(160, 32, 240);">'center'</span>)<br>
+</code></div>
+<br>
+<table style="text-align: left; width: 560px;" border="0" cellpadding="0">
+  <caption align="bottom">Example 12.&nbsp; Coordinate Axes<br>
+  </caption> <tbody>
+    <tr>
+      <td style="padding:0px;"><img src="ex12.png" alt="Example 12." title="Example 12."
+      style="border: 1px solid; width: 560px; height: 420px;" vspace="7"></td>
+    </tr>
+  </tbody>
+</table>
+<br>&nbsp;
+<br>
+</div>
+<div style="margin-left: 38px;"><a name="Example_13."></a> Example 13.&nbsp; Eigenvectors<br>
+<br>
+<div class="code" style="width:562px;">
+<code>n=500; <span style="color: rgb(34, 139, 34);">% generate test
+data</span><br>
+newz=[ 1&nbsp; 1 1]/sqrt(3);<br>
+newy=[ 0 -1 1]/sqrt(2);<br>
+newx=cross(newy,newz);<br>
+R=[newx;newy;newz]; <span style="color: rgb(34, 139, 34);">% rotation matrix</span><br>
+U=randn(n,3)*diag([1,2,3])*R;<br>
+u=U(:,1)+10; v=U(:,2)+20; w=U(:,3)+30;<br>
+<span style="color: rgb(34, 139, 34);">% plot eigenvectors with mean
+origin</span><br>
+plot3(u,v,w,'r.')<br>
+axis([0 20 10 29 20 40]), daspect([1 1 1])<br>
+view([-70,15]), set(gca,<span style="color: rgb(160, 32, 240);">'CameraViewAngle'</span>,8)<br>
+hold <span style="color: rgb(160, 32, 240);">on</span>, grid <span
+ style="color: rgb(160, 32, 240);">on</span><br>
+mu=repmat(mean([u,v,w]),3,1);<br>
+[V,D]=eig(cov([u,v,w]));<br>
+p=9*V'+mu;<br>
+arrow3(mu,p,[],1.25,[],0)<br>
+p=p+ones(3);<br>
+text(p(1,1),p(1,2),p(1,3),<span style="color: rgb(160, 32, 240);">'\bfU'</span>)<br>
+text(p(2,1),p(2,2),p(2,3),<span style="color: rgb(160, 32, 240);">'\bfV'</span>)<br>
+text(p(3,1),p(3,2),p(3,3),<span style="color: rgb(160, 32, 240);">'\bfW'</span>)<br>
+hold <span style="color: rgb(160, 32, 240);">off</span><br>
+</code></div>
+<br>
+<table style="text-align: left; width: 560px;" border="0" cellpadding="0">
+  <caption align="bottom">Example 13.&nbsp; Eigenvectors<br>
+  </caption> <tbody>
+    <tr>
+      <td style="padding:0px;"><img src="ex13.png" alt="Example 13." title="Example 13."
+      style="border: 1px solid; width: 560px; height: 420px;" vspace="7"></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<br>&nbsp;
+<br>
+<div style="margin-left: 38px;"><a name="Example_14."></a> Example 14.&nbsp; (cf. <a
+ href="http://www.mathworks.com/matlabcentral/fileexchange/11169">Frenet</a>)<br>
+<br>
+<div class="code" style="width:562px;">
+<code>z=(0:2/99:2)'; t=2*pi*z; r=2+z;<br>
+x=r.*cos(t); y=r.*sin(t);<br>
+R=[x,y,z]; dR=gradient(R')';<br>
+m=repmat(sqrt(sum(dR.*dR,2)),1,3);<br>
+T=dR./m; dT=gradient(T')';<br>
+m=repmat(sqrt(sum(dT.*dT,2)),1,3);<br>
+N=dT./m; B=cross(T,N);<br>
+plot3(x,y,z,<span style="color: rgb(160, 32, 240);">'color'</span>,0.5*[1
+1 1])<br>
+axis([-4 4 -4 4 0 2.5])<br>
+hold <span style="color: rgb(160, 32, 240);">on</span>, grid <span
+ style="color: rgb(160, 32, 240);">on</span>, pbaspect([1 1 1])<br>
+set(gca,<span style="color: rgb(160, 32, 240);">'CameraViewAngle'</span>,7)<br>
+plot3(0,0,0,<span style="color: rgb(160, 32, 240);">'r'</span>),
+plot3(0,0,0,<span style="color: rgb(160, 32, 240);">'color'</span>,[0
+0.5 0])<br>
+plot3(0,0,0,<span style="color: rgb(160, 32, 240);">'b'</span>)<br>
+legend(<span style="color: rgb(160, 32, 240);">'Curve'</span>,<span
+ style="color: rgb(160, 32, 240);">'Tangent'</span>,<span
+ style="color: rgb(160, 32, 240);">'Normal'</span>,<span
+ style="color: rgb(160, 32, 240);">'Binormal'</span>,2)<br>
+ndx=1:4:length(x); R=R(ndx,:);<br>
+arrow3(R,R+1.4*T(ndx,:),<span style="color: rgb(160, 32, 240);">'r'</span>,0.9)<br>
+arrow3(R,R+1.4*N(ndx,:),<span style="color: rgb(160, 32, 240);">'e'</span>,0.9)<br>
+arrow3(R,R+0.4*B(ndx,:),<span style="color: rgb(160, 32, 240);">'b'</span>,0.9)<br>
+hold <span style="color: rgb(160, 32, 240);">off</span>, view(-50,5)<br>
+set(gcf,<span style="color: rgb(160, 32, 240);">'renderer'</span>,<span
+ style="color: rgb(160, 32, 240);">'zbuffer'</span>)<br>
+</code></div>
+<br>
+<table style="text-align: left; width: 560px;" border="0" cellpadding="0">
+  <caption align="bottom">Example 14.&nbsp; Frenet Frames<br>
+  </caption> <tbody>
+    <tr>
+      <td style="padding:0px;"><img src="ex14.png" alt="Example 14." title="Example 14."
+      style="border: 1px solid; width: 560px; height: 420px;" vspace="7"></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+</div>
+<h2 style="color: rgb(102, 0, 0);"><a name="Named_Colors"></a>Named Colors
+</h2>
+<div style="margin-left: 38px;"><a name="Example_15."></a>Example 15.&nbsp; Named Color Table<br>
+<br>
+<div class="code" style="width:562px;">
+<code>arrow3(<span style="color: rgb(160, 32, 240);">'colors'</span>,0.4)
+&nbsp; &nbsp; <span style="color: rgb(34, 139, 34);">% 24 named
+colors with 44 adjustable shades</span><br>
+</code></div>
+<br>
+<table style="text-align: left; width: 560px;" border="0" cellpadding="0">
+  <caption align="bottom">Example 15.&nbsp; Named Color Table<br>
+  </caption> <tbody>
+    <tr>
+      <td style="padding:0px;"><img src="ex15.png" alt="Example 15." title="Example 15."
+      style="border: 1px solid; width: 560px; height: 420px;" vspace="7"></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+<table style="text-align: left; width: 562px;" border="1" cellpadding="3" cellspacing="0">
+    <tr align="center">
+      <td colspan="6">Color Equivalencies</td>
+    </tr>
+    <tr>
+      <td colspan="6" style="padding:0px; width:100%;">
+      <table style="width: 100%; margin: 0px;" border="0" cellpadding="3" cellspacing="0">
+          <tr>
+            <td style="text-align:right; width:25%;">
+              ColorOrder&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td style="width: 25%;">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Arrow3</td>
+            <td style="text-align: right; width: 25%">
+              Simulink&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td style="width: 25%;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Arrow3</td>
+          </tr>
+      </table>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: right; width: 22%;">Color1 &nbsp;
+      </td>
+      <td style="background-color: blue; width: 6%;">&nbsp;
+      </td>
+      <td style="width: 22%;">&nbsp; Blue
+      </td>
+      <td style="text-align: right; width: 22%;">LightBlue &nbsp;
+      </td>
+      <td style="background-color: rgb(96, 188, 252); width: 6%;">&nbsp;
+      </td>
+      <td style="width: 22%;">&nbsp; aZure
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: right;">Color2 &nbsp;
+      </td>
+      <td style="background-color: rgb(0, 127, 0);">&nbsp;
+      </td>
+      <td>&nbsp; Evergreen
+      </td>
+      <td style="text-align: right;">DarkGreen &nbsp;
+      </td>
+      <td style="background-color: rgb(107, 150, 61);">&nbsp;
+      </td>
+      <td>&nbsp; Asparagus
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: right;">Color3 &nbsp;
+      </td>
+      <td style="background-color: red;">&nbsp;
+      </td>
+      <td>&nbsp; Red
+      </td>
+      <td style="text-align: right;">Orange &nbsp;
+      </td>
+      <td style="background-color: rgb(255, 127, 0);">&nbsp;
+      </td>
+      <td>&nbsp; kumQuat
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: right;">Color4 &nbsp;
+      </td>
+      <td style="background-color: rgb(0, 191, 191);">&nbsp;
+      </td>
+      <td>&nbsp; Sky blue
+      </td>
+      <td style="text-align: right;">Gray &nbsp;
+      </td>
+      <td style="background-color: rgb(127, 127, 127);">&nbsp;
+      </td>
+      <td>&nbsp; Light gray
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: right;">Color5 &nbsp;
+      </td>
+      <td style="background-color: rgb(191, 0, 191);">&nbsp;
+      </td>
+      <td>&nbsp; Violet
+      </td>
+      <td colspan="3">&nbsp;
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: right;">Color6 &nbsp;
+      </td>
+      <td style="background-color: rgb(191, 191, 0);">&nbsp;
+      </td>
+      <td>&nbsp; Pear
+      </td>
+      <td colspan="3">&nbsp;
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: right;">Color7 &nbsp;
+      </td>
+      <td style="background-color: rgb(63, 63, 63);">&nbsp;
+      </td>
+      <td>&nbsp; Dark gray
+      </td>
+      <td colspan="3">&nbsp;
+      </td>
+    </tr>
+</table>
+<br>
+<br>
+</div>
+<h2 style="color: rgb(102, 0, 0);"><a name="Update"></a>Update (Modify and Restore)
+</h2>
+<div style="margin-left: 38px;"><a name="Example_16."></a>Example 16.&nbsp; Modify and Restore<br>
+<br>
+<div class="code" style="width:562px;">
+<code><span style="color: rgb(34, 139, 34);">% Arrow3 draws surfaces
+that appear to be right circular cones and</span><br
+ style="color: rgb(34, 139, 34);">
+<span style="color: rgb(34, 139, 34);">% spheres, but arrowheads and
+initial point markers retain their</span><br
+ style="color: rgb(34, 139, 34);">
+<span style="color: rgb(34, 139, 34);">% appearance only so long as the
+data aspect ratio remains unchanged.</span><br>
+daspect([1 1 2]), view([-40,24])<br>
+axis([-1 4 -1 4 0 6])<br>
+hold <span style="color: rgb(160, 32, 240);">on</span>, axis <span
+ style="color: rgb(160, 32, 240);">off</span><br>
+p1=[0,0,0;2,1,0;2.5,3,0;0,2,0];<br>
+p2=[-1,2,6;3,-1,3;2.5,1.5,5;-1,3.5,2];<br>
+<span style="color: rgb(0, 0, 255);">global</span> LineWidthOrder,
+LineWidthOrder=[2,3,3,3];<br>
+<span style="color: rgb(0, 0, 255);">global</span> ColorOrder,
+ColorOrder=<span style="color: rgb(160, 32, 240);">'rvbe'</span>;<br>
+w=[3,8,6,4]; h=[9,12,12,8]; ip=[3,5,5,4];<br>
+set(gca,<span style="color: rgb(160, 32, 240);">'LineStyleOrder'</span>,{<span
+ style="color: rgb(160, 32, 240);">'--'</span>,<span
+ style="color: rgb(160, 32, 240);">'-'</span>,<span
+ style="color: rgb(160, 32, 240);">'-.'</span>,<span
+ style="color: rgb(160, 32, 240);">':'</span>},<span
+ style="color: rgb(0, 0, 255);">...</span><br>
+&nbsp; <span style="color: rgb(160, 32, 240);">'position'</span>,get(gca,<span
+ style="color: rgb(160, 32, 240);">'position'</span>)+[0,0.075,0,0])<br>
+arrow3(p1,p2,<span style="color: rgb(160, 32, 240);">'o*/'</span>,w,h,ip)<br>
+hold <span style="color: rgb(160, 32, 240);">off</span><br>
+camlight <span style="color: rgb(160, 32, 240);">left</span><br>
+</code></div>
+<br>
+<table style="text-align: left; width: 560px;" border="0" cellpadding="0">
+  <caption align="bottom">Example 16.&nbsp; (a) Original plot<br>
+  </caption><tbody>
+    <tr>
+      <td style="padding:0px;"><img src="ex16a.png" alt="Example 16." title="Example 16."
+      style="border: 1px solid; width: 560px; height: 420px;" vspace="7"></td>
+    </tr>
+  </tbody>
+</table>
+<br>&nbsp;
+<br>
+<div class="code" style="width:562px;">
+<code><span style="color: rgb(34, 139, 34);">% Changing the data aspect
+ratio distorts the appearance of
+</span><br style="color: rgb(34, 139, 34);">
+<span style="color: rgb(34, 139, 34);">% arrowheads and initial point markers.</span><br>
+daspect([1 1 1])<br>
+</code></div>
+<br>
+<table style="text-align: left; width: 560px;" border="0" cellpadding="0">
+  <caption align="bottom">Example 16.&nbsp; (b) Aspect ratio distortion<br>
+  </caption><tbody>
+    <tr>
+      <td style="padding:0px;"><img src="ex16b.png" alt="Example 16." title="Example 16."
+      style="border: 1px solid; width: 560px; height: 420px;" vspace="7"></td>
+    </tr>
+  </tbody>
+</table>
+<br>&nbsp;
+<br>
+<div class="code" style="width:562px;">
+<code><span style="color: rgb(34, 139, 34);">% Restore appearance of
+arrowheads and initial point markers.</span><br>
+arrow3(<span style="color: rgb(160, 32, 240);">'update'</span>)<br>
+<span style="color: rgb(34, 139, 34);">% Modify colors of arrowheads,
+initial point markers, and lines to</span><br
+ style="color: rgb(34, 139, 34);">
+<span style="color: rgb(34, 139, 34);">% conform with magnitude
+coloring in the current colormap.</span><br>
+h=arrow3(<span style="color: rgb(160, 32, 240);">'update'</span>,<span
+ style="color: rgb(160, 32, 240);">'colors'</span>);<br>
+<span style="color: rgb(34, 139, 34);">% Change line style to
+continuous.</span><br>
+set(h(strcmp(get(h,<span style="color: rgb(160, 32, 240);">'type'</span>),<span
+ style="color: rgb(160, 32, 240);">'line'</span>)),<span
+ style="color: rgb(160, 32, 240);">'LineStyle'</span>,<span
+ style="color: rgb(160, 32, 240);">'-'</span>)<br>
+<span style="color: rgb(34, 139, 34);"></span><span
+ style="color: rgb(34, 139, 34);">% Reduce arrowhead width by 25%,
+retain arrowhead height, and reduce</span><br
+ style="color: rgb(34, 139, 34);">
+<span style="color: rgb(34, 139, 34);">% initial point marker diameter
+by 50%.</span><br>
+h=arrow3(<span style="color: rgb(160, 32, 240);">'update'</span>,[0.75,1,0.5]);<br>
+<span style="color: rgb(34, 139, 34);">% Reduce opacity to 70%.</span><br>
+set(h,<span style="color: rgb(160, 32, 240);">'FaceAlpha'</span>,0.7)<br>
+camlight <span style="color: rgb(160, 32, 240);">head</span><br>
+</code></div>
+<br>
+<table style="text-align: left; width: 560px;" border="0" cellpadding="0">
+  <caption align="bottom">Example 16.&nbsp; (c) Updated plot<br>
+  </caption><tbody>
+    <tr>
+      <td style="padding:0px;"><img src="ex16c.png" alt="Example 16." title="Example 16."
+      style="border: 1px solid; width: 560px; height: 420px;" vspace="7"></td>
+    </tr>
+  </tbody>
+</table>
+<br>&nbsp;
+<br>
+See also <a href="arrow3_messes_up_my_plots.html">Arrow3 Messes Up My
+Plots!</a><br>
+<br>
+<br>
+</div>
+</body>
+</html>

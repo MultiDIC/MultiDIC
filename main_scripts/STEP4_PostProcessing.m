@@ -3,7 +3,7 @@
 % and calculate diplacements, deformations, and strains.
 
 %%
-% clearvars; close all
+ clearvars; close all
 
 fs=get(0, 'DefaultUIControlFontSize');
 set(0, 'DefaultUIControlFontSize', 10);
