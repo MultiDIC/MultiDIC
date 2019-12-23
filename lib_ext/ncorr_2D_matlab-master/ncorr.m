@@ -128,7 +128,7 @@ classdef ncorr < handle
             % Set default UI control font size here before UI opens. Larger
             % font sizes can make the GUI too large. This seems to be an
             % error in earlier versions of Matlab
-            set(0,'defaultuicontrolfontsize',7);
+            set(0,'defaultuicontrolfontsize',8);
             
             % Initialize GUI and get GUI handles
             obj.handles_gui = init_gui(obj);     
@@ -1915,7 +1915,8 @@ classdef ncorr < handle
             % occurs when the user manually deletes the GUI handle
             closencorr = false;
             if (~force && ~isempty(obj.data_dic.dispinfo) && ~isempty(obj.data_dic.displacements))
-                contbutton = questdlg('Prior DIC data has been detected. If you continue without saving, this data will be deleted. Do you want to proceed?','Continue Operation','Yes','No','Yes');
+%                 contbutton = questdlg('Prior DIC data has been detected. If you continue without saving, this data will be deleted. Do you want to proceed?','Continue Operation','Yes','No','Yes');
+                contbutton = 'Yes'; % MultiDIC and DuoDIC modification to disable this warning
                 if (strcmp(contbutton,'Yes'))
                     closencorr = true;
                 end

@@ -203,7 +203,7 @@ for is=1:nStrains
     end
     
     title(optStruct.supTitleString{is});
-    axis off
+%     axis off
     % camlight headlight
     
     it=1;

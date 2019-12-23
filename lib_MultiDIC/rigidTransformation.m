@@ -52,7 +52,8 @@ switch estimationMethod
     case 'rigid'
         M=db'*da;
         [U,~,V] = svd(M);
-        R=U*V'; %rotation matrix from reconstructed coordinates to true
+        S=[1 0 0; 0 1 0; 0 0 det(U*V')];
+        R=U*S*V'; %rotation matrix from reconstructed coordinates to true
         t=bc'-R*ac'; %translation vector from centroid of reconstructed coordinates to true- this is the translation of the origin of the coordinate system!
     
     case 'affine'
@@ -61,7 +62,8 @@ switch estimationMethod
         F=M/A;
 %         R=F*(F'*F)^-.5; % this gives the same solution as the svd
         [U,~,V] = svd(F);
-        R=U*V'; %rotation matrix from reconstructed coordinates to true
+        S=[1 0 0; 0 1 0; 0 0 det(U*V')];
+        R=U*S*V'; %rotation matrix from reconstructed coordinates to true
         t=bc'-R*ac'; %translation vector from centroid of reconstructed coordinates to true- this is the translation of the origin of the coordinate system!
         
 end

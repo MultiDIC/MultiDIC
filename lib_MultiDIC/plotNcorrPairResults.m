@@ -33,8 +33,25 @@ catch
     newPath=uigetdir([],'Path to images is invalid. Please provide the correct path to the images (the folder containing all camera folders with the processed gray images)');
     for ii=1:length(ImPaths)
         [a,b,c]=fileparts(ImPaths{ii});
-        as = strsplit(a,'\');
+        as = strsplit(a,{'\','/'}');
         ImPaths{ii}=[newPath '\' as{end} '\' b c];
+    end
+    % save new results file with the new image path?
+    answer = questdlg('Do you want to save a new DIC2DpairResults results file with the new image path?' ,'Save new?');
+    switch answer
+        case 'Yes'
+            DIC2DpairResults.ImPaths=ImPaths;
+            savePath = uigetdir(fileparts(ImPaths{1}),'Select a folder for saving the results');       
+            saveName=fullfile(savePath, ['DIC2DpairResults_C_' num2str(DIC2DpairResults.nCamRef) '_C_' num2str(DIC2DpairResults.nCamDef) '.mat']);           
+            % rename if exists
+            icount=1;
+            while exist(saveName,'file')
+                saveName=fullfile(savePath, ['DIC2DpairResults_C_' num2str(DIC2DpairResults.nCamRef) '_C_' num2str(DIC2DpairResults.nCamDef) '(' num2str(icount) ').mat']);
+                icount=icount+1;
+            end
+            save(saveName,'DIC2DpairResults','-v7.3');                  
+        case 'No'
+        case 'Cancel'
     end
 end
 

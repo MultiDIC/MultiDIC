@@ -26,8 +26,23 @@ for ii=1:nImages
     FaceCorr{ii}=DIC3DPPresults.FaceCorrComb{ii}(currentFacesLogic,:);
 end
 ImSet=cell(2*nImages,1);
+ImPaths=DIC3DPPresults.DIC2Dinfo{pairIndex}.ImPaths;
+
+% if ImPaths are not valid (for example if using on another computer, ask
+% user to provide a new folder where all the images are located.
+try
+    ImSet{1}=imread(ImPaths{1});
+catch
+    newPath=uigetdir([],'Path to images is invalid. Please provide the correct path to the images (the folder containing all camera folders with the processed gray images)');
+    for ii=1:length(ImPaths)
+        [a,b,c]=fileparts(ImPaths{ii});
+        as = strsplit(a,{'\','/'});
+        ImPaths{ii}=[newPath '\' as{end} '\' b c];
+    end
+end
+
 for ii=1:2*nImages
-    ImSet{ii}=imread(DIC3DPPresults.DIC2Dinfo{pairIndex}.ImPaths{ii});
+    ImSet{ii}=imread(ImPaths{ii});
     if size(ImSet{ii},3)==3
         ImSet{ii}=rgb2gray(ImSet{ii});
     end
@@ -60,7 +75,11 @@ switch faceMeasureString
         for ii=1:nImages
             FC{ii}=DIC3DPPresults.Deform.(faceMeasureString){ii}(currentFacesLogic,:);
         end
-        cMap=coldwarm;
+        if isfield(optStruct,'cMap')
+            cMap=optStruct.cMap;
+        else
+            cMap=coldwarm;
+        end
         if ~isfield(optStruct,'FClimits')
             FCmax=0;
             for ii=1:nImages
@@ -74,7 +93,11 @@ switch faceMeasureString
         for ii=1:nImages
             FC{ii}=DIC3DPPresults.Deform.(faceMeasureString){ii}(currentFacesLogic,:);
         end
-        cMap='parula';
+        if isfield(optStruct,'cMap')
+            cMap=optStruct.cMap;
+        else
+            cMap='parula';
+        end
         if ~isfield(optStruct,'FClimits')
             FCmax=0;
             for ii=1:nImages
@@ -89,7 +112,11 @@ switch faceMeasureString
         for ii=1:nImages
             FC{ii}=DIC3DPPresults.Deform.(faceMeasureString){ii}(currentFacesLogic,:);
         end
-        cMap=coldwarm;
+        if isfield(optStruct,'cMap')
+            cMap=optStruct.cMap;
+        else
+            cMap=coldwarm;
+        end
         if ~isfield(optStruct,'FClimits')
             FCmax=0;
             for ii=1:nImages
@@ -140,7 +167,7 @@ axis off
 ii=nImages+1;
 subplot(1,2,2)
 hp3=imagesc(repmat(ImSet{ii},1,1,3)); hold on
-hp4=gpatch(F,Points{1},FC{ii-nImages},'none',0.5);
+hp4=gpatch(F,Points{ii},FC{1},'none',0.5);
 pbaspect([size(ImSet{ii},2) size(ImSet{ii},1) 1])
 hs2=title(['Cur ' num2str(ii) ' (Cam ' num2str(nCamDef) ' frame ' num2str(1) ')']);
 colormap(cMap);

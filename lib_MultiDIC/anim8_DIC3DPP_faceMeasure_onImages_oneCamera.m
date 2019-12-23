@@ -42,8 +42,26 @@ for ii=1:nImages
     FaceCorr2{ii}=DIC3DPPresults.FaceCorrComb{ii}(currentFacesLogic2,:);
 end
 ImSet=cell(nImages,1);
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ImPaths=DIC3DPPresults.DIC2Dinfo{pairIndices(1)}.ImPaths;
+
+% if ImPaths are not valid (for example if using on another computer, ask
+% user to provide a new folder where all the images are located.
+try
+   ImSet{1}=imread(ImPaths{1});
+catch
+    newPath=uigetdir([],'Path to images is invalid. Please provide the correct path to the images (the folder containing all camera folders with the processed gray images)');
+    for ii=1:length(ImPaths)
+        [a,b,c]=fileparts(ImPaths{ii});
+        as = strsplit(a,{'\','/'});
+        ImPaths{ii}=[newPath '\' as{end} '\' b c];
+    end
+end
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 for ii=1:nImages
-    ImSet{ii}=imread(DIC3DPPresults.DIC2Dinfo{pairIndices(1)}.ImPaths{(pairCamera(1)-1)*nImages+ii});
+    ImSet{ii}=imread(ImPaths{(pairCamera(1)-1)*nImages+ii});
     if size(ImSet{ii},3)==3
         ImSet{ii}=rgb2gray(ImSet{ii});
     end

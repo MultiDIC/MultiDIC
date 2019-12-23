@@ -6,7 +6,7 @@
 % consistent. The 1st image from the 1st camera is always defined as the reference
 % image.
 
-clearvars; close all
+clearvars; close all; clc;
 
 fs=get(0, 'DefaultUIControlFontSize');
 set(0, 'DefaultUIControlFontSize', 10);
@@ -118,18 +118,26 @@ if ~strcmp(chooseMaskButton,'Ncorr')
     DIC2DpairResults.ROImask=handles_ncorr.reference.roi.mask;
 end
 
-%% save important variables for further analysis (write text files of correlated 2D points, their cirrelation coefficients, triangular faces, and face colors
-if save2DDIClogic
-    save(fullfile(savePath, ['DIC2DpairResults_C_' num2str(nCamRef) '_C_' num2str(nCamDef)]),'DIC2DpairResults','-v7.3');
-end
-
 %% plot?
 set(0, 'DefaultUIControlFontSize', 10);
 plotButton = questdlg('Plot correlated points on images?', 'Plot?', 'Yes', 'No', 'Yes');
 switch plotButton
     case 'Yes'
-        plotNcorrPairResults(DIC2DpairResults);
+        plotNcorrPairResults(DIC2DpairResults);       
     case 'No'
+end
+
+%% save important variables for further analysis (write text files of correlated 2D points, their cirrelation coefficients, triangular faces, and face colors
+if save2DDIClogic
+    saveName=fullfile(savePath, ['DIC2DpairResults_C_' num2str(nCamRef) '_C_' num2str(nCamDef) '.mat']);
+    
+    % rename if exists
+    icount=1;
+    while exist(saveName,'file')     
+        saveName=fullfile(savePath, ['DIC2DpairResults_C_' num2str(nCamRef) '_C_' num2str(nCamDef) '(' num2str(icount) ').mat']);
+        icount=icount+1;      
+    end  
+    save(saveName,'DIC2DpairResults','-v7.3');
 end
 
 %% close Ncorr figure
@@ -139,7 +147,7 @@ if isvalid(h)
 end
 % close first animation figure
 if isvalid(hf1)
-close(hf1);
+    close(hf1);
 end
 
 %% finish
