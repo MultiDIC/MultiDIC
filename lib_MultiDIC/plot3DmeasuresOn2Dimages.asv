@@ -38,11 +38,8 @@ Prompt={'\bf{Select which parameter to plot}';... % 1
     'epc2: 2nd (largest) principal Almansi strain (faces)';... % 12
     'Emgn: Lagrangian strain tensor magnitude (faces)';... % 13
     'emgn: Almansi strain tensor magnitude (faces)';... % 14
-    'Eeq: Equivalent Lagrangian strain (faces)';... % 15
-    'eeq: Equivalent Almansi strain (faces)';... % 16
-    'EShearMax: max Lagrangian shear strain (faces)';... % 17
-    'eShearMax: max Almansi shear strain (faces)';... % 18
-    'Plot all';}; %19
+    'Eeq: ';...
+    ,'eeq','EShearMax','eShearMax'';}; % 15
 
 Title='Select which parameters to plot';
 
@@ -62,10 +59,6 @@ Formats(12,1).type='check';
 Formats(13,1).type='check';
 Formats(14,1).type='check';
 Formats(15,1).type='check';
-Formats(16,1).type='check';
-Formats(17,1).type='check';
-Formats(18,1).type='check';
-Formats(19,1).type='check';
 
 DefAns=cell(numel(Prompt),1);
 DefAns{1}=[];
@@ -77,8 +70,8 @@ Options.Resize='on';
 Options.FontSize=10;
 
 [Answer,Canceled] = inputsdlg(Prompt, Title, Formats, DefAns, Options);
-if Answer{19}
-    for ii=2:18
+if Answer{15}
+    for ii=2:14
         Answer{ii}=true;
     end
 end
@@ -89,7 +82,7 @@ end
 %% Select plotting options
 optStruct=struct;
 if ~Canceled && sum(cell2mat(Answer(2:end)))>0
-    answer = inputdlg({'Enter maximum correlation coefficient to plot (leave blank for plotting all points/faces)'},'Input',[1,50]);
+    answer = inputdlg({'Enter maximum correlation coefficient to keep points (leave blank for keeping all points)'},'Input',[1,50]);
     optStruct.CorCoeffCutOff=str2double(answer{1}); % maximal correlation coefficient for display (use [] for default which is max)
 else
     return
@@ -104,55 +97,44 @@ end
 
 %% plot animated images with the 3D measures on them
 if Answer{2}
-    anim8_DIC3DPP_pointMeasure_onImages_n_n(DIC3DPPresults,pairIndex,'DispMgn',optStruct);
+    anim8_DIC3DPP_pointMeasure_onImages_n_n(DIC3DPPresults,pairIndex,'DispMgn',varargin)
+%     anim8_DIC_images_3Dmeasure_points_n_n(ImSet,DIC2DpairResults,DIC3DpairResults,'DispMgn',optStruct);
 end
 if Answer{3}
-    anim8_DIC3DPP_pointMeasure_onImages_n_n(DIC3DPPresults,pairIndex,'DispX',optStruct);
+    anim8_DIC_images_3Dmeasure_points_n_n(ImSet,DIC2DpairResults,DIC3DpairResults,'DispX',optStruct);
 end
 if Answer{4}
-    anim8_DIC3DPP_pointMeasure_onImages_n_n(DIC3DPPresults,pairIndex,'DispY',optStruct);
+    anim8_DIC_images_3Dmeasure_points_n_n(ImSet,DIC2DpairResults,DIC3DpairResults,'DispY',optStruct);
 end
 if Answer{5}
-    anim8_DIC3DPP_pointMeasure_onImages_n_n(DIC3DPPresults,pairIndex,'DispZ',optStruct);
+    anim8_DIC_images_3Dmeasure_points_n_n(ImSet,DIC2DpairResults,DIC3DpairResults,'DispZ',optStruct);
 end
 if Answer{6}
-    anim8_DIC3DPP_faceMeasure_onImages_n_n(DIC3DPPresults,pairIndex,'J',optStruct);
+    anim8_DIC_images_3Dmeasure_faces_n_n(ImSet,DIC2DpairResults,DIC3DpairResults,'J',optStruct);
 end
 if Answer{7}
-    anim8_DIC3DPP_faceMeasure_onImages_n_n(DIC3DPPresults,pairIndex,'Lamda1',optStruct);
+    anim8_DIC_images_3Dmeasure_faces_n_n(ImSet,DIC2DpairResults,DIC3DpairResults,'Lamda1',optStruct);
 end
 if Answer{8}
-    anim8_DIC3DPP_faceMeasure_onImages_n_n(DIC3DPPresults,pairIndex,'Lamda2',optStruct);
+    anim8_DIC_images_3Dmeasure_faces_n_n(ImSet,DIC2DpairResults,DIC3DpairResults,'Lamda2',optStruct);
 end
 if Answer{9}
-    anim8_DIC3DPP_faceMeasure_onImages_n_n(DIC3DPPresults,pairIndex,'Epc1',optStruct);
+    anim8_DIC_images_3Dmeasure_faces_n_n(ImSet,DIC2DpairResults,DIC3DpairResults,'Epc1',optStruct);
 end
 if Answer{10}
-    anim8_DIC3DPP_faceMeasure_onImages_n_n(DIC3DPPresults,pairIndex,'Epc2',optStruct);
+    anim8_DIC_images_3Dmeasure_faces_n_n(ImSet,DIC2DpairResults,DIC3DpairResults,'Epc2',optStruct);
 end
 if Answer{11}
-    anim8_DIC3DPP_faceMeasure_onImages_n_n(DIC3DPPresults,pairIndex,'epc1',optStruct);
+    anim8_DIC_images_3Dmeasure_faces_n_n(ImSet,DIC2DpairResults,DIC3DpairResults,'epc1',optStruct);
 end
 if Answer{12}
-    anim8_DIC3DPP_faceMeasure_onImages_n_n(DIC3DPPresults,pairIndex,'epc2',optStruct);
+    anim8_DIC_images_3Dmeasure_faces_n_n(ImSet,DIC2DpairResults,DIC3DpairResults,'epc2',optStruct);
 end
 if Answer{13}
-    anim8_DIC3DPP_faceMeasure_onImages_n_n(DIC3DPPresults,pairIndex,'Emgn',optStruct);
+    anim8_DIC_images_3Dmeasure_faces_n_n(ImSet,DIC2DpairResults,DIC3DpairResults,'Emgn',optStruct);
 end
 if Answer{14}
-    anim8_DIC3DPP_faceMeasure_onImages_n_n(DIC3DPPresults,pairIndex,'emgn',optStruct);
-end
-if Answer{15}
-    anim8_DIC3DPP_faceMeasure_onImages_n_n(DIC3DPPresults,pairIndex,'Eeq',optStruct);
-end
-if Answer{16}
-    anim8_DIC3DPP_faceMeasure_onImages_n_n(DIC3DPPresults,pairIndex,'eeq',optStruct);
-end
-if Answer{17}
-    anim8_DIC3DPP_faceMeasure_onImages_n_n(DIC3DPPresults,pairIndex,'EShearMax',optStruct);
-end
-if Answer{18}
-    anim8_DIC3DPP_faceMeasure_onImages_n_n(DIC3DPPresults,pairIndex,'eShearMax',optStruct);
+    anim8_DIC_images_3Dmeasure_faces_n_n(ImSet,DIC2DpairResults,DIC3DpairResults,'emgn',optStruct);
 end
 
 
