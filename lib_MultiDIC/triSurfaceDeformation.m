@@ -41,7 +41,7 @@ if ~logicVcell
     error('the third input must be a cell array with one cell for each frame (time) containing a vertices 3D matrix).');
 end
 
-deformationStruct=structgit;
+deformationStruct=struct;
 
 % number of frames
 nFrames=numel(Vdef);
