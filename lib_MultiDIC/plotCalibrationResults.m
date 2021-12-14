@@ -88,7 +88,7 @@ for ipair=1:Npairs
     quiver3(zeros(NpPair,1),zeros(NpPair,1),zeros(NpPair,1),DLTstruct.reconstructErrors{ipair}(:,1),DLTstruct.reconstructErrors{ipair}(:,2),DLTstruct.reconstructErrors{ipair}(:,3),'Color',Colors(ipair,:),'AutoScale','off'); hold on
     errMax=max(abs(DLTstruct.reconstructErrors{ipair}(:)));
     errMaxTotal=max([errMaxTotal errMax]);
-    RMSE(ipair)=rms(sqrt(sum(DLTstruct.reconstructErrors{ipair}.^2,2)));
+    RMSE(ipair)=rms_multidic(sqrt(sum(DLTstruct.reconstructErrors{ipair}.^2,2)));
     legendstrings{ipair}=['Pair ' num2str(ipair) ', RMSE = ' num2str(RMSE(ipair),3)];
 end
 quiver3(0,0,0,mean(reconstructErrArray(:,1)),mean(reconstructErrArray(:,2)),mean(reconstructErrArray(:,3)),'Color','k','AutoScale','off','linewidth',4); hold on
@@ -96,7 +96,7 @@ legendstrings{ipair+1}=['Mean, |Mean| = ' num2str(norm(mean(reconstructErrArray(
 legend(legendstrings);
 axisGeom
 xlim([-errMaxTotal errMaxTotal]); ylim([-errMaxTotal errMaxTotal]); zlim([-errMaxTotal errMaxTotal]);
-RMSEtot=rms(sqrt(sum(reconstructErrArray.^2,2)));
+RMSEtot=rms_multidic(sqrt(sum(reconstructErrArray.^2,2)));
 title({'Reconstruction errors per camera pair [mm]';['RMSE=' num2str(RMSEtot,3)]},'fontsize',16);
 
 ax2=subplot(1,3,3);

@@ -22,7 +22,11 @@ switch distMetric
             [V_intersect,L_intersect,~] = triangleRayIntersection(v1(ones(size(F2,1),1),:),n1(ones(size(F2,1),1),:),V2,F2,optStruct);
             V_intersect=V_intersect(L_intersect,:);
             if nnz(L_intersect)>0
-                d=dist(v1,V_intersect');
+                try
+                    d=dist(v1,V_intersect'); %dist from Neural network toolbox
+                catch
+                    d=distND(v1,V_intersect'); %GIBBON's dist function
+                end
                 d1=min(d,[],2);
                 D1(q)=d1(:);
             end

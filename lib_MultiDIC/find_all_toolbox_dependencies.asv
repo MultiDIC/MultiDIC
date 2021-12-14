@@ -1,0 +1,72 @@
+% find dependencies
+clear;
+
+folderPaths={"lib_MultiDIC";...
+    "main_scripts";...
+    fullfile("lib_ext","arrow3");...
+    fullfile("lib_ext","export_fig");...
+    fullfile("lib_ext","findjobj");...
+    fullfile("lib_ext","GIBBON","lib");...
+    fullfile("lib_ext","ncorr_2D_matlab-master");...
+    fullfile("lib_ext","numsubplots");...
+    fullfile("lib_ext","selectdata");...
+    fullfile("lib_ext","subtightplot");...
+    fullfile("lib_ext","uipickfiles")};
+
+kk=1;
+for ii=1:length(folderPaths)
+    listing{ii,1} = dir(fullfile(folderPaths{ii,1},'*.m'));
+    for jj=1:length(listing{ii,1})
+        filePath=fullfile(listing{ii,1}(jj).folder,listing{ii,1}(jj).name);
+        filesPaths{kk}=fullfile(listing{ii,1}(jj).folder,listing{ii,1}(jj).name);
+        kk=kk+1;
+    end
+end
+
+names=cell(length(filesPaths),10);
+for ii=1:length(filesPaths)
+    names_temp=dependencies.toolboxDependencyAnalysis(filesPaths{ii});
+    names(ii,1:length(names_temp))= names_temp;
+end
+
+filesPath="C:\Users\dana\Dropbox (Personal)\Research\DIC\MultiDIC\lib_ext\GIBBON\lib\triSurfSetDist.m";
+names_temp=dependencies.toolboxDependencyAnalysis(filesPath);
+
+%%
+listing = dir(fullfile(currentPath,'lib_MultiDIC','*.m'));
+for ii=1:length(listing)
+    filePath=fullfile(listing(ii).folder,listing(ii).name);
+    files{ii,1}=fullfile(listing(ii).folder,listing(ii).name);
+    [fList,plist] = matlab.codetools.requiredFilesAndProducts(filePath);
+
+end
+names = dependencies.toolboxDependencyAnalysis(files);
+[fList,plist] = matlab.codetools.requiredFilesAndProducts(files);
+
+%%
+currentPath=pwd;
+listing = dir(fullfile(currentPath,'main_scripts','*.m'));
+for ii=1:length(listing)
+    filePath=fullfile(listing(ii).folder,listing(ii).name);
+    files{ii,1}=fullfile(listing(ii).folder,listing(ii).name);
+%     [fList,plist] = matlab.codetools.requiredFilesAndProducts(filePath);
+
+end
+names = dependencies.toolboxDependencyAnalysis(files);
+[fList,plist] = matlab.codetools.requiredFilesAndProducts(files);
+
+%%
+
+dirinfo(~[dirinfo.isdir]) = [];  %remove non-directories
+subdirinfo = cell(length(dirinfo),1);
+
+for K = 1 : length(dirinfo)
+  thisdir = dirinfo(K).name;
+  subdirinfo{K} = dir(fullfile(thisdir, '*.m'));
+end
+
+
+listing.name
+
+files="C:\Users\dana\Dropbox (Personal)\Research\DIC\MultiDIC\lib_MultiDIC\addAmbientStrengthButton.m";
+
