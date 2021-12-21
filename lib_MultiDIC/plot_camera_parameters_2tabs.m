@@ -10,15 +10,20 @@ function []=plot_camera_parameters_2tabs(cameraCBparameters)
 
 %%
 
-f = figure('name',['Camera ' num2str(cameraCBparameters.icam) ' Parameters'],'units','normalized','outerposition',[.05 .05 .9 .9]);
+f1 = figure('name',['Camera ' num2str(cameraCBparameters.icam) ' Parameters before distortion correction'],'units','normalized','outerposition',[.05 .05 .9 .9]);
 
-tabgp = uitabgroup(f);
+% tabgp = uitabgroup(f);
 
 %% before correction
-tab(1) = uitab(tabgp,'Title','Before Distortion Correction');
-axes('Parent',tab(1));
+% tab(1) = uitab(tabgp,'Title','Before Distortion Correction');
+% axes('Parent',tab(1));
 
 %% top row
+
+% extrinsic visualization (using MATLAB function)
+subplot(6,8,[4:8 12:16 20:24])
+showExtrinsics(cameraCBparameters.cameraParameters,'Parent',gca);
+
 % show Intrinsic parameters and their errors
 subplot(6,8,[1 2 3 9 10 11 17 18 19])
 showIntrinsics(cameraCBparameters);
@@ -26,10 +31,6 @@ showIntrinsics(cameraCBparameters);
 % visualize the distortion model
 %     subplot(6,7,[3 4 10 11 17 18])
 %     visulaizeDistortionModel(cameraCBparameters);
-
-% extrinsic visualization (using MATLAB function)
-subplot(6,8,[4:8 12:16 20:24])
-showExtrinsics(cameraCBparameters.cameraParameters);
 
 %% bottom row
 % show reprojection errors statistics in boxplot
@@ -48,8 +49,9 @@ drawnow
 
 %% after correction
 
-tab(2) = uitab(tabgp,'Title','After Distortion Correction');
-axes('Parent',tab(2));
+% tab(2) = uitab(tabgp,'Title','After Distortion Correction');
+% axes('Parent',tab(2));
+f2 = figure('name',['Camera ' num2str(cameraCBparameters.icam) ' Parameters after distortion correction'],'units','normalized','outerposition',[.05 .05 .9 .9]);
 
 cameraCBparametersMod=cameraCBparameters;
 cameraCBparametersMod.cameraParameters=cameraCBparameters.cameraParametersAUD;

@@ -28,16 +28,17 @@ nCams=numel(indCams);
 
 % select the folder where the DLT parameter files are stored
 folderPathInitial=pwd;
-DLTparameterFolder = uipickfiles('FilterSpec',folderPathInitial,'Prompt',['Select the folder containing DLT parameters for cameras ' num2str(indCams')]);
+DLTparameterFolder=uigetdir([],['Select the folder containing DLT parameters for cameras ' num2str(indCams')]);
+% DLTparameterFolder = uipickfiles('FilterSpec',folderPathInitial,'Prompt',['Select the folder containing DLT parameters for cameras ' num2str(indCams')]);
 DLTstructAllCams=cell(nCams,1);
 DLTpath=cell(nCams,1);
 for ic=1:nCams
-    DLTpath{ic}=fullfile(DLTparameterFolder{1}, ['DLTstruct_cam_' num2str(indCams(ic))]);
+    DLTpath{ic}=fullfile(DLTparameterFolder, ['DLTstruct_cam_' num2str(indCams(ic))]);
     DLTstructTemp=load(DLTpath{ic});
     DLTstructAllCams{ic}=DLTstructTemp.DLTstructCam;
 end
 
-% remove distortion? If yes, choose the folder where the parameters exist
+% remove distortion? If yes, choose the folder where the parameters are saved
 distortionRemovalButton = questdlg('Remove distortion?', 'Remove distortion?', 'Yes', 'No', 'Yes');
 switch distortionRemovalButton
     case 'Yes'
@@ -205,13 +206,17 @@ end
 
 
 %% Stitch pairs
-% Stitch pairs? If yes, selesct which pairs to stitch and in which order
-stitchButton = questdlg('Stitch surfaces together?', 'Stitch surfaces together?', 'Yes', 'No', 'Yes');
-switch stitchButton
-    case 'Yes'
-        stitchButton=true(1);
-    case 'No'
-        stitchButton=false(1);
+if nPairs>1
+    % Stitch pairs? If yes, selesct which pairs to stitch and in which order
+    stitchButton = questdlg('Stitch surfaces together?', 'Stitch surfaces together?', 'Yes', 'No', 'Yes');
+    switch stitchButton
+        case 'Yes'
+            stitchButton=true(1);
+        case 'No'
+            stitchButton=false(1);
+    end
+else
+    stitchButton=false(1);
 end
 
 if stitchButton
