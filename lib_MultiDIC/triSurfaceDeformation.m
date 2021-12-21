@@ -88,7 +88,7 @@ eShearMaxVec2=cell(nFrames,1);
 Eeq=cell(nFrames,1);
 eeq=cell(nFrames,1);
 Area=cell(nFrames,1);
-
+%%
 hw = waitbar(0,'Calculating deformations and strains');
 
 for itime=1:nFrames
@@ -134,7 +134,7 @@ for itime=1:nFrames
     Eeq{itime}=zeros(size(F,1),1);
     eeq{itime}=zeros(size(F,1),1);
     Area{itime}=zeros(size(F,1),1);
-    
+%%    
     for itri=1:nFaces
         
         % reference director vectors
@@ -255,12 +255,12 @@ for itime=1:nFrames
             epc2vec{itime}(itri,:)=[NaN NaN NaN];
             EShearMax{itime}(itri)=NaN;
             eShearMax{itime}(itri)=NaN;
-            EShearMaxVec1=[NaN NaN NaN];
-            EShearMaxVec2=[NaN NaN NaN];
-            EShearMaxVecCur1=[NaN NaN NaN];
-            EShearMaxVecCur2=[NaN NaN NaN];
-            eShearMaxVec1=[NaN NaN NaN];
-            eShearMaxVec2=[NaN NaN NaN];
+            EShearMaxVec1{itime}(itri,:)=[NaN NaN NaN];
+            EShearMaxVec2{itime}(itri,:)=[NaN NaN NaN];
+            EShearMaxVecCur1{itime}(itri,:)=[NaN NaN NaN];
+            EShearMaxVecCur2{itime}(itri,:)=[NaN NaN NaN];
+            eShearMaxVec1{itime}(itri,:)=[NaN NaN NaN];
+            eShearMaxVec2{itime}(itri,:)=[NaN NaN NaN];
             Eeq{itime}(itri)=NaN;
             eeq{itime}(itri)=NaN;
             Area{itime}(itri)=NaN;
