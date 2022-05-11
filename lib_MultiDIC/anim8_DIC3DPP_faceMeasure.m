@@ -598,7 +598,11 @@ if colorBarLogic
         icolorbar(optStruct.colorBarLimits);
     else
         colorbar;
-        caxis(optStruct.colorBarLimits);
+        if optStruct.colorBarLimits(2)>optStruct.colorBarLimits(2)
+            caxis(optStruct.colorBarLimits);
+        else
+            optStruct.colorBarLimits=[-eps eps];
+        end
     end
 end
 
