@@ -70,18 +70,21 @@ If you wish to contribute code/algorithms to this project, or to propose a colla
 
 ## Publications <a name="Publications"></a>
 ### MultiDIC has been used in the following publications:
-1. [MultiDIC: An Open-Source Toolbox for Multi-View 3D Digital Image Correlation](https://ieeexplore.ieee.org/abstract/document/8371235)
-2. [A framework for measuring the time-varying shape and full-field deformation of residual limbs using 3D digital image correlation](https://ieeexplore.ieee.org/document/8625546)
-3. [Decoding of facial strains via conformable piezoelectric interfaces](https://www.nature.com/articles/s41551-020-00612-w)
-4. [Seeing the Big Picture: Improving The Prosthetic Design Cycle Using 360° 3D Digital Image Correlation](https://www.techrxiv.org/articles/preprint/Seeing_the_Big_Picture_Improving_The_Prosthetic_Design_Cycle_Using_360_3D_Digital_Image_Correlation/12705722)
-5. [Implementing 3D Digital Image Correlation to Study the Dynamics of Globally-Coupled Multistable Structures](https://kb.osu.edu/handle/1811/87248)
-6. [Using Digital Image Correlation to Quantify Skin Deformation with Von Frey Monofilaments](https://ieeexplore.ieee.org/abstract/document/9663031/)
-7. [A Comparative Study of 2D and 3D Digital Image Correlation Approaches for the Characterization and Numerical Analysis of Composite Materials](https://ieeexplore.ieee.org/abstract/document/9634011)
+1. [Solav, Dana, et al. "MultiDIC: An open-source toolbox for multi-view 3D digital image correlation." _IEEE Access_ 6 (2018): 30520-30535.](https://ieeexplore.ieee.org/abstract/document/8371235)
+2. [Solav, Dana, et al. "A framework for measuring the time-varying shape and full-field deformation of residual limbs using 3-D digital image correlation." _IEEE Transactions on Biomedical Engineering_ 66.10 (2019): 2740-2752.](https://ieeexplore.ieee.org/document/8625546)
+3. [Sun, Tao, et al. "Decoding of facial strains via conformable piezoelectric interfaces." _Nature biomedical engineering_ 4.10 (2020): 954-972.](https://www.nature.com/articles/s41551-020-00612-w)
+4. [Cabrera, Isaac A., et al. "Seeing the Big Picture: Improving the prosthetic design cycle using 360 3D digital image correlation." (2020).](https://www.techrxiv.org/articles/preprint/Seeing_the_Big_Picture_Improving_The_Prosthetic_Design_Cycle_Using_360_3D_Digital_Image_Correlation/12705722)
+5. [DeNise, Adam. Implementing 3D Digital Image Correlation to Study the Dynamics of Globally-Coupled Multistable Structures. _Diss. The Ohio State University_, 2019.](https://kb.osu.edu/handle/1811/87248)
+6. [Kao, Anika Rothlin, Chang Xu, and Gregory John Gerling. "Using Digital Image Correlation to Quantify Skin Deformation with Von Frey Monofilaments." _IEEE Transactions on Haptics_ (2021).](https://ieeexplore.ieee.org/abstract/document/9663031/)
+7. [Pisonero, Javier, et al. "A Comparative Study of 2D and 3D Digital Image Correlation Approaches for the Characterization and Numerical Analysis of Composite Materials." _IEEE Access_ 9 (2021): 160675-160687.](https://ieeexplore.ieee.org/abstract/document/9634011)
 8. [Stereo Digital Image Correlation in MATLAB
 ](https://www.mdpi.com/2076-3417/11/11/4904/htm)
-9. [Using Multi-Dimensional Digital Image Correlation to Measure Mechanical Properties of Additively Manufactured and Anisotropic Materials](https://www.proquest.com/docview/2550639051?pq-origsite=gscholar&fromopenview=true)
-10. [Deformation Measurements of a Full Span Model with Adaptive Elasto-Flexible Membrane Wings](https://link.springer.com/chapter/10.1007/978-3-030-79561-0_51)
-
+9. [Hebert, John J. "Using Multi-Dimensional Digital Image Correlation to Measure Mechanical Properties of Additively Manufactured and Anisotropic Materials."" _Diss. University of Louisiana at Lafayette_, 2020.](https://www.proquest.com/docview/2550639051?pq-origsite=gscholar&fromopenview=true)
+10. [Pflüger, Jonathan, Yuting Chen, and Christian Breitsamter. "Deformation Measurements of a Full Span Model with Adaptive Elasto-Flexible Membrane Wings." _STAB/DGLR Symposium_. Springer, Cham, 2020.](https://link.springer.com/chapter/10.1007/978-3-030-79561-0_51)
+11. [Gacek, Elizabeth, Arin M. Ellingson, and Victor H. Barocas. "In Situ Lumbar Facet Capsular Ligament Strains Due to Joint Pressure and Residual Strain." _Journal of biomechanical engineering_ 144.6 (2022): 061007.](https://asmedigitalcollection.asme.org/biomechanical/article/144/6/061007/1137926/In-Situ-Lumbar-Facet-Capsular-Ligament-Strains-Due?casa_token=-fX2MKVtvboAAAAA:Xg4p7p4Yngk9gVcIpgqUgXydaY_8OCdNjeAGut_qfLDG5MU9mLpEp5zWJsfZCrmm7CSqWeDLsQ)
+12. [Li, Yuanzhe, et al. "Imaging dynamic three-dimensional traction stresses." _Science advances_ 8.11 (2022): eabm0984.](https://www.science.org/doi/full/10.1126/sciadv.abm0984)
+13. [Jung, Yei Hwan, et al. "A wireless haptic interface for programmable patterns of touch across large areas of the skin." _Nature Electronics_ (2022): 1-12.](https://www.nature.com/articles/s41928-022-00765-3)
+14.[Álvarez-Blanco, Mario, et al. "Crack morphology in lattice-core specimens made of biopolymer via fused deposition modelling." _Procedia Structural Integrity_ 39 (2022): 379-386.](https://www.sciencedirect.com/science/article/pii/S2452321622003195)
 
 
 ## License <a name="License"></a>
