@@ -84,7 +84,7 @@ If you wish to contribute code/algorithms to this project, or to propose a colla
 11. [Gacek, Elizabeth, Arin M. Ellingson, and Victor H. Barocas. "In Situ Lumbar Facet Capsular Ligament Strains Due to Joint Pressure and Residual Strain." _Journal of biomechanical engineering_ 144.6 (2022): 061007.](https://asmedigitalcollection.asme.org/biomechanical/article/144/6/061007/1137926/In-Situ-Lumbar-Facet-Capsular-Ligament-Strains-Due?casa_token=-fX2MKVtvboAAAAA:Xg4p7p4Yngk9gVcIpgqUgXydaY_8OCdNjeAGut_qfLDG5MU9mLpEp5zWJsfZCrmm7CSqWeDLsQ)
 12. [Li, Yuanzhe, et al. "Imaging dynamic three-dimensional traction stresses." _Science advances_ 8.11 (2022): eabm0984.](https://www.science.org/doi/full/10.1126/sciadv.abm0984)
 13. [Jung, Yei Hwan, et al. "A wireless haptic interface for programmable patterns of touch across large areas of the skin." _Nature Electronics_ (2022): 1-12.](https://www.nature.com/articles/s41928-022-00765-3)
-14.[Álvarez-Blanco, Mario, et al. "Crack morphology in lattice-core specimens made of biopolymer via fused deposition modelling." _Procedia Structural Integrity_ 39 (2022): 379-386.](https://www.sciencedirect.com/science/article/pii/S2452321622003195)
+14. [Álvarez-Blanco, Mario, et al. "Crack morphology in lattice-core specimens made of biopolymer via fused deposition modelling." _Procedia Structural Integrity_ 39 (2022): 379-386.](https://www.sciencedirect.com/science/article/pii/S2452321622003195)
 
 
 ## License <a name="License"></a>
