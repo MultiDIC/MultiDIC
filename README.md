@@ -77,14 +77,14 @@ If you wish to contribute code/algorithms to this project, or to propose a colla
 5. [DeNise, Adam. Implementing 3D Digital Image Correlation to Study the Dynamics of Globally-Coupled Multistable Structures. _Diss. The Ohio State University_, 2019.](https://kb.osu.edu/handle/1811/87248)
 6. [Kao, Anika Rothlin, Chang Xu, and Gregory John Gerling. "Using Digital Image Correlation to Quantify Skin Deformation with Von Frey Monofilaments." _IEEE Transactions on Haptics_ (2021).](https://ieeexplore.ieee.org/abstract/document/9663031/)
 7. [Pisonero, Javier, et al. "A Comparative Study of 2D and 3D Digital Image Correlation Approaches for the Characterization and Numerical Analysis of Composite Materials." _IEEE Access_ 9 (2021): 160675-160687.](https://ieeexplore.ieee.org/abstract/document/9634011)
-8. [Stereo Digital Image Correlation in MATLAB
-](https://www.mdpi.com/2076-3417/11/11/4904/htm)
+8. [Atkinson, Devan, and Thorsten Hermann Becker. "Stereo Digital Image Correlation in MATLAB." Applied Sciences 11.11 (2021): 4904.](https://www.mdpi.com/2076-3417/11/11/4904/htm)
 9. [Hebert, John J. "Using Multi-Dimensional Digital Image Correlation to Measure Mechanical Properties of Additively Manufactured and Anisotropic Materials."" _Diss. University of Louisiana at Lafayette_, 2020.](https://www.proquest.com/docview/2550639051?pq-origsite=gscholar&fromopenview=true)
 10. [Pflüger, Jonathan, Yuting Chen, and Christian Breitsamter. "Deformation Measurements of a Full Span Model with Adaptive Elasto-Flexible Membrane Wings." _STAB/DGLR Symposium_. Springer, Cham, 2020.](https://link.springer.com/chapter/10.1007/978-3-030-79561-0_51)
 11. [Gacek, Elizabeth, Arin M. Ellingson, and Victor H. Barocas. "In Situ Lumbar Facet Capsular Ligament Strains Due to Joint Pressure and Residual Strain." _Journal of biomechanical engineering_ 144.6 (2022): 061007.](https://asmedigitalcollection.asme.org/biomechanical/article/144/6/061007/1137926/In-Situ-Lumbar-Facet-Capsular-Ligament-Strains-Due?casa_token=-fX2MKVtvboAAAAA:Xg4p7p4Yngk9gVcIpgqUgXydaY_8OCdNjeAGut_qfLDG5MU9mLpEp5zWJsfZCrmm7CSqWeDLsQ)
 12. [Li, Yuanzhe, et al. "Imaging dynamic three-dimensional traction stresses." _Science advances_ 8.11 (2022): eabm0984.](https://www.science.org/doi/full/10.1126/sciadv.abm0984)
 13. [Jung, Yei Hwan, et al. "A wireless haptic interface for programmable patterns of touch across large areas of the skin." _Nature Electronics_ (2022): 1-12.](https://www.nature.com/articles/s41928-022-00765-3)
 14. [Álvarez-Blanco, Mario, et al. "Crack morphology in lattice-core specimens made of biopolymer via fused deposition modelling." _Procedia Structural Integrity_ 39 (2022): 379-386.](https://www.sciencedirect.com/science/article/pii/S2452321622003195)
+15. [Shiraishi, Yasuyuki, et al. "In Vitro Modelling for Bulging Sinus Effects of an Expanded Polytetrafluoroethylene Valved Conduit Based on High-Speed 3D Leaflet Evaluation." 2022 44th Annual International Conference of the IEEE Engineering in Medicine & Biology Society (EMBC). IEEE, 2022.](https://ieeexplore.ieee.org/abstract/document/9871676)
 
 
 ## License <a name="License"></a>
