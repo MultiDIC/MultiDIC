@@ -85,6 +85,11 @@ If you wish to contribute code/algorithms to this project, or to propose a colla
 13. [Jung, Yei Hwan, et al. "A wireless haptic interface for programmable patterns of touch across large areas of the skin." _Nature Electronics_ (2022): 1-12.](https://www.nature.com/articles/s41928-022-00765-3)
 14. [Álvarez-Blanco, Mario, et al. "Crack morphology in lattice-core specimens made of biopolymer via fused deposition modelling." _Procedia Structural Integrity_ 39 (2022): 379-386.](https://www.sciencedirect.com/science/article/pii/S2452321622003195)
 15. [Shiraishi, Yasuyuki, et al. "In Vitro Modelling for Bulging Sinus Effects of an Expanded Polytetrafluoroethylene Valved Conduit Based on High-Speed 3D Leaflet Evaluation." 2022 44th Annual International Conference of the IEEE Engineering in Medicine & Biology Society (EMBC). IEEE, 2022.](https://ieeexplore.ieee.org/abstract/document/9871676)
+16. [Ni, Xinchen, et al. "Soft shape-programmable surfaces by fast electromagnetic actuation of liquid metal networks." Nature communications 13.1 (2022): 1-9.](https://www.nature.com/articles/s41467-022-31092-y)
+17. [Kang, Youn J., et al. "Soft skin-interfaced mechano-acoustic sensors for real-time monitoring and patient feedback on respiratory and swallowing biomechanics." npj Digital Medicine 5.1 (2022): 1-13.](https://www.nature.com/articles/s41746-022-00691-w)
+18. [Sun, Weifu, et al. "Digital image correlation-aided non-destructive buckling load prediction of cylindrical shells." International Journal of Solids and Structures 254 (2022): 111941.](https://www.sciencedirect.com/science/article/pii/S0020768322003961)
+19. [Lee, Duncan RC. Design and Clinical Evaluation of a Digital Transtibial Prosthetic Interface. Diss. Massachusetts Institute of Technology, 2022.](https://dspace.mit.edu/handle/1721.1/144501)
+
 
 
 ## License <a name="License"></a>
