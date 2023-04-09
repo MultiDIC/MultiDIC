@@ -88,8 +88,13 @@ If you wish to contribute code/algorithms to this project, or to propose a colla
 16. [Ni, Xinchen, et al. "Soft shape-programmable surfaces by fast electromagnetic actuation of liquid metal networks." Nature communications 13.1 (2022): 1-9.](https://www.nature.com/articles/s41467-022-31092-y)
 17. [Kang, Youn J., et al. "Soft skin-interfaced mechano-acoustic sensors for real-time monitoring and patient feedback on respiratory and swallowing biomechanics." npj Digital Medicine 5.1 (2022): 1-13.](https://www.nature.com/articles/s41746-022-00691-w)
 18. [Sun, Weifu, et al. "Digital image correlation-aided non-destructive buckling load prediction of cylindrical shells." International Journal of Solids and Structures 254 (2022): 111941.](https://www.sciencedirect.com/science/article/pii/S0020768322003961)
-19. [Lee, Duncan RC. Design and Clinical Evaluation of a Digital Transtibial Prosthetic Interface. Diss. Massachusetts Institute of Technology, 2022.](https://dspace.mit.edu/handle/1721.1/144501)
-
+19. [Lee, Duncan RC. "Design and Clinical Evaluation of a Digital Transtibial Prosthetic Interface." Diss. Massachusetts Institute of Technology, 2022.](https://dspace.mit.edu/handle/1721.1/144501)
+20. [Zhu, Xing, et al. "Identification of crack initiation and damage thresholds in sandstone using 3D digital image correlation." Theoretical and Applied Fracture Mechanics 122 (2022): 103653.](https://www.sciencedirect.com/science/article/pii/S0167844222003974)
+21. [Kim, Jin-Tae, et al. "Dynamics of plosive consonants via imaging, computations, and soft electronics." Proceedings of the National Academy of Sciences 119.46 (2022): e2214164119.](https://www.pnas.org/doi/full/10.1073/pnas.2214164119)
+22. [Kim, Jin-Tae, et al. "Mechanics of vibrotactile sensors for applications in skin-interfaced haptic systems." Extreme Mechanics Letters 58 (2023): 101940.](https://www.sciencedirect.com/science/article/pii/S2352431622002164)
+23. [Ghadimi, Hamed, et al. "Effects of Printing Layer Orientation on the High-Frequency Bending-Fatigue Life and Tensile Strength of Additively Manufactured 17-4 PH Stainless Steel." Materials 16.2 (2023): 469.](https://www.mdpi.com/1996-1944/16/2/469)
+24. [Álvarez-Blanco, Mario. "Influence of material extrusion parameters on fracture mechanisms of polylactic acid under three-point bending." Engineering Fracture Mechanics (2023): 109223.](https://www.sciencedirect.com/science/article/pii/S0013794423001819)
+25. [Huang, Senbin, et al. "Experimental investigations of optimized 3D Printing Planar X-joints manufactured by stainless steel and high-strength steel." Engineering Structures 285 (2023): 116054.](https://www.sciencedirect.com/science/article/pii/S0141029623004686)
 
 
 ## License <a name="License"></a>
