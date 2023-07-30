@@ -93,8 +93,9 @@ If you wish to contribute code/algorithms to this project, or to propose a colla
 21. [Kim, Jin-Tae, et al. "Dynamics of plosive consonants via imaging, computations, and soft electronics." Proceedings of the National Academy of Sciences 119.46 (2022): e2214164119.](https://www.pnas.org/doi/full/10.1073/pnas.2214164119)
 22. [Kim, Jin-Tae, et al. "Mechanics of vibrotactile sensors for applications in skin-interfaced haptic systems." Extreme Mechanics Letters 58 (2023): 101940.](https://www.sciencedirect.com/science/article/pii/S2352431622002164)
 23. [Ghadimi, Hamed, et al. "Effects of Printing Layer Orientation on the High-Frequency Bending-Fatigue Life and Tensile Strength of Additively Manufactured 17-4 PH Stainless Steel." Materials 16.2 (2023): 469.](https://www.mdpi.com/1996-1944/16/2/469)
-24. [Álvarez-Blanco, Mario. "Influence of material extrusion parameters on fracture mechanisms of polylactic acid under three-point bending." Engineering Fracture Mechanics (2023): 109223.](https://www.sciencedirect.com/science/article/pii/S0013794423001819)
+24. [Álvarez-Blanco, Mario, et al. "Influence of material extrusion parameters on fracture mechanisms of polylactic acid under three-point bending." Engineering Fracture Mechanics 283 (2023): 109223.](https://www.sciencedirect.com/science/article/pii/S0013794423001819)
 25. [Huang, Senbin, et al. "Experimental investigations of optimized 3D Printing Planar X-joints manufactured by stainless steel and high-strength steel." Engineering Structures 285 (2023): 116054.](https://www.sciencedirect.com/science/article/pii/S0141029623004686)
+26. [Arias-Blanco, Adrián, et al "Experimental and numerical analysis of the influence of intramedullary nail position on the cut-out phenomenon." Computer Methods and Programs in Biomedicine (2023): 107734.](https://www.sciencedirect.com/science/article/pii/S0169260723004005?dgcid=author#fig0003)
 
 
 ## License <a name="License"></a>
